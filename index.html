@@ -15,7 +15,7 @@
 <header>
  <div class="wrap bar">
   <button id="menuBtn" aria-label="Mở menu" aria-expanded="false"><svg viewBox="0 0 30 30" aria-hidden="true"><path class="b1" d="M3 7h24"/><path class="b2" d="M3 15h24"/><path class="b3" d="M3 23h24"/></svg></button>
-  <a class="logo" href="#home" aria-label="Hà Trần Minh Trí – về đầu trang"><span class="l1">MINH</span> <span class="l2">TR<span class="i">I</span></span><i class="lc" aria-hidden="true">LcSt</i></a>
+  <a class="logo" href="#home" aria-label="Hà Trần Minh Trí – về đầu trang"><span class="l1">MINH</span> <span class="l2">TR<span class="i">I</span></span></a>
   <div class="rt">
    <button class="ic" id="themeBtn" aria-label="Chuyển sang giao diện tối" aria-pressed="false"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
    <button class="ic" id="searchBtn" aria-label="Tìm kiếm" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
@@ -69,6 +69,18 @@
    </div>
   </div>
  </div>
+<!-- ===== Nút GHI CHÚ: góc phải dưới của phần đầu trang ===== -->
+<div class="nt" id="notes">
+ <div class="nt-act" id="ntAct">
+  <button type="button" id="ntNew"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Tạo ghi chú mới</button>
+  <button type="button" id="ntList"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Danh sách ghi chú</button>
+  <button type="button" class="del" id="ntDel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Xoá ghi chú</button>
+ </div>
+ <button type="button" class="nt-main" id="ntMain" aria-label="Ghi chú" aria-expanded="false" aria-controls="ntAct">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+  <span class="nt-label">GHI CHÚ</span>
+ </button>
+</div>
 </section>
 
 <!-- ===== B. GIỚI THIỆU ===== -->
@@ -183,7 +195,7 @@
    <svg viewBox="0 0 2400 120" preserveAspectRatio="none"><path fill="rgba(255,255,255,.08)" d="M0 60 C200 20 400 100 600 60 S1000 100 1200 60 S1600 100 1800 60 S2200 100 2400 60 V120 H0Z"/></svg>
   </div>
   <div class="wrap ft-in">
-   <a class="logo f" href="#home" aria-label="Hà Trần Minh Trí – về đầu trang"><span class="l1">MINH</span> <span class="l2">TR<span class="i">I</span></span><i class="lc" aria-hidden="true">LcSt</i></a>
+   <a class="logo f" href="#home" aria-label="Hà Trần Minh Trí – về đầu trang"><span class="l1">MINH</span> <span class="l2">TR<span class="i">I</span></span></a>
    <p>Đây là website cá nhân của Hà Trần Minh Trí, nơi lưu trữ và chia sẻ kiến thức, tài liệu học tập.</p>
    <ul class="soc">
     <li><a href="mailto:tri.htm.68cdt@ntu.edu.vn" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></a></li>
@@ -355,7 +367,6 @@ if("IntersectionObserver" in window)new IntersectionObserver((es,o)=>{if(es[0].i
  <svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M18 15l-6-6-6 6"/></svg>
 </a>
 
-<script src="clock.js"></script>
 <script>
 /* ... (giữ nguyên các đoạn mã JavaScript khác của bạn ở đây) ... */
 
@@ -373,6 +384,102 @@ window.addEventListener("scroll", () => {
  if (window.scrollY > 300) { btp.classList.add("show"); } 
  else { btp.classList.remove("show"); }
 }, { passive: true });
+</script>
+
+<!-- ===== Hộp thoại GHI CHÚ ===== -->
+<div class="nm" id="nm" role="dialog" aria-modal="true" aria-labelledby="nmT" aria-hidden="true" data-mode="create">
+ <div class="nm-box">
+  <div class="nm-h"><h3 id="nmT">Tạo ghi chú mới</h3><button type="button" class="nm-x" id="nmX" aria-label="Đóng">✕</button></div>
+  <div class="nm-b">
+   <div class="nm-ed">
+    <textarea id="nmTxt" maxlength="2000" placeholder="Viết ghi chú của bạn..." aria-label="Nội dung ghi chú"></textarea>
+    <div class="row"><small id="nmCnt">0/2000</small><button type="button" class="btn sm" id="nmSave">Lưu ghi chú</button></div>
+   </div>
+   <p class="note" id="nmMsg" role="status" aria-live="polite"></p>
+   <div class="nm-tools"><button type="button" class="rm" id="nmAll">Xoá tất cả</button></div>
+   <ul class="nm-list" id="nmList"></ul>
+  </div>
+ </div>
+</div>
+
+<script>
+/* ===== GHI CHÚ: lưu trong localStorage của trình duyệt (khóa "ghichu_notes"), có ngày giờ viết =====
+   Dữ liệu chỉ nằm trên thiết bị/trình duyệt này, không gửi lên máy chủ hay GitHub. */
+(function () {
+  var KEY = "ghichu_notes";
+  var $ = function (s) { return document.querySelector(s); };
+  var box = $("#notes"), main = $("#ntMain"), m = $("#nm"), txt = $("#nmTxt"), cnt = $("#nmCnt"),
+      msgEl = $("#nmMsg"), list = $("#nmList"), allBtn = $("#nmAll"), title = $("#nmT");
+  var lastFocus = null, allTimer = 0;
+  function load() { try { var a = JSON.parse(localStorage.getItem(KEY) || "[]"); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function save(a) { try { localStorage.setItem(KEY, JSON.stringify(a)); return true; } catch (e) { return false; } }
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function fmt(iso) { var d = new Date(iso); return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear() + " " + pad(d.getHours()) + ":" + pad(d.getMinutes()); }
+  function say(t, ok) { msgEl.textContent = t; msgEl.className = "note" + (t ? (ok ? " nm-ok" : " nm-err") : ""); }
+  function setOpen(v) { box.classList.toggle("open", v); main.setAttribute("aria-expanded", v ? "true" : "false"); }
+
+  function render() {
+    var a = load().sort(function (x, y) { return x.created < y.created ? 1 : -1; });
+    list.innerHTML = "";
+    allBtn.hidden = !a.length;
+    if (!a.length) { var e = document.createElement("li"); e.className = "nm-empty"; e.textContent = "Chưa có ghi chú nào."; list.appendChild(e); return; }
+    a.forEach(function (n) {
+      var li = document.createElement("li"), t = document.createElement("time"), p = document.createElement("p"), b = document.createElement("button");
+      li.className = "nm-it"; li.setAttribute("data-id", n.id);
+      t.setAttribute("datetime", n.created); t.textContent = "Viết lúc " + fmt(n.created);
+      p.textContent = n.text;
+      b.type = "button"; b.className = "rm"; b.textContent = "Xoá"; b.setAttribute("data-id", n.id); b.setAttribute("aria-label", "Xoá ghi chú viết lúc " + fmt(n.created));
+      li.appendChild(t); li.appendChild(p); li.appendChild(b); list.appendChild(li);
+    });
+  }
+  function openM(mode) {
+    m.setAttribute("data-mode", mode);
+    title.textContent = { create: "Tạo ghi chú mới", list: "Danh sách ghi chú", del: "Xoá ghi chú" }[mode === "delete" ? "del" : mode];
+    say(""); allBtn.textContent = "Xoá tất cả"; render();
+    lastFocus = main; setOpen(false);
+    m.classList.add("show"); m.setAttribute("aria-hidden", "false");
+    (mode === "create" ? txt : $("#nmX")).focus();
+  }
+  function closeM() { m.classList.remove("show"); m.setAttribute("aria-hidden", "true"); if (lastFocus) lastFocus.focus(); }
+
+  main.addEventListener("click", function () { setOpen(!box.classList.contains("open")); });
+  $("#ntNew").addEventListener("click", function () { openM("create"); });
+  $("#ntList").addEventListener("click", function () { openM("list"); });
+  $("#ntDel").addEventListener("click", function () { openM("delete"); });
+  $("#nmX").addEventListener("click", closeM);
+  m.addEventListener("click", function (e) { if (e.target === m) closeM(); });
+  document.addEventListener("click", function (e) { if (!box.contains(e.target)) setOpen(false); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (m.classList.contains("show")) closeM(); else setOpen(false);
+  });
+
+  txt.addEventListener("input", function () { cnt.textContent = txt.value.length + "/2000"; });
+  txt.addEventListener("keydown", function (e) { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) $("#nmSave").click(); });
+  $("#nmSave").addEventListener("click", function () {
+    var t = txt.value.trim();
+    if (!t) { say("Hãy viết nội dung ghi chú trước khi lưu."); txt.focus(); return; }
+    var a = load();
+    a.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), text: t, created: new Date().toISOString() });
+    if (!save(a)) { say("Không lưu được: trình duyệt đang chặn lưu dữ liệu."); return; }
+    txt.value = ""; cnt.textContent = "0/2000"; render(); say("Đã lưu ghi chú.", true); txt.focus();
+  });
+  list.addEventListener("click", function (e) {
+    var b = e.target.closest(".rm"); if (!b) return;
+    var li = b.closest(".nm-it"), id = b.getAttribute("data-id");
+    li.classList.add("out");
+    setTimeout(function () { save(load().filter(function (n) { return n.id !== id; })); render(); say("Đã xoá ghi chú.", true); }, 250);
+  });
+  allBtn.addEventListener("click", function () {
+    if (allBtn.getAttribute("data-ask") !== "1") {
+      allBtn.setAttribute("data-ask", "1"); allBtn.textContent = "Bấm lần nữa để xoá tất cả";
+      clearTimeout(allTimer); allTimer = setTimeout(function () { allBtn.removeAttribute("data-ask"); allBtn.textContent = "Xoá tất cả"; }, 4000);
+      return;
+    }
+    clearTimeout(allTimer); allBtn.removeAttribute("data-ask");
+    if (save([])) { render(); say("Đã xoá tất cả ghi chú.", true); } else say("Không xoá được: trình duyệt đang chặn lưu dữ liệu.");
+  });
+})();
 </script>
 </body>
 </html>
