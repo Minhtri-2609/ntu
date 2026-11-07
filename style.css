@@ -342,3 +342,14 @@ html[data-theme=dark] .nm-ok{color:#6ee7b7}html[data-theme=dark] .nm-err{color:#
 .nm[data-mode=create] .nm-it{grid-template-columns:minmax(0,1fr)}
 .nm:not([data-mode=create]) .nm-ed{display:none}
 @keyframes nin{from{opacity:0;transform:translateY(-8px)}}
+.avatar{
+  display:block;
+  width:160px;
+  height:160px;
+  margin:0 auto 16px;
+  border-radius:50%;
+  object-fit:cover;
+  object-position:right top;
+  border:4px solid var(--card);
+  box-shadow:0 0 0 3px var(--cyan),0 8px 20px rgba(11,31,68,.2)
+}

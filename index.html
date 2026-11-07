@@ -33,7 +33,7 @@
     <li><a href="#contact">Liên hệ</a></li>
    </ul>
   </nav>
- <div class="sp" id="sp" hidden><div class="wrap"><input id="sq" type="search" placeholder="Tìm tài liệu, môn học, bài viết, dự án..." aria-label="Tìm kiếm trên website" autocomplete="off"><ul id="sr" aria-live="polite"></ul></div></div>
+ <div class="sp" id="sp" hidden><div class="wrap"><input id="sq" type="search" placeholder="Tài liệu, môn học, bài viết, dự án..." aria-label="Tìm kiếm trên website" autocomplete="off"><ul id="sr" aria-live="polite"></ul></div></div>
 </header>
 
 <main>
@@ -86,21 +86,32 @@
 <section id="about">
  <div class="wrap">
   <h2>Giới thiệu bản thân</h2>
-  <p class="lead">Một sinh viên đang học để hiểu cách phần cứng, phần mềm và cơ khí cùng tạo nên những hệ thống thông minh.</p>
+  <p class="lead">Là sinh viên đang học tại Trường Đại học Nha Trang. Học tập để hiểu cách phần cứng, phần mềm và cơ khí cùng tạo nên những hệ thống thông minh.</p>
   <div class="about">
-   <div class="panel">
-    <h3>Thông tin học tập</h3>
+<div class="panel">
+    <!-- 1. ĐẶT ẢNH LÊN ĐẦU và thêm style float: right -->
+    <img class="avatar" src="minhtri.jpg" alt="Ảnh của Hà Trần Minh Trí" style="float: right; margin-left: 20px; margin-bottom: 10px;">
+    
+    <!-- 2. NỘI DUNG CHỮ ĐỂ BÌNH THƯỜNG Ở DƯỚI ẢNH -->
+    <h3>Thông tin của Trí</h3>
     <ul>
-     <li>Trường: Đại học Nha Trang (NTU)</li>
-     <li>Khóa: K68</li>
-     <li>Ngành: Kỹ thuật Cơ điện tử</li>
-     <li>Chuyên ngành: Hệ thống nhúng và IoT</li>
+        <li>Trường: Đại học Nha Trang (NTU)</li>
+        <li>MSSV: 68133511</li>
+        <li>Khóa: K68</li>
+        <li>Ngành: Kỹ thuật Cơ điện tử</li>
+        <li>Chuyên ngành: Hệ thống nhúng và IoT</li>
+        <li>Khoa/Viện: Trường Kỹ thuật và Công nghệ</li>
     </ul>
-    <p style="margin-top:14px;color:var(--mut)">Mình thích tìm hiểu công nghệ, điện tử, lập trình và các hệ thống thông minh. Định hướng của mình là học chắc nền tảng, thực hành qua các dự án nhỏ và dần đi sâu vào nghiên cứu.</p>
-   </div>
-   <div class="panel">
+    
+    <!-- Đoạn văn bản sẽ tự động tràn sang phải lấp đầy khoảng trống -->
+    <p style="margin-top:14px; color:var(--mut);">Trí thích tìm hiểu công nghệ, điện tử, lập trình và các hệ thống thông minh. Định hướng của Trí là học chắc nền tảng, thực hành qua các dự án nhỏ và dần đi sâu vào nghiên cứu.</p>
+    
+    <!-- Dòng này để xóa float, đảm bảo khung panel bao trọn nội dung -->
+    <div style="clear: both;"></div>
+</div>   
+<div class="panel">
     <h3>Mong muốn chia sẻ</h3>
-    <p style="color:var(--mut)">Mình muốn tập hợp tài liệu và kiến thức hữu ích thành một thư viện mở, cập nhật dần theo quá trình học, để các bạn sinh viên khóa sau có thể tham khảo.</p>
+    <p style="color:var(--mut)">Trí muốn tổng hợp tài liệu và kiến thức hữu ích thành một thư viện mở, được update qua theo quá trình học, để các bạn sinh viên cùng khoá hoặc là khóa sau có thể tham khảo.</p>
     <h3 style="margin-top:16px">Lĩnh vực quan tâm và đang học</h3>
     <div class="chips">
      <span>Electronics</span><span>Embedded Systems</span><span>Internet of Things (IoT)</span><span>C/C++ Programming</span><span>Microcontrollers</span><span>Automation</span><span>Technical Documentation</span>
@@ -167,18 +178,16 @@
     <h3>Hà Trần Minh Trí</h3>
     <ul class="links" style="margin-top:10px">
      <li><a href="mailto:tri.htm.68cdt@ntu.edu.vn"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#0e7490"/><rect x="8" y="11" width="22" height="16" rx="3" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 13l10 8 10-8" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg><span><strong>Email</strong><small>tri.htm.68cdt@ntu.edu.vn</small></span></a></li>
-     <li><a href="https://github.com/Minhtri-2609/" target="_blank" rel="noopener"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#24292f"/><svg x="7" y="7" width="24" height="24" viewBox="0 0 16 16"><path fill="#fff" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></svg><span><strong>GitHub</strong><small>github.com/Minhtri-2609</small></span></a></li>
-     <li><a href="https://www.facebook.com/share/1E6H6hMqB4/" target="_blank" rel="noopener"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#1877f2"/><svg x="7" y="7" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.6V13h2.7v8h3.2z"/></svg></svg><span><strong>Facebook</strong><small>Xem trang Facebook</small></span></a></li>
+     <li><a href="https://www.facebook.com/share/1E6H6hMqB4/" target="_blank" rel="noopener"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#1877f2"/><svg x="7" y="7" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.6V13h2.7v8h3.2z"/></svg></svg><span><strong>Facebook</strong><small>xue.lamthat.6706</small></span></a></li>
      <li><a href="https://www.instagram.com/tr1ssca?mdxt=NDF6YTg2eHIyOXhm" target="_blank" rel="noopener"><svg viewBox="0 0 38 38" aria-hidden="true"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#feda75"/><stop offset=".35" stop-color="#fa7e1e"/><stop offset=".6" stop-color="#d62976"/><stop offset="1" stop-color="#4f5bd5"/></linearGradient></defs><rect width="38" height="38" rx="9" fill="url(#ig)"/><rect x="9" y="9" width="20" height="20" rx="6" fill="none" stroke="#fff" stroke-width="2"/><circle cx="19" cy="19" r="4.6" fill="none" stroke="#fff" stroke-width="2"/><circle cx="25" cy="13" r="1.4" fill="#fff"/></svg><span><strong>Instagram</strong><small>@tr1ssca</small></span></a></li>
-    </ul>
-   </div>
+     <li><a href="https://x.com/trissca2609" target="_blank" rel="noopener"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#000000"/><g transform="translate(7, 7)"><path fill="#ffffff" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></g></svg><span><strong>X</strong><small>Minhtri2609</small></span></a></li>   </div>
    <form class="panel" id="form" novalidate>
     <label for="n">Họ và tên</label><input id="n" required>
     <label for="e">Email</label><input id="e" type="email" required>
     <label for="s">Chủ đề</label><input id="s" required>
     <label for="m">Nội dung tin nhắn</label><textarea id="m" rows="4" required></textarea>
     <button class="btn" type="submit">Gửi liên hệ</button>
-    <p class="note">Biểu mẫu này là giao diện minh họa, chưa kết nối máy chủ nên chưa gửi dữ liệu đi đâu.</p>
+    <p class="note">Biểu mẫu này là giao diện minh hoạ. Chưa kết nối máy chủ nên chưa thể gửi liên hệ.</p>
    </form>
   </div>
  </div>
@@ -198,12 +207,12 @@
    <p>Đây là website cá nhân của Hà Trần Minh Trí, nơi lưu trữ và chia sẻ kiến thức, tài liệu học tập.</p>
    <ul class="soc">
     <li><a href="mailto:tri.htm.68cdt@ntu.edu.vn" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></a></li>
-    <li><a href="https://github.com/Minhtri-2609/" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
     <li><a href="https://www.facebook.com/share/1E6H6hMqB4/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.6V13h2.7v8h3.2z"/></svg></a></li>
     <li><a href="https://www.instagram.com/tr1ssca?mdxt=NDF6YTg2eHIyOXhm" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="7" r="1.2" fill="currentColor"/></svg></a></li>
+    <li><a href="https://x.com/trissca2609" target="_blank" rel="noopener" aria-label="Twitter" title="Twitter"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="transparent"/><g transform="translate(7, 7)"><path fill="#ffffff" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></g></svg></a></li>
    </ul>
-  </div>
- </div>
+  </div> 
+ </div> 
  <div class="fb">
   <div class="wrap">
    <p>© 2026 Lâm Thất - WEBSITE này dành cho cá nhân, vui lòng liên hệ để gỡ nội dung nếu liên quan. Xin cảm ơn!</p>
