@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Tổng quan về Kỹ thuật Cơ điện tử: các lĩnh vực tích hợp, nguyên lý hoạt động, ứng dụng, kỹ năng và lộ trình học tập.">
+        <meta name="theme-color" content="#0b1f44">
+        <title>
+            Tổng quan về ngành Kỹ thuật Cơ điện tử | Hà Lâm
+        </title>
+        
+ <style>
+
+:root {
+    color-scheme: light;
+    --page-bg: #f3f7fc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --muted: #56657f;
+    --heading: #0b1f44;
+    --line: #dbe5f3;
+    --blue: #1d4ed8;
+    --cyan: #06b6d4;
+    --purple: #6d28d9;
+    --shadow: 0 16px 45px rgba(11, 31, 68, 0.09);
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg: #0b1220;
+    --surface: #121c31;
+    --text: #e6edf7;
+    --muted: #9fb0cc;
+    --heading: #e6edf7;
+    --line: #25344f;
+    --shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+}
+
+body {
+    min-width: 320px;
+    overflow-x: hidden;
+    background: var(--page-bg);
+    color: var(--text);
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.75;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 3px;
+}
+
+.progress-track {
+    position: fixed;
+    z-index: 100;
+    inset: 0 0 auto;
+    height: 4px;
+    background: transparent;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--cyan), #a78bfa);
+    transition: width 0.08s linear;
+}
+
+.site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    backdrop-filter: blur(16px);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: min(1180px, 92%);
+    min-height: 68px;
+    margin: 0 auto;
+}
+
+.brand {
+    font-family: "Arial Black", "Segoe UI", sans-serif;
+    font-size: 1.32rem;
+    font-weight: 900;
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+}
+
+.brand span:first-child {
+    color: var(--heading);
+}
+
+.brand span:last-child {
+    color: var(--blue);
+}
+
+.brand span:first-child {
+    margin-right: 0.2em;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-link,
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 13px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 650;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.header-link:hover,
+.icon-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--cyan);
+}
+
+.article-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-height: clamp(360px, 48vw, 590px);
+    overflow: hidden;
+    background: #07152f;
+}
+
+.article-hero::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(4, 13, 35, 0.95), rgba(4, 13, 35, 0.54) 58%, rgba(4, 13, 35, 0.08)), linear-gradient(0deg, rgba(4, 13, 35, 0.62), transparent 55%);
+    content: "";
+}
+
+.article-hero img {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-content {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    padding: 72px 0 66px;
+    color: #fff;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 5px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #c7f7ff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+}
+
+.hero-content h1 {
+    max-width: 850px;
+    margin-bottom: 16px;
+    font-size: clamp(2.3rem, 5.5vw, 4.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+}
+
+.hero-summary {
+    max-width: 720px;
+    color: #d9e9ff;
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+}
+
+.hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 24px;
+    color: #c1d6f5;
+    font-size: 0.88rem;
+}
+
+.hero-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.article-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 36px;
+    width: min(1180px, 92%);
+    margin: 52px auto 88px;
+    align-items: start;
+}
+
+.article-content {
+    min-width: 0;
+    padding: clamp(22px, 4vw, 48px);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.article-content p {
+    margin: 0 0 18px;
+    color: var(--muted);
+}
+
+.article-content h2 {
+    margin: 54px 0 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    color: var(--heading);
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    line-height: 1.3;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin: 28px 0 10px;
+    color: var(--heading);
+    font-size: 1.18rem;
+    line-height: 1.4;
+}
+
+.article-content ul,
+.article-content ol {
+    margin: 0 0 20px 22px;
+    color: var(--muted);
+}
+
+.article-content li {
+    margin: 7px 0;
+    padding-left: 4px;
+}
+
+.article-content strong {
+    color: var(--heading);
+}
+
+.lead-paragraph {
+    color: var(--heading) !important;
+    font-size: 1.13rem;
+    line-height: 1.8;
+}
+
+.callout {
+    margin: 26px 0;
+    padding: 20px 22px;
+    border-left: 4px solid var(--cyan);
+    border-radius: 0 14px 14px 0;
+    background: linear-gradient(120deg, rgba(29, 78, 216, 0.08), rgba(6, 182, 212, 0.08));
+}
+
+.callout p:last-child {
+    margin-bottom: 0;
+}
+
+.key-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+}
+
+.key-card {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: var(--page-bg);
+}
+
+.key-card .number {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    color: #fff;
+    font-size: 0.86rem;
+    font-weight: 800;
+}
+
+.key-card h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+
+.key-card p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.diagram {
+    margin: 28px 0;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--page-bg);
+}
+
+.diagram-title {
+    margin-bottom: 16px;
+    color: var(--heading);
+    font-weight: 750;
+}
+
+.flow-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.flow-node {
+    display: grid;
+    place-items: center;
+    min-width: 112px;
+    min-height: 72px;
+    padding: 10px;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--heading);
+    text-align: center;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.flow-node small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.flow-arrow {
+    color: var(--cyan);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    margin: 22px 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+}
+
+th,
+td {
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: var(--page-bg);
+    color: var(--heading);
+    font-size: 0.9rem;
+}
+
+td {
+    color: var(--muted);
+    font-size: 0.91rem;
+}
+
+tr:last-child td {
+    border-bottom: 0;
+}
+
+.code-block {
+    overflow-x: auto;
+    margin: 20px 0;
+    padding: 18px 20px;
+    border: 1px solid rgba(100, 160, 255, 0.2);
+    border-radius: 14px;
+    background: #07152b;
+    color: #d8f7ff;
+    font: 0.91rem/1.7 Consolas, "Courier New", monospace;
+    white-space: pre;
+}
+
+.toc {
+    position: sticky;
+    top: 94px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.toc h2 {
+    margin-bottom: 12px;
+    color: var(--heading);
+    font-size: 1.05rem;
+}
+
+.toc ol {
+    display: grid;
+    gap: 7px;
+    margin-left: 19px;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.toc a:hover,
+.references a:hover {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.toc-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--line);
+}
+
+.small-action {
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--page-bg);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.references {
+    margin-top: 22px;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--page-bg);
+}
+
+.references h3 {
+    margin-top: 0;
+}
+
+.references ol {
+    margin-bottom: 0;
+}
+
+.references a {
+    overflow-wrap: anywhere;
+    color: var(--blue);
+}
+
+.article-footer {
+    padding: 34px 0;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+}
+
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.footer-inner a {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.back-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    color: #fff;
+    font-size: 1.2rem;
+    box-shadow: 0 8px 24px rgba(29, 78, 216, 0.27);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+.back-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (max-width: 900px) {
+    .article-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toc {
+        position: static;
+        order: -1;
+    }
+}
+
+@media (max-width: 620px) {
+    .header-inner {
+        min-height: 60px;
+    }
+
+    .header-link {
+        padding: 7px 10px;
+        font-size: 0.82rem;
+    }
+
+    .hero-content {
+        padding: 55px 0 48px;
+    }
+
+    .article-layout {
+        margin-top: 28px;
+    }
+
+    .article-content {
+        padding: 21px 18px;
+        border-radius: 16px;
+    }
+
+    .key-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .diagram {
+        padding: 15px;
+    }
+
+    .flow-row {
+        flex-direction: column;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .flow-node {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+ </style>
+
+    </head>
+    <body>
+        <div class="progress-track" aria-hidden="true">
+            <div class="progress-bar" id="progressBar">
+            </div>
+        </div>
+        <header class="site-header">
+            <div class="header-inner">
+                <a class="brand" href="../index.html" aria-label="Hà Lâm – về trang chủ">
+                    <span>
+                        HÀ
+                    </span>
+                    <span>
+                        LÂM
+                    </span>
+                </a>
+                <div class="header-actions">
+                    <a class="header-link" href="../index.html#articles">
+                        ← Góc kiến thức
+                    </a>
+                    <button class="icon-button" id="themeToggle" type="button" aria-label="Chuyển giao diện">
+                        ☾ Giao diện tối
+                    </button>
+                </div>
+            </div>
+        </header>
+        <section class="article-hero">
+            <img src="images/mechatronics-overview.webp" alt="Cánh tay robot công nghiệp, bộ truyền cơ khí và mạch điều khiển trong một hệ thống cơ điện tử" width="1600" height="900" fetchpriority="high">
+            <div class="hero-content">
+                <span class="eyebrow">
+                    Góc kiến thức · Cơ điện tử
+                </span>
+                <h1>
+                    Tổng quan về ngành Kỹ thuật Cơ điện tử
+                </h1>
+                <p class="hero-summary">
+                    Tìm hiểu cách cơ khí, điện – điện tử, công nghệ máy tính và điều khiển phối hợp để tạo nên máy móc, robot và hệ thống thông minh.
+                </p>
+                <div class="hero-meta">
+                    <span>
+                        ◷ 9–12 phút đọc
+                    </span>
+                    <span>
+                        ▣ Cập nhật: 08/11/2026
+                    </span>
+                    <span>
+                        ✦ Nội dung học tập
+                    </span>
+                    <span>
+                        ✎ Compiled by Tri
+                    </span>
+
+                </div>
+            </div>
+        </section>
+        <main class="article-layout">
+            <article class="article-content">
+                <p class="lead-paragraph">
+                    Kỹ thuật Cơ điện tử (Mechatronics Engineering) là lĩnh vực liên ngành, tập trung vào việc thiết kế và tích hợp hệ thống cơ khí với điện – điện tử, máy tính, phần mềm và kỹ thuật điều khiển. Thay vì chỉ tạo ra một bộ phận cơ khí hoặc một mạch điện riêng lẻ, kỹ sư cơ điện tử nhìn toàn bộ thiết bị như một hệ thống thống nhất có thể cảm nhận, xử lý và hành động.
+                </p>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Cách nhớ nhanh:
+                        </strong>
+                         Cơ khí tạo chuyển động và kết cấu; điện – điện tử cung cấp năng lượng và giao tiếp; cảm biến thu nhận trạng thái; bộ điều khiển xử lý thông tin; phần mềm quyết định hệ thống cần làm gì.
+                    </p>
+                </div>
+                <h2 id="what">
+                    1. Kỹ thuật Cơ điện tử là gì?
+                </h2>
+                <p>
+                    Đây không phải phép cộng cơ học của nhiều môn học, mà là cách tiếp cận thiết kế theo hướng tích hợp. Một sản phẩm cơ điện tử thường có kết cấu cơ khí, mạch điện tử, bộ xử lý, cảm biến, cơ cấu chấp hành và thuật toán điều khiển được lựa chọn để cùng đáp ứng một mục tiêu.
+                </p>
+                <p>
+                    Ví dụ, một cánh tay robot không chỉ là các thanh nối và khớp quay. Nó còn cần động cơ, bộ truyền, cảm biến hoặc phương pháp ước lượng vị trí, mạch công suất, bộ điều khiển và chương trình phối hợp các khớp. Nếu một phần thay đổi, các phần còn lại có thể phải được thiết kế lại để bảo đảm toàn hệ thống hoạt động ổn định.
+                </p>
+                <div class="key-grid">
+                    <div class="key-card">
+                        <span class="number">
+                            01
+                        </span>
+                        <h3>
+                            Cơ khí
+                        </h3>
+                        <p>
+                            Kết cấu, chi tiết máy, động học, vật liệu, truyền động và chế tạo.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            02
+                        </span>
+                        <h3>
+                            Điện – điện tử
+                        </h3>
+                        <p>
+                            Mạch điện, nguồn, cảm biến, mạch công suất và giao tiếp phần cứng.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            03
+                        </span>
+                        <h3>
+                            Máy tính và phần mềm
+                        </h3>
+                        <p>
+                            Vi điều khiển, hệ thống nhúng, lập trình và xử lý dữ liệu.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            04
+                        </span>
+                        <h3>
+                            Điều khiển
+                        </h3>
+                        <p>
+                            Mô hình hóa, phản hồi, điều khiển động cơ và tối ưu vận hành.
+                        </p>
+                    </div>
+                </div>
+                <h2 id="operation">
+                    2. Một hệ thống cơ điện tử hoạt động như thế nào?
+                </h2>
+                <p>
+                    Một vòng điều khiển điển hình bắt đầu từ đối tượng vật lý. Cảm biến ghi nhận đại lượng như vị trí, tốc độ, nhiệt độ hoặc lực; tín hiệu được đưa đến bộ điều khiển. Chương trình so sánh trạng thái đo được với giá trị mong muốn, tính toán lệnh điều khiển rồi gửi tín hiệu đến mạch công suất và cơ cấu chấp hành.
+                </p>
+                <div class="diagram">
+                    <div class="diagram-title">
+                        Sơ đồ khối khái quát của hệ thống có phản hồi
+                    </div>
+                    <div class="flow-row">
+                        <div class="flow-node">
+                            Giá trị đặt
+                            <small>
+                                Setpoint
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Bộ điều khiển
+                            <small>
+                                MCU / PLC
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Driver và động cơ
+                            <small>
+                                Actuator
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Đối tượng cơ khí
+                            <small>
+                                Plant
+                            </small>
+                        </div>
+                    </div>
+                    <p style="margin:16px 0 0;text-align:center;font-size:.9rem;">
+                        Cảm biến đo trạng thái và đưa tín hiệu phản hồi trở lại bộ điều khiển.
+                    </p>
+                </div>
+                <p>
+                    Trong thực tế, hệ thống còn có thể cần khối điều hòa tín hiệu, chuyển đổi tương tự – số, mạch bảo vệ, giao tiếp truyền thông và cơ chế xử lý lỗi. Không phải sản phẩm nào cũng có đầy đủ mọi khối; kiến trúc phụ thuộc vào yêu cầu kỹ thuật và môi trường hoạt động.
+                </p>
+                <h2 id="fields">
+                    3. Những mảng kiến thức chính
+                </h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Mảng kiến thức
+                                </th>
+                                <th>
+                                    Nội dung thường gặp
+                                </th>
+                                <th>
+                                    Vai trò trong hệ thống
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Cơ học và thiết kế
+                                </td>
+                                <td>
+                                    Tĩnh học, động lực học, chi tiết máy, CAD
+                                </td>
+                                <td>
+                                    Tạo kết cấu và mô hình chuyển động
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Mạch điện – điện tử
+                                </td>
+                                <td>
+                                    Mạch tương tự, số, điện tử công suất
+                                </td>
+                                <td>
+                                    Đo lường, cấp nguồn và điều khiển tải
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Lập trình và nhúng
+                                </td>
+                                <td>
+                                    C/C++, vi điều khiển, giao tiếp ngoại vi
+                                </td>
+                                <td>
+                                    Thực thi logic và kết nối phần cứng
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Điều khiển tự động
+                                </td>
+                                <td>
+                                    Phản hồi, PID, mô hình hệ thống
+                                </td>
+                                <td>
+                                    Điều chỉnh hành vi và độ chính xác
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tích hợp hệ thống
+                                </td>
+                                <td>
+                                    Cảm biến, cơ cấu chấp hành, robot, PLC, IoT
+                                </td>
+                                <td>
+                                    Kết nối các khối thành sản phẩm hoàn chỉnh
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Chương trình đào tạo Kỹ thuật Cơ điện tử của Đại học Nha Trang thể hiện rõ tính tích hợp qua các học phần như Nhập môn ngành Cơ điện tử, Kỹ thuật điện, Kỹ thuật điện tử, Lý thuyết điều khiển, Kỹ thuật ứng dụng vi điều khiển, Cảm biến và ứng dụng, PLC, Mạng truyền thông công nghiệp và Kỹ thuật robot. Trường cũng công bố chương trình Hệ thống nhúng và IoT thuộc ngành Kỹ thuật Cơ điện tử (mã ngành 7520114). Danh sách học phần có thể được điều chỉnh theo khóa và phiên bản chương trình, vì vậy người học nên đối chiếu đề cương chính thức của khóa mình.
+                </p>
+                <h2 id="applications">
+                    4. Ứng dụng của cơ điện tử
+                </h2>
+                <ul>
+                    <li>
+                        <strong>
+                            Sản xuất công nghiệp:
+                        </strong>
+                         robot gắp đặt, dây chuyền tự động, máy CNC, hệ thống kiểm tra và phân loại sản phẩm.
+                    </li>
+                    <li>
+                        <strong>
+                            Giao thông và ô tô:
+                        </strong>
+                         hệ thống điều khiển động cơ, hỗ trợ phanh, cơ cấu chấp hành điện và các cụm điều khiển điện tử.
+                    </li>
+                    <li>
+                        <strong>
+                            Nông nghiệp và thủy sản:
+                        </strong>
+                         giám sát môi trường, điều khiển bơm/quạt, thiết bị phân loại và dây chuyền chế biến.
+                    </li>
+                    <li>
+                        <strong>
+                            Y sinh và thiết bị thông minh:
+                        </strong>
+                         thiết bị hỗ trợ vận động, hệ thống định vị chính xác, máy móc có cảm biến và điều khiển.
+                    </li>
+                    <li>
+                        <strong>
+                            Sản phẩm tiêu dùng:
+                        </strong>
+                         máy giặt, điều hòa, thiết bị gia dụng tự động và các cơ cấu có khả năng tự điều chỉnh.
+                    </li>
+                </ul>
+                <h2 id="skills">
+                    5. Người học cần rèn luyện những kỹ năng nào?
+                </h2>
+                <p>
+                    Điểm quan trọng của cơ điện tử là khả năng kết nối kiến thức. Người học không nhất thiết phải trở thành chuyên gia sâu ở mọi lĩnh vực ngay từ đầu, nhưng cần hiểu các khối ảnh hưởng lẫn nhau như thế nào và biết cách kiểm chứng bằng mô hình, phép đo và thử nghiệm.
+                </p>
+                <ul>
+                    <li>
+                        <strong>
+                            Nền tảng:
+                        </strong>
+                         toán, vật lý, cơ học, mạch điện và tư duy lập trình.
+                    </li>
+                    <li>
+                        <strong>
+                            Thực hành:
+                        </strong>
+                         đọc datasheet, sử dụng thiết bị đo, lắp mạch, kiểm tra tín hiệu và ghi chép kết quả.
+                    </li>
+                    <li>
+                        <strong>
+                            Thiết kế:
+                        </strong>
+                         vẽ CAD, đọc sơ đồ điện, xây dựng mô hình và lựa chọn linh kiện theo thông số.
+                    </li>
+                    <li>
+                        <strong>
+                            Tích hợp:
+                        </strong>
+                         kết nối cảm biến – vi điều khiển – driver – động cơ, rồi kiểm tra toàn hệ thống.
+                    </li>
+                    <li>
+                        <strong>
+                            Làm việc nhóm:
+                        </strong>
+                         trình bày quyết định kỹ thuật, quản lý phiên bản mã nguồn và viết tài liệu.
+                    </li>
+                </ul>
+                <h2 id="roadmap">
+                    6. Lộ trình học tập gợi ý
+                </h2>
+                <ol>
+                    <li>
+                        <strong>
+                            Giai đoạn nền tảng:
+                        </strong>
+                         học chắc toán, vật lý, cơ học cơ bản, điện tử và lập trình C/C++.
+                    </li>
+                    <li>
+                        <strong>
+                            Giai đoạn phần cứng:
+                        </strong>
+                         thực hành mạch số, cảm biến, vi điều khiển, timer, PWM và các giao tiếp phổ biến.
+                    </li>
+                    <li>
+                        <strong>
+                            Giai đoạn điều khiển:
+                        </strong>
+                         tìm hiểu động cơ, mô hình chuyển động, điều khiển vòng kín và PID ở mức phù hợp.
+                    </li>
+                    <li>
+                        <strong>
+                            Giai đoạn tích hợp:
+                        </strong>
+                         làm một dự án nhỏ có cảm biến, cơ cấu chấp hành, phần mềm và tài liệu kiểm thử.
+                    </li>
+                    <li>
+                        <strong>
+                            Giai đoạn chuyên sâu:
+                        </strong>
+                         lựa chọn hướng robot, tự động hóa, hệ thống nhúng, IoT, thiết kế máy hoặc nghiên cứu.
+                    </li>
+                </ol>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Ý tưởng dự án nhập môn:
+                        </strong>
+                         một bàn xoay có điều khiển tốc độ, bộ đo nhiệt độ – độ ẩm có cảnh báo, hoặc mô hình băng tải đếm sản phẩm bằng cảm biến. Hãy bắt đầu với yêu cầu nhỏ, xác định tiêu chí đo được và ghi lại kết quả kiểm thử.
+                    </p>
+                </div>
+                <h2 id="career">
+                    7. Hướng nghề nghiệp và kết luận
+                </h2>
+                <p>
+                    Tùy nền tảng và sở thích, người học có thể phát triển theo các hướng như thiết kế cơ khí tích hợp, kỹ thuật tự động hóa, robot công nghiệp, điều khiển – truyền động, phát triển firmware và hệ thống nhúng, kiểm thử thiết bị, tích hợp hệ thống hoặc nghiên cứu phát triển sản phẩm.
+                </p>
+                <p>
+                    Không có một lộ trình duy nhất phù hợp với tất cả. Cách học hiệu quả là kết hợp lý thuyết với dự án vừa sức, đo đạc được và có tài liệu kỹ thuật rõ ràng. Một sản phẩm chạy được là bước đầu; hiểu tại sao nó chạy ổn định, giới hạn nằm ở đâu và cách kiểm thử mới là nền tảng để tiến xa hơn.
+                </p>
+                <section class="references" id="references">
+                    <h3>
+                        Tài liệu tham khảo
+                    </h3>
+                    <p>
+                        Nội dung được tổng hợp và diễn giải từ các nguồn dưới đây; phần trình bày, ví dụ và sơ đồ là nội dung biên soạn lại cho mục đích học tập.
+                    </p>
+                    <ol>
+                        <li>
+                            <a href="https://www.auckland.ac.nz/en/study/study-options/find-a-study-option/mechatronics-engineering.html" target="_blank" rel="noopener">
+                                The University of Auckland – Mechatronics Engineering
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://mech.ubc.ca/undergraduate/curriculum/program-options/mechatronics/" target="_blank" rel="noopener">
+                                University of British Columbia – Mechatronics
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.sydney.edu.au/engineering/study/study-areas/mechatronic-engineering.html" target="_blank" rel="noopener">
+                                The University of Sydney – Mechatronic Engineering
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://ctdt.ntu.edu.vn/chuongtrinhdt/56" target="_blank" rel="noopener">
+                                Trường Đại học Nha Trang – Chương trình đào tạo Kỹ thuật Cơ điện tử
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://ctdt.ntu.edu.vn/chuongtrinhdt/214" target="_blank" rel="noopener">
+                                Trường Đại học Nha Trang – Chương trình đào tạo Hệ thống nhúng và IoT
+                            </a>
+                            .
+                        </li>
+                    </ol>
+                </section>
+            </article>
+            <aside class="toc">
+                <h2>
+                    Trong bài viết
+                </h2>
+                <ol>
+                    <li>
+                        <a href="#what">
+                            Kỹ thuật Cơ điện tử là gì?
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#operation">
+                            Nguyên lý hoạt động
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#fields">
+                            Các mảng kiến thức
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#applications">
+                            Ứng dụng thực tế
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#skills">
+                            Kỹ năng cần rèn luyện
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#roadmap">
+                            Lộ trình học tập
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#career">
+                            Hướng nghề nghiệp
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#references">
+                            Tài liệu tham khảo
+                        </a>
+                    </li>
+                </ol>
+                <div class="toc-tools">
+                    <button class="small-action" type="button" id="copyLink">
+                        Sao chép liên kết
+                    </button>
+                    <button class="small-action" type="button" onclick="window.print()">
+                        In bài viết
+                    </button>
+                </div>
+            </aside>
+        </main>
+        <footer class="article-footer">
+            <div class="footer-inner">
+                <span>
+                    © 2026 Hà Lâm · Nội dung phục vụ mục đích học tập.
+                </span>
+                <a href="../index.html">
+                    Trở về trang chủ ↑
+                </a>
+            </div>
+        </footer>
+        <button class="back-top" id="backTop" type="button" aria-label="Cuộn lên đầu trang">
+            ↑
+        </button>
+        
+
+<script>
+(function () {
+    "use strict";
+
+    const root = document.documentElement;
+    const themeButton = document.getElementById("themeToggle");
+    const progressBar = document.getElementById("progressBar");
+    const backTop = document.getElementById("backTop");
+    const copyButton = document.getElementById("copyLink");
+    const article = document.querySelector(".article-content");
+
+    function applyTheme(theme) {
+        root.dataset.theme = theme;
+        themeButton.setAttribute("aria-pressed", String(theme === "dark"));
+        themeButton.textContent = theme === "dark" ? "☀ Giao diện sáng" : "☾ Giao diện tối";
+    }
+
+    let savedTheme = "light";
+    try {
+        savedTheme = localStorage.getItem("theme") || "light";
+    } catch (error) {
+        savedTheme = "light";
+    }
+    applyTheme(savedTheme);
+
+    themeButton.addEventListener("click", function () {
+        const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
+        try {
+            localStorage.setItem("theme", nextTheme);
+        } catch (error) {
+            // Trang vẫn đổi giao diện dù trình duyệt không cho lưu lựa chọn.
+        }
+    });
+
+    function updateProgress() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progressBar.style.width = Math.min(100, Math.max(0, progress)) + "%";
+        backTop.classList.toggle("is-visible", window.scrollY > 420);
+    }
+
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    updateProgress();
+
+    backTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    copyButton.addEventListener("click", async function () {
+        const originalText = copyButton.textContent;
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            copyButton.textContent = "Đã sao chép";
+        } catch (error) {
+            copyButton.textContent = "Không thể sao chép";
+        }
+        window.setTimeout(function () {
+            copyButton.textContent = originalText;
+        }, 1800);
+    });
+
+    const revealTargets = article.querySelectorAll("h2, .callout, .key-card, .diagram, .references");
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealTargets.forEach(function (element) {
+            element.classList.add("reveal");
+            revealObserver.observe(element);
+        });
+    }
+})();
+</script>
+
+
+    </body>
+</html>

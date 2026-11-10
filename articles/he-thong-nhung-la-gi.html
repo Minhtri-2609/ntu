@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Tìm hiểu hệ thống nhúng, cấu trúc phần cứng, firmware, vi điều khiển, thời gian thực, ứng dụng và lộ trình học.">
+        <meta name="theme-color" content="#0b1f44">
+        <title>
+            Hệ thống nhúng là gì? | Lâm Thất
+        </title>
+        
+ <style>
+
+:root {
+    color-scheme: light;
+    --page-bg: #f3f7fc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --muted: #56657f;
+    --heading: #0b1f44;
+    --line: #dbe5f3;
+    --blue: #1d4ed8;
+    --cyan: #06b6d4;
+    --purple: #6d28d9;
+    --shadow: 0 16px 45px rgba(11, 31, 68, 0.09);
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg: #0b1220;
+    --surface: #121c31;
+    --text: #e6edf7;
+    --muted: #9fb0cc;
+    --heading: #e6edf7;
+    --line: #25344f;
+    --shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+}
+
+body {
+    min-width: 320px;
+    overflow-x: hidden;
+    background: var(--page-bg);
+    color: var(--text);
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.75;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 3px;
+}
+
+.progress-track {
+    position: fixed;
+    z-index: 100;
+    inset: 0 0 auto;
+    height: 4px;
+    background: transparent;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--cyan), #a78bfa);
+    transition: width 0.08s linear;
+}
+
+.site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    backdrop-filter: blur(16px);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: min(1180px, 92%);
+    min-height: 68px;
+    margin: 0 auto;
+}
+
+.brand {
+    font-family: "Arial Black", "Segoe UI", sans-serif;
+    font-size: 1.32rem;
+    font-weight: 900;
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+}
+
+.brand span:first-child {
+    color: var(--heading);
+}
+
+.brand span:last-child {
+    color: var(--blue);
+}
+
+.brand span:first-child {
+    margin-right: 0.2em;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-link,
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 13px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 650;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.header-link:hover,
+.icon-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--cyan);
+}
+
+.article-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-height: clamp(360px, 48vw, 590px);
+    overflow: hidden;
+    background: #07152f;
+}
+
+.article-hero::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(4, 13, 35, 0.95), rgba(4, 13, 35, 0.54) 58%, rgba(4, 13, 35, 0.08)), linear-gradient(0deg, rgba(4, 13, 35, 0.62), transparent 55%);
+    content: "";
+}
+
+.article-hero img {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-content {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    padding: 72px 0 66px;
+    color: #fff;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 5px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #c7f7ff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+}
+
+.hero-content h1 {
+    max-width: 850px;
+    margin-bottom: 16px;
+    font-size: clamp(2.3rem, 5.5vw, 4.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+}
+
+.hero-summary {
+    max-width: 720px;
+    color: #d9e9ff;
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+}
+
+.hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 24px;
+    color: #c1d6f5;
+    font-size: 0.88rem;
+}
+
+.hero-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.article-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 36px;
+    width: min(1180px, 92%);
+    margin: 52px auto 88px;
+    align-items: start;
+}
+
+.article-content {
+    min-width: 0;
+    padding: clamp(22px, 4vw, 48px);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.article-content p {
+    margin: 0 0 18px;
+    color: var(--muted);
+}
+
+.article-content h2 {
+    margin: 54px 0 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    color: var(--heading);
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    line-height: 1.3;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin: 28px 0 10px;
+    color: var(--heading);
+    font-size: 1.18rem;
+    line-height: 1.4;
+}
+
+.article-content ul,
+.article-content ol {
+    margin: 0 0 20px 22px;
+    color: var(--muted);
+}
+
+.article-content li {
+    margin: 7px 0;
+    padding-left: 4px;
+}
+
+.article-content strong {
+    color: var(--heading);
+}
+
+.lead-paragraph {
+    color: var(--heading) !important;
+    font-size: 1.13rem;
+    line-height: 1.8;
+}
+
+.callout {
+    margin: 26px 0;
+    padding: 20px 22px;
+    border-left: 4px solid var(--cyan);
+    border-radius: 0 14px 14px 0;
+    background: linear-gradient(120deg, rgba(29, 78, 216, 0.08), rgba(6, 182, 212, 0.08));
+}
+
+.callout p:last-child {
+    margin-bottom: 0;
+}
+
+.key-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+}
+
+.key-card {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: var(--page-bg);
+}
+
+.key-card .number {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    color: #fff;
+    font-size: 0.86rem;
+    font-weight: 800;
+}
+
+.key-card h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+
+.key-card p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.diagram {
+    margin: 28px 0;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--page-bg);
+}
+
+.diagram-title {
+    margin-bottom: 16px;
+    color: var(--heading);
+    font-weight: 750;
+}
+
+.flow-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.flow-node {
+    display: grid;
+    place-items: center;
+    min-width: 112px;
+    min-height: 72px;
+    padding: 10px;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--heading);
+    text-align: center;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.flow-node small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.flow-arrow {
+    color: var(--cyan);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    margin: 22px 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+}
+
+th,
+td {
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: var(--page-bg);
+    color: var(--heading);
+    font-size: 0.9rem;
+}
+
+td {
+    color: var(--muted);
+    font-size: 0.91rem;
+}
+
+tr:last-child td {
+    border-bottom: 0;
+}
+
+.code-block {
+    overflow-x: auto;
+    margin: 20px 0;
+    padding: 18px 20px;
+    border: 1px solid rgba(100, 160, 255, 0.2);
+    border-radius: 14px;
+    background: #07152b;
+    color: #d8f7ff;
+    font: 0.91rem/1.7 Consolas, "Courier New", monospace;
+    white-space: pre;
+}
+
+.toc {
+    position: sticky;
+    top: 94px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.toc h2 {
+    margin-bottom: 12px;
+    color: var(--heading);
+    font-size: 1.05rem;
+}
+
+.toc ol {
+    display: grid;
+    gap: 7px;
+    margin-left: 19px;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.toc a:hover,
+.references a:hover {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.toc-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--line);
+}
+
+.small-action {
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--page-bg);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.references {
+    margin-top: 22px;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--page-bg);
+}
+
+.references h3 {
+    margin-top: 0;
+}
+
+.references ol {
+    margin-bottom: 0;
+}
+
+.references a {
+    overflow-wrap: anywhere;
+    color: var(--blue);
+}
+
+.article-footer {
+    padding: 34px 0;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+}
+
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.footer-inner a {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.back-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    color: #fff;
+    font-size: 1.2rem;
+    box-shadow: 0 8px 24px rgba(29, 78, 216, 0.27);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+.back-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (max-width: 900px) {
+    .article-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toc {
+        position: static;
+        order: -1;
+    }
+}
+
+@media (max-width: 620px) {
+    .header-inner {
+        min-height: 60px;
+    }
+
+    .header-link {
+        padding: 7px 10px;
+        font-size: 0.82rem;
+    }
+
+    .hero-content {
+        padding: 55px 0 48px;
+    }
+
+    .article-layout {
+        margin-top: 28px;
+    }
+
+    .article-content {
+        padding: 21px 18px;
+        border-radius: 16px;
+    }
+
+    .key-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .diagram {
+        padding: 15px;
+    }
+
+    .flow-row {
+        flex-direction: column;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .flow-node {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+ </style>
+
+    </head>
+    <body>
+        <div class="progress-track" aria-hidden="true">
+            <div class="progress-bar" id="progressBar">
+            </div>
+        </div>
+        <header class="site-header">
+            <div class="header-inner">
+                <a class="brand" href="../index.html" aria-label="Lâm Thất – về trang chủ">
+                    <span>
+                        LÂM
+                    </span>
+                    <span>
+                        THẤT
+                    </span>
+                </a>
+                <div class="header-actions">
+                    <a class="header-link" href="../index.html#articles">
+                        ← Góc kiến thức
+                    </a>
+                    <button class="icon-button" id="themeToggle" type="button" aria-label="Chuyển giao diện">
+                        ☾ Giao diện tối
+                    </button>
+                </div>
+            </div>
+        </header>
+        <section class="article-hero">
+            <img src="images/embedded-systems.webp" alt="Bo mạch phát triển với vi điều khiển, linh kiện điện tử và tín hiệu cảm biến" width="1600" height="900" fetchpriority="high">
+            <div class="hero-content">
+                <span class="eyebrow">
+                    Góc kiến thức · Hệ thống nhúng
+                </span>
+                <h1>
+                    Hệ thống nhúng là gì?
+                </h1>
+                <p class="hero-summary">
+                    Khám phá máy tính chuyên dụng ẩn bên trong những thiết bị quen thuộc: từ bộ điều khiển gia dụng đến ô tô, robot và thiết bị IoT.
+                </p>
+                <div class="hero-meta">
+                    <span>
+                        ◷ 8–11 phút đọc
+                    </span>
+                    <span>
+                        ▣ Cập nhật: 08/11/2026
+                    </span>
+                    <span>
+                        ✦ Nội dung học tập
+                    </span>
+                    <span>
+                        ✎ Compiled by Tri
+                    </span>
+                </div>
+            </div>
+        </section>
+        <main class="article-layout">
+            <article class="article-content">
+                <p class="lead-paragraph">
+                    Hệ thống nhúng (Embedded System) là một hệ thống máy tính được tích hợp vào một thiết bị hoặc sản phẩm lớn hơn để thực hiện một hay một nhóm chức năng xác định. Nó kết hợp phần cứng và phần mềm được thiết kế phù hợp với nhiệm vụ, kích thước, chi phí, năng lượng và môi trường vận hành của thiết bị.
+                </p>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Ví dụ dễ hình dung:
+                        </strong>
+                         bộ điều khiển trong máy điều hòa không chỉ “chạy một chương trình”. Nó đọc nhiệt độ, nhận lệnh người dùng, điều khiển quạt hoặc máy nén thông qua mạch phù hợp và duy trì hoạt động theo các quy tắc đã thiết kế.
+                    </p>
+                </div>
+                <h2 id="definition">
+                    1. Hệ thống nhúng là gì?
+                </h2>
+                <p>
+                    Khác với máy tính đa dụng được tạo ra để chạy nhiều loại ứng dụng, hệ thống nhúng thường được xây dựng xoay quanh một mục tiêu cụ thể. Phần mềm của nó gắn chặt với phần cứng và chức năng của sản phẩm. Một số hệ thống chỉ cần vi điều khiển nhỏ, trong khi các thiết bị phức tạp có thể dùng bộ xử lý mạnh hơn, nhiều lõi và hệ điều hành.
+                </p>
+                <p>
+                    Ranh giới không phải lúc nào cũng tuyệt đối. Điện thoại thông minh, thiết bị mạng hoặc thiết bị đa phương tiện có thể đảm nhiệm nhiều chức năng hơn trước, nhưng vẫn chứa các bộ xử lý và phần mềm chuyên trách cho từng tác vụ phần cứng.
+                </p>
+                <h2 id="architecture">
+                    2. Cấu trúc cơ bản của hệ thống nhúng
+                </h2>
+                <p>
+                    Một cấu hình phổ biến gồm bộ xử lý, bộ nhớ, các giao tiếp vào/ra và chương trình firmware. Tùy thiết bị, hệ thống có thể nối với cảm biến để thu nhận dữ liệu, hoặc cơ cấu chấp hành để tạo ra hành động.
+                </p>
+                <div class="diagram">
+                    <div class="diagram-title">
+                        Luồng dữ liệu khái quát
+                    </div>
+                    <div class="flow-row">
+                        <div class="flow-node">
+                            Cảm biến
+                            <small>
+                                Nhiệt độ, vị trí...
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Giao tiếp vào
+                            <small>
+                                GPIO / ADC
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Vi điều khiển
+                            <small>
+                                CPU + bộ nhớ
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Ngõ ra
+                            <small>
+                                PWM / GPIO
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Thiết bị chấp hành
+                            <small>
+                                Động cơ, relay...
+                            </small>
+                        </div>
+                    </div>
+                    <p style="margin:16px 0 0;text-align:center;font-size:.9rem;">
+                        Firmware điều phối việc đọc tín hiệu, xử lý logic, giao tiếp và cập nhật đầu ra.
+                    </p>
+                </div>
+                <div class="key-grid">
+                    <div class="key-card">
+                        <span class="number">
+                            01
+                        </span>
+                        <h3>
+                            Bộ xử lý
+                        </h3>
+                        <p>
+                            Vi điều khiển (MCU), vi xử lý (MPU) hoặc SoC đảm nhiệm tính toán và điều phối.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            02
+                        </span>
+                        <h3>
+                            Bộ nhớ
+                        </h3>
+                        <p>
+                            Flash thường lưu chương trình; RAM lưu dữ liệu tạm và trạng thái khi hệ thống chạy.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            03
+                        </span>
+                        <h3>
+                            Ngoại vi
+                        </h3>
+                        <p>
+                            GPIO, timer, ADC, PWM và các khối truyền thông giúp bộ xử lý làm việc với thế giới bên ngoài.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            04
+                        </span>
+                        <h3>
+                            Firmware
+                        </h3>
+                        <p>
+                            Phần mềm cấp thấp điều khiển phần cứng, xử lý sự kiện và thực hiện chức năng sản phẩm.
+                        </p>
+                    </div>
+                </div>
+                <h2 id="characteristics">
+                    3. Những đặc điểm nổi bật
+                </h2>
+                <ul>
+                    <li>
+                        <strong>
+                            Chức năng chuyên biệt:
+                        </strong>
+                         phần cứng và phần mềm được tối ưu theo nhiệm vụ cụ thể.
+                    </li>
+                    <li>
+                        <strong>
+                            Tài nguyên có giới hạn:
+                        </strong>
+                         bộ nhớ, năng lực xử lý, kích thước, giá thành và năng lượng thường là các ràng buộc thiết kế.
+                    </li>
+                    <li>
+                        <strong>
+                            Tương tác với môi trường:
+                        </strong>
+                         hệ thống có thể đọc cảm biến, giao tiếp với người dùng hoặc điều khiển các phần tử vật lý.
+                    </li>
+                    <li>
+                        <strong>
+                            Yêu cầu thời gian:
+                        </strong>
+                         nhiều thiết bị cần phản hồi trong khoảng thời gian xác định. Mức độ nghiêm ngặt phụ thuộc ứng dụng; không phải mọi hệ thống nhúng đều là hệ thống thời gian thực cứng.
+                    </li>
+                    <li>
+                        <strong>
+                            Độ tin cậy:
+                        </strong>
+                         thiết bị thường phải hoạt động ổn định trong điều kiện nguồn, nhiệt độ, nhiễu và thời gian sử dụng đã dự kiến.
+                    </li>
+                </ul>
+                <h2 id="mcu-mpu">
+                    4. Vi điều khiển, vi xử lý và hệ thống nhúng
+                </h2>
+                <p>
+                    Vi điều khiển và vi xử lý đều có thể đóng vai trò là bộ xử lý trung tâm, nhưng cách tích hợp phần cứng thường khác nhau. MCU thường tích hợp CPU, bộ nhớ và nhiều ngoại vi trên cùng một chip, phù hợp với các nhiệm vụ điều khiển chuyên biệt. MPU thường tập trung vào năng lực xử lý và có thể cần bộ nhớ hoặc ngoại vi bên ngoài; nó thường xuất hiện trong các hệ thống phức tạp hơn.
+                </p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Tiêu chí
+                                </th>
+                                <th>
+                                    MCU – Vi điều khiển
+                                </th>
+                                <th>
+                                    MPU – Vi xử lý
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Tích hợp
+                                </td>
+                                <td>
+                                    Thường có CPU, Flash/RAM và ngoại vi trong chip
+                                </td>
+                                <td>
+                                    Thường cần thêm bộ nhớ và mạch ngoại vi
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Ứng dụng điển hình
+                                </td>
+                                <td>
+                                    Đọc cảm biến, điều khiển động cơ, thiết bị gia dụng
+                                </td>
+                                <td>
+                                    Thiết bị có giao diện phức tạp, xử lý dữ liệu lớn hơn
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Phần mềm
+                                </td>
+                                <td>
+                                    Bare-metal hoặc RTOS là các lựa chọn phổ biến
+                                </td>
+                                <td>
+                                    Có thể chạy hệ điều hành đầy đủ tùy nền tảng
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Điểm cần cân nhắc
+                                </td>
+                                <td>
+                                    Tiết kiệm tài nguyên, năng lượng và chi phí
+                                </td>
+                                <td>
+                                    Năng lực tính toán, bộ nhớ, hệ điều hành và nhiệt
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Đây là cách so sánh tổng quát, không phải quy tắc tuyệt đối. Các dòng chip hiện đại có nhiều cấu hình lai và mức độ tích hợp khác nhau; cần đọc datasheet để xác định chính xác khả năng của linh kiện.
+                </p>
+                <h2 id="firmware">
+                    5. Firmware, vòng lặp chính và hệ điều hành thời gian thực
+                </h2>
+                <p>
+                    Firmware là phần mềm gần với phần cứng, chịu trách nhiệm khởi tạo thiết bị, cấu hình ngoại vi, đọc dữ liệu và điều khiển hoạt động. Với hệ thống đơn giản, chương trình có thể chạy theo vòng lặp chính (super loop). Khi số lượng tác vụ và yêu cầu thời gian tăng lên, nhà phát triển có thể cân nhắc bộ lập lịch hoặc hệ điều hành thời gian thực (RTOS).
+                </p>
+                <h3>
+                    Ví dụ vòng lặp xử lý khái niệm
+                </h3>
+                
+  <pre class="code-block"><code>khoi_tao_phan_cung();
+
+while (1) {
+    doc_cam_bien();
+    xu_ly_du_lieu();
+    cap_nhat_dau_ra();
+    kiem_tra_trang_thai_he_thong();
+}</code></pre>
+  
+                <p>
+                    Đoạn mã trên chỉ mô tả trình tự ở mức khái niệm, không phải chương trình hoàn chỉnh cho một bo mạch cụ thể. Mã thực tế cần xử lý lỗi cảm biến, giới hạn thời gian, trạng thái nguồn, ngắt, bảo vệ đầu ra và các tình huống bất thường.
+                </p>
+                <p>
+                    RTOS hỗ trợ chia chương trình thành các tác vụ, lập lịch và đồng bộ tài nguyên. Việc có cần RTOS hay không phụ thuộc độ phức tạp, độ trễ cho phép, bộ nhớ, năng lực xử lý và yêu cầu bảo trì; dùng RTOS không tự động làm hệ thống tốt hơn nếu bài toán chưa cần.
+                </p>
+                <h2 id="applications">
+                    6. Hệ thống nhúng ở quanh chúng ta
+                </h2>
+                <ul>
+                    <li>
+                        <strong>
+                            Gia dụng:
+                        </strong>
+                         máy giặt, điều hòa, lò vi sóng, bộ điều khiển nhiệt độ.
+                    </li>
+                    <li>
+                        <strong>
+                            Ô tô và giao thông:
+                        </strong>
+                         bộ điều khiển điện tử, quản lý động cơ, cảm biến và hệ thống hỗ trợ vận hành.
+                    </li>
+                    <li>
+                        <strong>
+                            Công nghiệp:
+                        </strong>
+                         bộ điều khiển máy, thiết bị đo, cảm biến thông minh, robot và hệ thống thu thập dữ liệu.
+                    </li>
+                    <li>
+                        <strong>
+                            Mạng và viễn thông:
+                        </strong>
+                         router, switch và các thiết bị truyền thông chuyên dụng.
+                    </li>
+                    <li>
+                        <strong>
+                            IoT:
+                        </strong>
+                         thiết bị giám sát môi trường, cảm biến kết nối, bộ điều khiển nhà thông minh và thiết bị nông nghiệp.
+                    </li>
+                </ul>
+                <h2 id="workflow">
+                    7. Quy trình phát triển một hệ thống nhúng
+                </h2>
+                <ol>
+                    <li>
+                        <strong>
+                            Xác định yêu cầu:
+                        </strong>
+                         thiết bị phải làm gì, giới hạn thời gian và môi trường hoạt động ra sao?
+                    </li>
+                    <li>
+                        <strong>
+                            Chọn kiến trúc:
+                        </strong>
+                         xác định MCU/MPU, bộ nhớ, cảm biến, cơ cấu chấp hành và giao tiếp cần thiết.
+                    </li>
+                    <li>
+                        <strong>
+                            Thiết kế phần cứng:
+                        </strong>
+                         sơ đồ nguyên lý, nguồn, mạch giao tiếp, PCB và bảo vệ.
+                    </li>
+                    <li>
+                        <strong>
+                            Phát triển firmware:
+                        </strong>
+                         driver, xử lý dữ liệu, trạng thái, giao tiếp và cơ chế báo lỗi.
+                    </li>
+                    <li>
+                        <strong>
+                            Kiểm thử và gỡ lỗi:
+                        </strong>
+                         kiểm tra từng khối, đo tín hiệu, thử tình huống biên và đánh giá toàn hệ thống.
+                    </li>
+                    <li>
+                        <strong>
+                            Hoàn thiện tài liệu:
+                        </strong>
+                         lưu cấu hình, phiên bản phần mềm, hướng dẫn sử dụng và kết quả kiểm thử.
+                    </li>
+                </ol>
+                <h2 id="learning">
+                    8. Lộ trình học hệ thống nhúng cho người mới
+                </h2>
+                <ul>
+                    <li>
+                        Ôn nền tảng điện – điện tử, logic số và cách đọc sơ đồ mạch.
+                    </li>
+                    <li>
+                        Học C/C++ cơ bản, con trỏ, kiểu dữ liệu, thao tác bit và tổ chức chương trình.
+                    </li>
+                    <li>
+                        Làm quen một họ vi điều khiển, GPIO, timer, ngắt, ADC và PWM.
+                    </li>
+                    <li>
+                        Thực hành UART, I²C, SPI và kết nối cảm biến phù hợp với datasheet.
+                    </li>
+                    <li>
+                        Học kiểm thử, debug, quản lý phiên bản và viết tài liệu kỹ thuật.
+                    </li>
+                    <li>
+                        Sau khi vững cơ bản, tìm hiểu RTOS, IoT, tiết kiệm năng lượng, bảo mật và an toàn hệ thống theo định hướng.
+                    </li>
+                </ul>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Dự án nhập môn gợi ý:
+                        </strong>
+                         bộ đo nhiệt độ hiển thị LCD/OLED hoặc thiết bị ghi dữ liệu cảm biến. Bắt đầu bằng việc đọc đúng datasheet, kiểm tra nguồn và giao tiếp, sau đó mới thêm lưu trữ, truyền dữ liệu và cảnh báo.
+                    </p>
+                </div>
+                <h2 id="summary">
+                    9. Kết luận
+                </h2>
+                <p>
+                    Hệ thống nhúng là cầu nối giữa phần mềm và thiết bị vật lý. Để học tốt lĩnh vực này, hãy tiến từng bước từ điện tử cơ bản và lập trình đến ngoại vi, cảm biến, điều khiển và kiểm thử. Quan trọng nhất là hiểu giới hạn phần cứng, đo đạc kết quả thực tế và thiết kế phần mềm phù hợp với yêu cầu của thiết bị.
+                </p>
+                <section class="references" id="references">
+                    <h3>
+                        Tài liệu tham khảo
+                    </h3>
+                    <p>
+                        Nội dung được tổng hợp và diễn giải từ các tài liệu dưới đây; ví dụ và sơ đồ là nội dung biên soạn lại cho mục đích học tập.
+                    </p>
+                    <ol>
+                        <li>
+                            <a href="https://support.arm.com/documentation/den0013/d/Introduction/Embedded-systems" target="_blank" rel="noopener">
+                                Arm – ARM Cortex-A Series Programmer’s Guide: Embedded systems
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://onlinedocs.microchip.com/oxy/GUID-D79ACEBE-41BD-43EF-8E1B-9462847AE13E-en-US-12/GUID-84241B5D-A9C0-4583-922C-3E63917EE832.html" target="_blank" rel="noopener">
+                                Microchip Technology – An Overview of Embedded Systems
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://education.freertos.org/Documentation/01-FreeRTOS-quick-start/01-Beginners-guide/01-RTOS-fundamentals" target="_blank" rel="noopener">
+                                FreeRTOS – RTOS Fundamentals
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://ctdt.ntu.edu.vn/chuongtrinhdt/214" target="_blank" rel="noopener">
+                                Trường Đại học Nha Trang – Chương trình đào tạo Hệ thống nhúng và IoT
+                            </a>
+                            .
+                        </li>
+                    </ol>
+                </section>
+            </article>
+            <aside class="toc">
+                <h2>
+                    Trong bài viết
+                </h2>
+                <ol>
+                    <li>
+                        <a href="#definition">
+                            Khái niệm hệ thống nhúng
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#architecture">
+                            Cấu trúc cơ bản
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#characteristics">
+                            Đặc điểm nổi bật
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#mcu-mpu">
+                            MCU và MPU
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#firmware">
+                            Firmware và RTOS
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#applications">
+                            Ứng dụng thực tế
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#workflow">
+                            Quy trình phát triển
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#learning">
+                            Lộ trình học tập
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#summary">
+                            Kết luận
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#references">
+                            Tài liệu tham khảo
+                        </a>
+                    </li>
+                </ol>
+                <div class="toc-tools">
+                    <button class="small-action" type="button" id="copyLink">
+                        Sao chép liên kết
+                    </button>
+                    <button class="small-action" type="button" onclick="window.print()">
+                        In bài viết
+                    </button>
+                </div>
+            </aside>
+        </main>
+        <footer class="article-footer">
+            <div class="footer-inner">
+                <span>
+                    © 2026 Lâm Thất · Nội dung phục vụ mục đích học tập.
+                </span>
+                <a href="../index.html">
+                    Trở về trang chủ ↑
+                </a>
+            </div>
+        </footer>
+        <button class="back-top" id="backTop" type="button" aria-label="Cuộn lên đầu trang">
+            ↑
+        </button>
+        
+
+<script>
+(function () {
+    "use strict";
+
+    const root = document.documentElement;
+    const themeButton = document.getElementById("themeToggle");
+    const progressBar = document.getElementById("progressBar");
+    const backTop = document.getElementById("backTop");
+    const copyButton = document.getElementById("copyLink");
+    const article = document.querySelector(".article-content");
+
+    function applyTheme(theme) {
+        root.dataset.theme = theme;
+        themeButton.setAttribute("aria-pressed", String(theme === "dark"));
+        themeButton.textContent = theme === "dark" ? "☀ Giao diện sáng" : "☾ Giao diện tối";
+    }
+
+    let savedTheme = "light";
+    try {
+        savedTheme = localStorage.getItem("theme") || "light";
+    } catch (error) {
+        savedTheme = "light";
+    }
+    applyTheme(savedTheme);
+
+    themeButton.addEventListener("click", function () {
+        const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
+        try {
+            localStorage.setItem("theme", nextTheme);
+        } catch (error) {
+            // Trang vẫn đổi giao diện dù trình duyệt không cho lưu lựa chọn.
+        }
+    });
+
+    function updateProgress() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progressBar.style.width = Math.min(100, Math.max(0, progress)) + "%";
+        backTop.classList.toggle("is-visible", window.scrollY > 420);
+    }
+
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    updateProgress();
+
+    backTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    copyButton.addEventListener("click", async function () {
+        const originalText = copyButton.textContent;
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            copyButton.textContent = "Đã sao chép";
+        } catch (error) {
+            copyButton.textContent = "Không thể sao chép";
+        }
+        window.setTimeout(function () {
+            copyButton.textContent = originalText;
+        }, 1800);
+    });
+
+    const revealTargets = article.querySelectorAll("h2, .callout, .key-card, .diagram, .references");
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealTargets.forEach(function (element) {
+            element.classList.add("reveal");
+            revealObserver.observe(element);
+        });
+    }
+})();
+</script>
+
+
+    </body>
+</html>

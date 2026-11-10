@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Tìm hiểu IoT (Internet of Things): khái niệm, kiến trúc, công nghệ kết nối, giao thức MQTT, ứng dụng thực tế, bảo mật và lộ trình học.">
+        <meta name="theme-color" content="#0b1f44">
+        <title>
+            IoT (Internet of Things) là gì? | Hà Lâm
+        </title>
+        
+ <style>
+
+:root {
+    color-scheme: light;
+    --page-bg: #f3f7fc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --muted: #56657f;
+    --heading: #0b1f44;
+    --line: #dbe5f3;
+    --blue: #1d4ed8;
+    --cyan: #06b6d4;
+    --purple: #6d28d9;
+    --shadow: 0 16px 45px rgba(11, 31, 68, 0.09);
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg: #0b1220;
+    --surface: #121c31;
+    --text: #e6edf7;
+    --muted: #9fb0cc;
+    --heading: #e6edf7;
+    --line: #25344f;
+    --shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+}
+
+body {
+    min-width: 320px;
+    overflow-x: hidden;
+    background: var(--page-bg);
+    color: var(--text);
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.75;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 3px;
+}
+
+.progress-track {
+    position: fixed;
+    z-index: 100;
+    inset: 0 0 auto;
+    height: 4px;
+    background: transparent;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--cyan), #a78bfa);
+    transition: width 0.08s linear;
+}
+
+.site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    backdrop-filter: blur(16px);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: min(1180px, 92%);
+    min-height: 68px;
+    margin: 0 auto;
+}
+
+.brand {
+    font-family: "Arial Black", "Segoe UI", sans-serif;
+    font-size: 1.32rem;
+    font-weight: 900;
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+}
+
+.brand span:first-child {
+    color: var(--heading);
+}
+
+.brand span:last-child {
+    color: var(--blue);
+}
+
+.brand span:first-child {
+    margin-right: 0.2em;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-link,
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 13px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 650;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.header-link:hover,
+.icon-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--cyan);
+}
+
+.article-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-height: clamp(360px, 48vw, 590px);
+    overflow: hidden;
+    background: #07152f;
+}
+
+.article-hero::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(4, 13, 35, 0.95), rgba(4, 13, 35, 0.54) 58%, rgba(4, 13, 35, 0.08)), linear-gradient(0deg, rgba(4, 13, 35, 0.62), transparent 55%);
+    content: "";
+}
+
+.article-hero img {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-content {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    padding: 72px 0 66px;
+    color: #fff;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 5px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #c7f7ff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+}
+
+.hero-content h1 {
+    max-width: 850px;
+    margin-bottom: 16px;
+    font-size: clamp(2.3rem, 5.5vw, 4.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+}
+
+.hero-summary {
+    max-width: 720px;
+    color: #d9e9ff;
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+}
+
+.hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 24px;
+    color: #c1d6f5;
+    font-size: 0.88rem;
+}
+
+.hero-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.article-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 36px;
+    width: min(1180px, 92%);
+    margin: 52px auto 88px;
+    align-items: start;
+}
+
+.article-content {
+    min-width: 0;
+    padding: clamp(22px, 4vw, 48px);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.article-content p {
+    margin: 0 0 18px;
+    color: var(--muted);
+}
+
+.article-content h2 {
+    margin: 54px 0 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    color: var(--heading);
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    line-height: 1.3;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin: 28px 0 10px;
+    color: var(--heading);
+    font-size: 1.18rem;
+    line-height: 1.4;
+}
+
+.article-content ul,
+.article-content ol {
+    margin: 0 0 20px 22px;
+    color: var(--muted);
+}
+
+.article-content li {
+    margin: 7px 0;
+    padding-left: 4px;
+}
+
+.article-content strong {
+    color: var(--heading);
+}
+
+.lead-paragraph {
+    color: var(--heading) !important;
+    font-size: 1.13rem;
+    line-height: 1.8;
+}
+
+.callout {
+    margin: 26px 0;
+    padding: 20px 22px;
+    border-left: 4px solid var(--cyan);
+    border-radius: 0 14px 14px 0;
+    background: linear-gradient(120deg, rgba(29, 78, 216, 0.08), rgba(6, 182, 212, 0.08));
+}
+
+.callout p:last-child {
+    margin-bottom: 0;
+}
+
+.key-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+}
+
+.key-card {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: var(--page-bg);
+}
+
+.key-card .number {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    color: #fff;
+    font-size: 0.86rem;
+    font-weight: 800;
+}
+
+.key-card h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+
+.key-card p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.diagram {
+    margin: 28px 0;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--page-bg);
+}
+
+.diagram-title {
+    margin-bottom: 16px;
+    color: var(--heading);
+    font-weight: 750;
+}
+
+.flow-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.flow-node {
+    display: grid;
+    place-items: center;
+    min-width: 112px;
+    min-height: 72px;
+    padding: 10px;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--heading);
+    text-align: center;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.flow-node small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.flow-arrow {
+    color: var(--cyan);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    margin: 22px 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+}
+
+th,
+td {
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: var(--page-bg);
+    color: var(--heading);
+    font-size: 0.9rem;
+}
+
+td {
+    color: var(--muted);
+    font-size: 0.91rem;
+}
+
+tr:last-child td {
+    border-bottom: 0;
+}
+
+.code-block {
+    overflow-x: auto;
+    margin: 20px 0;
+    padding: 18px 20px;
+    border: 1px solid rgba(100, 160, 255, 0.2);
+    border-radius: 14px;
+    background: #07152b;
+    color: #d8f7ff;
+    font: 0.91rem/1.7 Consolas, "Courier New", monospace;
+    white-space: pre;
+}
+
+.toc {
+    position: sticky;
+    top: 94px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.toc h2 {
+    margin-bottom: 12px;
+    color: var(--heading);
+    font-size: 1.05rem;
+}
+
+.toc ol {
+    display: grid;
+    gap: 7px;
+    margin-left: 19px;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.toc a:hover,
+.references a:hover {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.toc-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--line);
+}
+
+.small-action {
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--page-bg);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.references {
+    margin-top: 22px;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--page-bg);
+}
+
+.references h3 {
+    margin-top: 0;
+}
+
+.references ol {
+    margin-bottom: 0;
+}
+
+.references a {
+    overflow-wrap: anywhere;
+    color: var(--blue);
+}
+
+.article-footer {
+    padding: 34px 0;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+}
+
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.footer-inner a {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.back-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    color: #fff;
+    font-size: 1.2rem;
+    box-shadow: 0 8px 24px rgba(29, 78, 216, 0.27);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+.back-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (max-width: 900px) {
+    .article-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toc {
+        position: static;
+        order: -1;
+    }
+}
+
+@media (max-width: 620px) {
+    .header-inner {
+        min-height: 60px;
+    }
+
+    .header-link {
+        padding: 7px 10px;
+        font-size: 0.82rem;
+    }
+
+    .hero-content {
+        padding: 55px 0 48px;
+    }
+
+    .article-layout {
+        margin-top: 28px;
+    }
+
+    .article-content {
+        padding: 21px 18px;
+        border-radius: 16px;
+    }
+
+    .key-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .diagram {
+        padding: 15px;
+    }
+
+    .flow-row {
+        flex-direction: column;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .flow-node {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+ </style>
+
+    </head>
+    <body>
+        <div class="progress-track" aria-hidden="true">
+            <div class="progress-bar" id="progressBar">
+            </div>
+        </div>
+        <header class="site-header">
+            <div class="header-inner">
+                <a class="brand" href="../index.html" aria-label="Hà Lâm – về trang chủ">
+                    <span>
+                        HÀ
+                    </span>
+                    <span>
+                        LÂM
+                    </span>
+                </a>
+                <div class="header-actions">
+                    <a class="header-link" href="../index.html#articles">
+                        ← Góc kiến thức
+                    </a>
+                    <button class="icon-button" id="themeToggle" type="button" aria-label="Chuyển giao diện">
+                        ☾ Giao diện tối
+                    </button>
+                </div>
+            </div>
+        </header>
+        <section class="article-hero">
+            <img src="images/internet-of-things.webp" alt="Đám mây trung tâm kết nối với cảm biến nhiệt độ, nhà thông minh, điện thoại và bo mạch vi điều khiển" width="1600" height="900" fetchpriority="high">
+            <div class="hero-content">
+                <span class="eyebrow">
+                    Góc kiến thức · Internet of Things
+                </span>
+                <h1>
+                    IoT (Internet of Things) là gì?
+                </h1>
+                <p class="hero-summary">
+                    Tìm hiểu cách các thiết bị cảm nhận, kết nối mạng và gửi dữ liệu lên nền tảng để giám sát, điều khiển từ xa: từ nhà thông minh đến nông nghiệp, thủy sản và công nghiệp.
+                </p>
+                <div class="hero-meta">
+                    <span>
+                        ◷ 10–12 phút đọc
+                    </span>
+                    <span>
+                        ▣ Cập nhật: 10/11/2026
+                    </span>
+                    <span>
+                        ✦ Nội dung học tập
+                    </span>
+                    <span>
+                        ✎ Compiled by Tri
+                    </span>
+
+                </div>
+            </div>
+        </section>
+        <main class="article-layout">
+            <article class="article-content">
+                <p class="lead-paragraph">
+                    Internet vạn vật (Internet of Things – IoT) là mô hình trong đó các thiết bị và đồ vật trong đời sống, từ cảm biến, bóng đèn, máy bơm đến máy móc công nghiệp, được trang bị khả năng cảm nhận, xử lý và kết nối mạng để trao đổi dữ liệu với nhau và với các hệ thống phần mềm. Nhờ đó, thế giới vật lý có thể được theo dõi, điều khiển từ xa hoặc vận hành tự động dựa trên dữ liệu thu được.
+                </p>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Ví dụ dễ hình dung:
+                        </strong>
+                         một cảm biến đo nhiệt độ và độ ẩm trong nhà kính gửi số liệu lên máy chủ sau mỗi vài phút. Ứng dụng trên điện thoại hiển thị biểu đồ; khi nhiệt độ vượt ngưỡng đã đặt, hệ thống bật quạt thông gió hoặc gửi cảnh báo cho người trồng.
+                    </p>
+                </div>
+                <h2 id="definition">
+                    1. IoT là gì?
+                </h2>
+                <p>
+                    Trong khuyến nghị ITU-T Y.2060, IoT được mô tả như một hạ tầng toàn cầu của xã hội thông tin, cho phép cung cấp các dịch vụ nâng cao bằng cách kết nối các “vật” với nhau dựa trên những công nghệ thông tin và truyền thông hiện có và đang phát triển. “Vật” ở đây gồm hai nhóm: vật thể trong thế giới thực như cảm biến, robot, thiết bị điện (có thể được cảm nhận, điều khiển và kết nối) và vật thể trong thế giới thông tin như phần mềm hay nội dung số (có thể được lưu trữ, xử lý và truy cập).
+                </p>
+                <p>
+                    Thực tế, giới nghiên cứu chưa thống nhất một định nghĩa duy nhất. Nhóm tác giả Lynn và cộng sự (Springer, 2020) nhận xét rằng IoT mang ý nghĩa khác nhau với mỗi người và phân biệt hai cách tiếp cận: góc nhìn kỹ thuật và góc nhìn kinh tế – xã hội. Trong khi đó, Gubbi và cộng sự cho rằng IoT có thể được hiện thực theo ba hướng: hướng Internet (phần mềm trung gian), hướng “vật” (cảm biến) và hướng ngữ nghĩa (tri thức).
+                </p>
+                <p>
+                    Điểm chung của các cách hiểu là IoT không phải một công nghệ đơn lẻ mà là sự kết hợp của nhiều lớp: thiết bị có phần cứng và firmware, phương thức kết nối, nền tảng lưu trữ và xử lý dữ liệu, cùng ứng dụng cho người dùng. Phần “đầu thiết bị” thường là một <a href="he-thong-nhung-la-gi.html">hệ thống nhúng</a>: vi điều khiển đọc cảm biến, điều khiển ngõ ra và giao tiếp với mạng.
+                </p>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Quy mô hiện nay:
+                        </strong>
+                         theo thống kê của IoT Analytics, thế giới có khoảng 21,1 tỷ thiết bị IoT kết nối vào cuối năm 2025 (tăng khoảng 14% so với năm trước) và dự báo đạt khoảng 39 tỷ vào năm 2030. Các con số này là ước tính, và mỗi tổ chức thống kê có thể tính khác nhau tùy cách định nghĩa thiết bị IoT.
+                    </p>
+                </div>
+                <h2 id="architecture">
+                    2. Kiến trúc cơ bản của một hệ thống IoT
+                </h2>
+                <p>
+                    Kiến trúc IoT thay đổi theo từng giải pháp nên không có một mô hình duy nhất. Tài liệu của Sultan (Egyptian Journal of Applied Sciences) mô tả IoT thường gồm 3 hoặc 4 lớp, với các thành phần chính là: “vật” có gắn cảm biến và bộ chấp hành, cổng kết nối (gateway), nền tảng đám mây và ứng dụng. Cổng kết nối chuyển dữ liệu giữa thiết bị và đám mây, có thể tiền xử lý hoặc lọc bớt dữ liệu trước khi gửi lên, đồng thời đưa lệnh điều khiển từ đám mây xuống để thiết bị thực thi qua bộ chấp hành.
+                </p>
+                <div class="diagram">
+                    <div class="diagram-title">
+                        Luồng dữ liệu IoT khái quát
+                    </div>
+                    <div class="flow-row">
+                        <div class="flow-node">
+                            Thiết bị
+                            <small>
+                                Cảm biến, bộ điều khiển
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Kết nối
+                            <small>
+                                Wi-Fi, BLE, LoRa...
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Cổng / Internet
+                            <small>
+                                Gateway, router
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Nền tảng
+                            <small>
+                                Lưu trữ, xử lý
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Ứng dụng
+                            <small>
+                                Web, điện thoại
+                            </small>
+                        </div>
+                    </div>
+                    <p style="margin:16px 0 0;text-align:center;font-size:.9rem;">
+                        Dữ liệu đi từ thiết bị lên nền tảng; lệnh điều khiển có thể đi theo chiều ngược lại xuống thiết bị.
+                    </p>
+                </div>
+                <div class="key-grid">
+                    <div class="key-card">
+                        <span class="number">
+                            01
+                        </span>
+                        <h3>
+                            Thiết bị và cảm biến
+                        </h3>
+                        <p>
+                            Cảm biến đo nhiệt độ, độ ẩm, ánh sáng, vị trí…; bộ chấp hành như relay, động cơ, đèn biến tín hiệu điện thành hành động.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            02
+                        </span>
+                        <h3>
+                            Kết nối
+                        </h3>
+                        <p>
+                            Đưa dữ liệu ra khỏi thiết bị bằng sóng vô tuyến hoặc dây, trực tiếp hay qua cổng trung gian.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            03
+                        </span>
+                        <h3>
+                            Nền tảng dữ liệu
+                        </h3>
+                        <p>
+                            Nhận, lưu trữ, phân tích dữ liệu và quản lý thiết bị, thường đặt trên máy chủ hoặc đám mây.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            04
+                        </span>
+                        <h3>
+                            Ứng dụng
+                        </h3>
+                        <p>
+                            Bảng điều khiển, ứng dụng di động, cảnh báo và các quy tắc tự động hóa cho người dùng.
+                        </p>
+                    </div>
+                </div>
+                <p>
+                    Ngoài đám mây, nhiều hệ thống còn xử lý một phần dữ liệu ngay tại thiết bị hoặc cổng kết nối (thường gọi là điện toán biên – edge computing). Cách làm này giảm lượng dữ liệu phải gửi đi và giúp hệ thống phản ứng nhanh hơn, kể cả khi mạng chập chờn.
+                </p>
+                <h2 id="connectivity">
+                    3. Các công nghệ kết nối thường gặp
+                </h2>
+                <p>
+                    Mỗi bài toán IoT có yêu cầu khác nhau về khoảng cách, lượng dữ liệu, thời lượng pin và chi phí, nên không có công nghệ kết nối nào phù hợp cho mọi trường hợp.
+                </p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Công nghệ
+                                </th>
+                                <th>
+                                    Đặc điểm nổi bật
+                                </th>
+                                <th>
+                                    Ứng dụng điển hình
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Wi-Fi
+                                </td>
+                                <td>
+                                    Tốc độ cao, dùng được hạ tầng mạng sẵn có, nhưng tiêu thụ năng lượng tương đối nhiều
+                                </td>
+                                <td>
+                                    Thiết bị nhà thông minh, bo mạch ESP32, camera
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Bluetooth Low Energy
+                                </td>
+                                <td>
+                                    Khoảng cách ngắn, tiết kiệm năng lượng, kết nối trực tiếp với điện thoại
+                                </td>
+                                <td>
+                                    Thiết bị đeo, cảm biến cá nhân, thẻ định vị
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Zigbee
+                                </td>
+                                <td>
+                                    Công suất thấp, có thể tạo mạng lưới (mesh) giữa nhiều nút
+                                </td>
+                                <td>
+                                    Chiếu sáng và cảm biến trong tòa nhà, nhà thông minh
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    LoRa / LoRaWAN
+                                </td>
+                                <td>
+                                    Phủ sóng xa (vùng thoáng có thể tới hàng chục km), tốc độ dữ liệu thấp, tiết kiệm năng lượng, dùng băng tần không cần giấy phép
+                                </td>
+                                <td>
+                                    Giám sát nông nghiệp, môi trường, đo đạc ở khu vực rộng
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    NB-IoT / LTE-M
+                                </td>
+                                <td>
+                                    Dùng mạng di động, vùng phủ rộng, thiết kế cho thiết bị ít dữ liệu
+                                </td>
+                                <td>
+                                    Công tơ thông minh, thiết bị đặt ở xa hoặc di chuyển
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Riêng với LoRa và LoRaWAN, hai khái niệm này thường bị nhầm: LoRa là kỹ thuật điều chế sóng vô tuyến ở lớp vật lý, còn LoRaWAN là giao thức và kiến trúc mạng quản lý việc liên lạc giữa thiết bị và máy chủ mạng. LoRaWAN được LoRa Alliance duy trì và đã được ITU công nhận là chuẩn quốc tế cho mạng diện rộng công suất thấp (LPWAN).
+                </p>
+                <p>
+                    Bảng trên là so sánh định tính ở mức tổng quát. Phạm vi, tốc độ và mức tiêu thụ thực tế phụ thuộc vào chip, môi trường lắp đặt và cấu hình, nên cần đọc datasheet và thử nghiệm trước khi chọn.
+                </p>
+                <h2 id="protocols">
+                    4. Giao thức truyền dữ liệu: MQTT, HTTP và CoAP
+                </h2>
+                <p>
+                    Sau khi có đường truyền, thiết bị và máy chủ cần thống nhất cách trao đổi dữ liệu. MQTT là lựa chọn rất phổ biến trong IoT: đây là giao thức nhắn tin theo mô hình publish/subscribe, nhẹ, mở và đơn giản để triển khai. Thiết bị gửi (publish) dữ liệu lên một chủ đề (topic) tại máy trung gian gọi là broker; các ứng dụng đã đăng ký (subscribe) chủ đề đó sẽ nhận được dữ liệu, mà thiết bị và ứng dụng không cần biết trực tiếp về nhau.
+                </p>
+                <h3>
+                    Ví dụ một bản tin MQTT khái niệm
+                </h3>
+                <pre class="code-block"><code>Topic:   nhakinh/khu-a/cambien-01/moi-truong
+Payload: {"nhiet_do": 29.5, "do_am": 71}</code></pre>
+                <p>
+                    Ví dụ trên chỉ minh họa cách đặt tên chủ đề và dữ liệu; cấu trúc topic cụ thể do người thiết kế hệ thống tự quy ước. Bên cạnh MQTT, HTTP/REST được dùng nhiều vì dễ tích hợp với ứng dụng web, còn CoAP được thiết kế cho các thiết bị có tài nguyên hạn chế.
+                </p>
+                <h2 id="applications">
+                    5. IoT trong đời sống và sản xuất
+                </h2>
+                <ul>
+                    <li>
+                        <strong>
+                            Nhà thông minh:
+                        </strong>
+                         điều khiển đèn, quạt, điều hòa, khóa cửa và theo dõi mức tiêu thụ điện từ xa.
+                    </li>
+                    <li>
+                        <strong>
+                            Nông nghiệp:
+                        </strong>
+                         đo độ ẩm đất, nhiệt độ, ánh sáng để tưới tiêu và thông gió nhà kính hợp lý.
+                    </li>
+                    <li>
+                        <strong>
+                            Thủy sản:
+                        </strong>
+                         giám sát nhiệt độ, độ mặn, oxy hòa tan trong ao hoặc lồng nuôi và cảnh báo khi thông số bất thường.
+                    </li>
+                    <li>
+                        <strong>
+                            Công nghiệp:
+                        </strong>
+                         theo dõi tình trạng máy, thu thập dữ liệu sản xuất và hỗ trợ bảo trì trước khi hỏng hóc xảy ra.
+                    </li>
+                    <li>
+                        <strong>
+                            Y tế và sức khỏe:
+                        </strong>
+                         thiết bị đeo theo dõi nhịp tim, giấc ngủ, hoạt động thể chất.
+                    </li>
+                    <li>
+                        <strong>
+                            Đô thị thông minh:
+                        </strong>
+                         chiếu sáng công cộng, quan trắc môi trường, giám sát giao thông và hạ tầng.
+                    </li>
+                </ul>
+                <h2 id="security">
+                    6. Bảo mật và những thách thức cần lưu ý
+                </h2>
+                <p>
+                    Số lượng thiết bị kết nối càng nhiều thì rủi ro càng lớn nếu thiết kế thiếu cẩn trọng. Báo cáo NISTIR 8228 của Viện Tiêu chuẩn và Công nghệ Hoa Kỳ (NIST) nhìn rủi ro của IoT trong suốt vòng đời thiết bị và nêu ba mục tiêu giảm thiểu: bảo vệ thiết bị, bảo vệ dữ liệu và bảo vệ quyền riêng tư của cá nhân. Báo cáo cũng lưu ý một số thiết bị IoT khó được vá lỗi hoặc nâng cấp phần mềm như máy tính thông thường.
+                </p>
+                <p>
+                    Ở phía sản phẩm tiêu dùng, tiêu chuẩn châu Âu ETSI EN 303 645 đặt ra 13 điều khoản bảo mật cơ bản. Ba điều được nhấn mạnh hàng đầu là: không dùng mật khẩu mặc định chung cho mọi thiết bị, có chính sách tiếp nhận báo cáo lỗ hổng, và luôn cập nhật phần mềm.
+                </p>
+                <ul>
+                    <li>
+                        <strong>
+                            Bảo mật và quyền riêng tư:
+                        </strong>
+                         đổi mật khẩu mặc định, mã hóa đường truyền, chỉ thu thập dữ liệu thật sự cần thiết.
+                    </li>
+                    <li>
+                        <strong>
+                            Cập nhật và bảo trì:
+                        </strong>
+                         lên kế hoạch cập nhật firmware và quản lý danh sách thiết bị đang chạy.
+                    </li>
+                    <li>
+                        <strong>
+                            Năng lượng:
+                        </strong>
+                         thiết bị chạy bằng pin cần chế độ ngủ, chu kỳ gửi dữ liệu hợp lý và công nghệ kết nối tiết kiệm điện.
+                    </li>
+                    <li>
+                        <strong>
+                            Tương thích:
+                        </strong>
+                         thiết bị của nhiều hãng cần dùng giao thức và định dạng dữ liệu chung để phối hợp được với nhau.
+                    </li>
+                    <li>
+                        <strong>
+                            Độ tin cậy:
+                        </strong>
+                         hệ thống cần xử lý khi mất mạng, mất nguồn hoặc cảm biến trả về giá trị sai.
+                    </li>
+                </ul>
+                <h2 id="learning">
+                    7. Lộ trình học IoT cho người mới bắt đầu
+                </h2>
+                <ol>
+                    <li>
+                        <strong>
+                            Nền tảng điện tử và lập trình:
+                        </strong>
+                         hiểu điện áp, dòng điện, mạch cơ bản và làm quen với C/C++.
+                    </li>
+                    <li>
+                        <strong>
+                            Vi điều khiển và cảm biến:
+                        </strong>
+                         đọc cảm biến, điều khiển ngõ ra, làm quen với GPIO, ADC, I2C, UART.
+                    </li>
+                    <li>
+                        <strong>
+                            Kết nối mạng:
+                        </strong>
+                         dùng bo mạch có Wi-Fi như ESP32 để gửi dữ liệu lên mạng.
+                    </li>
+                    <li>
+                        <strong>
+                            Giao thức và nền tảng:
+                        </strong>
+                         thực hành MQTT với một broker, lưu dữ liệu và vẽ biểu đồ trên bảng điều khiển.
+                    </li>
+                    <li>
+                        <strong>
+                            Bảo mật và vận hành:
+                        </strong>
+                         thêm xác thực, mã hóa, cơ chế cập nhật firmware và ghi nhật ký lỗi.
+                    </li>
+                </ol>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Dự án nhập môn gợi ý:
+                        </strong>
+                         trạm giám sát môi trường dùng ESP32 đọc nhiệt độ, độ ẩm và gửi lên broker MQTT, sau đó hiển thị trên một bảng điều khiển đơn giản. Hãy bắt đầu bằng việc đọc đúng cảm biến, rồi mới thêm kết nối mạng và cảnh báo.
+                    </p>
+                </div>
+                <h2 id="summary">
+                    8. Kết luận
+                </h2>
+                <p>
+                    IoT là cách đưa dữ liệu của thế giới vật lý vào hệ thống phần mềm để quan sát, phân tích và điều khiển. Một hệ thống IoT tốt không chỉ cần thiết bị kết nối được, mà còn cần thiết kế phần cứng hợp lý, giao thức rõ ràng, dữ liệu đáng tin cậy và bảo mật ngay từ đầu. Với sinh viên Hệ thống nhúng và IoT, đây là lĩnh vực nối liền điện tử, lập trình và mạng, rất phù hợp để học qua các dự án nhỏ.
+                </p>
+                <section class="references" id="references">
+                    <h3>
+                        Tài liệu tham khảo
+                    </h3>
+                    <p>
+                        Nội dung được tổng hợp và diễn giải từ các tài liệu dưới đây; ví dụ và sơ đồ là nội dung biên soạn lại cho mục đích học tập.
+                    </p>
+                    <ol>
+                        <li>
+                            <a href="https://www.itu.int/rec/T-REC-Y.2060/en" target="_blank" rel="noopener">
+                                ITU-T – Recommendation Y.2060: Overview of the Internet of things
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://link.springer.com/content/pdf/10.1007/978-3-030-41110-7_1" target="_blank" rel="noopener">
+                                T. Lynn và cộng sự – The Internet of Things: Definitions, Key Concepts, and Reference Architectures (Springer, 2020)
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://arxiv.org/pdf/1207.0203" target="_blank" rel="noopener">
+                                J. Gubbi và cộng sự – Internet of Things (IoT): A Vision, Architectural Elements, and Future Directions
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://journals.ekb.eg/article_151723.html" target="_blank" rel="noopener">
+                                T. Sultan – Internet of Things-IoT: Definition, Architecture and Applications (Egyptian Journal of Applied Sciences)
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html" target="_blank" rel="noopener">
+                                OASIS – MQTT Version 5.0
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.thethingsnetwork.org/docs/lorawan/what-is-lorawan" target="_blank" rel="noopener">
+                                The Things Network – What is LoRaWAN? (tóm tắt theo LoRa Alliance)
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://doi.org/10.6028/NIST.IR.8228" target="_blank" rel="noopener">
+                                NIST – NISTIR 8228: Considerations for Managing Internet of Things (IoT) Cybersecurity and Privacy Risks
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://etsi.org/technologies/consumer-iot-security" target="_blank" rel="noopener">
+                                ETSI – Consumer IoT Security (ETSI EN 303 645)
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://iot-analytics.com/state-of-enterprise-iot-from-iot-autonomous-connected-operations/" target="_blank" rel="noopener">
+                                IoT Analytics – State of Enterprise IoT 2026: Connected operations in the AI era
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://ctdt.ntu.edu.vn/chuongtrinhdt/214" target="_blank" rel="noopener">
+                                Trường Đại học Nha Trang – Chương trình đào tạo Hệ thống nhúng và IoT
+                            </a>
+                            .
+                        </li>
+                    </ol>
+                </section>
+            </article>
+            <aside class="toc">
+                <h2>
+                    Trong bài viết
+                </h2>
+                <ol>
+                    <li>
+                        <a href="#definition">
+                            IoT là gì?
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#architecture">
+                            Kiến trúc cơ bản
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#connectivity">
+                            Công nghệ kết nối
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#protocols">
+                            Giao thức MQTT, HTTP, CoAP
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#applications">
+                            Ứng dụng thực tế
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#security">
+                            Bảo mật và thách thức
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#learning">
+                            Lộ trình học tập
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#summary">
+                            Kết luận
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#references">
+                            Tài liệu tham khảo
+                        </a>
+                    </li>
+                </ol>
+                <div class="toc-tools">
+                    <button class="small-action" type="button" id="copyLink">
+                        Sao chép liên kết
+                    </button>
+                    <button class="small-action" type="button" onclick="window.print()">
+                        In bài viết
+                    </button>
+                </div>
+            </aside>
+        </main>
+        <footer class="article-footer">
+            <div class="footer-inner">
+                <span>
+                    © 2026 Hà Lâm · Nội dung phục vụ mục đích học tập.
+                </span>
+                <a href="../index.html">
+                    Trở về trang chủ ↑
+                </a>
+            </div>
+        </footer>
+        <button class="back-top" id="backTop" type="button" aria-label="Cuộn lên đầu trang">
+            ↑
+        </button>
+        
+
+<script>
+(function () {
+    "use strict";
+
+    const root = document.documentElement;
+    const themeButton = document.getElementById("themeToggle");
+    const progressBar = document.getElementById("progressBar");
+    const backTop = document.getElementById("backTop");
+    const copyButton = document.getElementById("copyLink");
+    const article = document.querySelector(".article-content");
+
+    function applyTheme(theme) {
+        root.dataset.theme = theme;
+        themeButton.setAttribute("aria-pressed", String(theme === "dark"));
+        themeButton.textContent = theme === "dark" ? "☀ Giao diện sáng" : "☾ Giao diện tối";
+    }
+
+    let savedTheme = "light";
+    try {
+        savedTheme = localStorage.getItem("theme") || "light";
+    } catch (error) {
+        savedTheme = "light";
+    }
+    applyTheme(savedTheme);
+
+    themeButton.addEventListener("click", function () {
+        const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
+        try {
+            localStorage.setItem("theme", nextTheme);
+        } catch (error) {
+            // Trang vẫn đổi giao diện dù trình duyệt không cho lưu lựa chọn.
+        }
+    });
+
+    function updateProgress() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progressBar.style.width = Math.min(100, Math.max(0, progress)) + "%";
+        backTop.classList.toggle("is-visible", window.scrollY > 420);
+    }
+
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    updateProgress();
+
+    backTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    copyButton.addEventListener("click", async function () {
+        const originalText = copyButton.textContent;
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            copyButton.textContent = "Đã sao chép";
+        } catch (error) {
+            copyButton.textContent = "Không thể sao chép";
+        }
+        window.setTimeout(function () {
+            copyButton.textContent = originalText;
+        }, 1800);
+    });
+
+    const revealTargets = article.querySelectorAll("h2, .callout, .key-card, .diagram, .references");
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealTargets.forEach(function (element) {
+            element.classList.add("reveal");
+            revealObserver.observe(element);
+        });
+    }
+})();
+</script>
+
+
+    </body>
+</html>

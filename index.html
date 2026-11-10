@@ -1,493 +1,1387 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lâm Thất</title>
-<meta name="description" content="Website cá nhân và thư viện tài liệu học tập của Hà Trần Minh Trí, sinh viên K68 ngành Kỹ thuật Cơ điện tử, Đại học Nha Trang.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
-<script>try{document.documentElement.dataset.theme=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}catch(e){}</script>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            Lâm Thất
+        </title>
+        <meta name="description" content="Website cá nhân và thư viện tài liệu học tập của Lâm Thất, sinh viên K68 ngành Kỹ thuật Cơ điện tử, Đại học Nha Trang.">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+        <script>
+try {
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light");
+}
+catch (e) { }
 
-<header>
- <div class="wrap bar">
-  <button id="menuBtn" aria-label="Mở menu" aria-expanded="false"><svg viewBox="0 0 30 30" aria-hidden="true"><path class="b1" d="M3 7h24"/><path class="b2" d="M3 15h24"/><path class="b3" d="M3 23h24"/></svg></button>
-  <a class="logo" href="#home" aria-label="Hà Trần Minh Trí – về đầu trang"><span class="l1">MINH</span> <span class="l2">TR<span class="i">I</span></span></a>
-  <div class="rt">
-   <button class="ic" id="themeBtn" aria-label="Chuyển sang giao diện tối" aria-pressed="false"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
-   <button class="ic" id="searchBtn" aria-label="Tìm kiếm" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
-   <a class="ic" id="authLink" href="login.html" aria-label="Đăng nhập / Đăng ký" title="Đăng nhập / Đăng ký"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
-  </div>
- </div>
- <nav id="nav" aria-label="Điều hướng chính">
-   <ul>
-    <li><a href="#home">Trang chủ</a></li>
-    <li><a href="#about">Giới thiệu</a></li>
-    <li><a href="#resources">Tài liệu học tập</a></li>
-    <li><a href="#freshman">Môn Đại cương</a></li>
-    <li><a href="#articles">Góc Kiến thức</a></li>
-    <li><a href="#projects">Dự án</a></li>
-    <li><a href="#contact">Liên hệ</a></li>
-   </ul>
-  </nav>
- <div class="sp" id="sp" hidden><div class="wrap"><input id="sq" type="search" placeholder="Tài liệu, môn học, bài viết, dự án..." aria-label="Tìm kiếm trên website" autocomplete="off"><ul id="sr" aria-live="polite"></ul></div></div>
-</header>
-
-<main>
-<!-- ===== A. TRANG CHỦ ===== -->
-<section id="home">
- <div class="wrap hero">
-  <div>
-<span class="badge" role="status"><a href="https://ntu.edu.vn" target="_blank" rel="noopener">Đại học Nha Trang – NTU</a></span>   <h1>Hà Trần Minh Trí</h1>
-   <p class="sub">Sinh viên K68 – Ngành Kỹ thuật Cơ điện tử<br>Chuyên ngành: Hệ thống nhúng và IoT</p>
-   <p>Website này là nơi mình giới thiệu quá trình học tập tại Trường Đại học Nha Trang và chia sẻ tài liệu, kiến thức cho sinh viên, giảng viên quan tâm đến cơ điện tử, hệ thống nhúng và IoT.</p>
-   <a class="btn" href="#resources">Khám phá tài liệu</a>
-   <a class="btn ghost" href="#about">Tìm hiểu về tôi</a>
-  </div>
-  <!-- Thẻ Đồng hồ + Lịch: cột phải trên máy tính, nằm dưới phần chữ trên điện thoại -->
-   <div class="tw" role="group" aria-label="Đồng hồ và lịch">
-   <select class="tzs" data-clock="mainclock" aria-label="Chọn múi giờ">
-    <option value="Asia/Ho_Chi_Minh" data-city="Nha Trang">Việt Nam</option>
-    <option value="Asia/Shanghai" data-city="Bắc Kinh">Trung Quốc</option>
-    <option value="America/New_York" data-city="New York (miền Đông)">Mỹ</option>
-    <option value="Europe/London" data-city="Luân Đôn">Luân Đôn</option>
-   </select>
-   
-   <div class="tw-body">
-    <div class="clk" id="mainclock" data-tz="Asia/Ho_Chi_Minh"></div>
-    <button class="cal-toggle-btn" id="calToggle" aria-label="Ẩn hiện lịch" aria-expanded="false" title="Lịch">
-     <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
-    </button>
-   </div>
-
-   <div class="cal-collapse-wrap collapsed" id="calCollapseWrap">
-    <div id="cal"></div>
-   </div>
-  </div>
- </div>
-<!-- ===== Nút GHI CHÚ: góc phải dưới của phần đầu trang ===== -->
-<div class="nt" id="notes">
- <div class="nt-act" id="ntAct">
-  <button type="button" id="ntNew"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Tạo ghi chú mới</button>
-  <button type="button" id="ntList"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Danh sách ghi chú</button>
-  <button type="button" class="del" id="ntDel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Xoá ghi chú</button>
- </div>
- <button type="button" class="nt-main" id="ntMain" aria-label="Ghi chú" aria-expanded="false" aria-controls="ntAct">
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-  <span class="nt-label">GHI CHÚ</span>
- </button>
-</div>
-</section>
-
-<!-- ===== B. GIỚI THIỆU ===== -->
-<section id="about">
- <div class="wrap">
-  <h2>Giới thiệu bản thân</h2>
-  <p class="lead">Là sinh viên đang học tại Trường Đại học Nha Trang. Học tập để hiểu cách phần cứng, phần mềm và cơ khí cùng tạo nên những hệ thống thông minh.</p>
-  <div class="about">
-<div class="panel">
-    <!-- 1. ĐẶT ẢNH LÊN ĐẦU và thêm style float: right -->
-    <img class="avatar" src="minhtri.jpg" alt="Ảnh của Hà Trần Minh Trí" style="float: right; margin-left: 20px; margin-bottom: 10px;">
-    
-    <!-- 2. NỘI DUNG CHỮ ĐỂ BÌNH THƯỜNG Ở DƯỚI ẢNH -->
-    <h3>Thông tin của Trí</h3>
-    <ul>
-        <li>Trường: Đại học Nha Trang (NTU)</li>
-        <li>MSSV: 68133511</li>
-        <li>Khóa: K68</li>
-        <li>Ngành: Kỹ thuật Cơ điện tử</li>
-        <li>Chuyên ngành: Hệ thống nhúng và IoT</li>
-        <li>Khoa/Viện: Trường Kỹ thuật và Công nghệ</li>
-    </ul>
-    
-    <!-- Đoạn văn bản sẽ tự động tràn sang phải lấp đầy khoảng trống -->
-    <p style="margin-top:14px; color:var(--mut);">Trí thích tìm hiểu công nghệ, điện tử, lập trình và các hệ thống thông minh. Định hướng của Trí là học chắc nền tảng, thực hành qua các dự án nhỏ và dần đi sâu vào nghiên cứu.</p>
-    
-    <!-- Dòng này để xóa float, đảm bảo khung panel bao trọn nội dung -->
-    <div style="clear: both;"></div>
-</div>   
-<div class="panel">
-    <h3>Mong muốn chia sẻ</h3>
-    <p style="color:var(--mut)">Trí muốn tổng hợp tài liệu và kiến thức hữu ích thành một thư viện mở, được update qua theo quá trình học, để các bạn sinh viên cùng khoá hoặc là khóa sau có thể tham khảo.</p>
-    <h3 style="margin-top:16px">Lĩnh vực quan tâm và đang học</h3>
-    <div class="chips">
-     <span>Electronics</span><span>Embedded Systems</span><span>Internet of Things (IoT)</span><span>C/C++ Programming</span><span>Microcontrollers</span><span>Automation</span><span>Technical Documentation</span>
-    </div>
-   </div>
-  </div>
- </div>
-</section>
-
-<!-- ===== C. THƯ VIỆN TÀI LIỆU ===== -->
-<section id="resources" style="background:var(--card)">
- <div class="wrap">
-  <h2>Thư viện tài liệu học tập</h2>
-  <p class="lead"><span class="badge">Dữ liệu minh họa</span><br>Tìm theo tên, lọc theo danh mục và sắp xếp theo ngày cập nhật. Các thẻ bên dưới là mẫu; khi chưa có tệp thật, thẻ hiển thị "Chưa có tài liệu".</p>
-  <div class="tools">
-   <input id="q" type="search" placeholder="Tìm tài liệu theo tên..." aria-label="Tìm tài liệu theo tên">
-   <select id="cat" aria-label="Lọc theo danh mục"></select>
-   <select id="sort" aria-label="Sắp xếp">
-    <option value="desc">Mới cập nhật nhất</option>
-    <option value="asc">Cũ nhất</option>
-   </select>
-  </div>
-  <p id="count" aria-live="polite"></p>
-  <div class="grid" id="docs"></div>
-  <button id="more" class="btn ghost">Xem thêm</button>
- </div>
-</section>
-
-<!-- ===== MÔN ĐẠI CƯƠNG NĂM NHẤT ===== -->
-<section id="freshman">
- <div class="wrap">
-  <h2>Môn Đại cương năm nhất</h2>
-  <p class="lead"><span class="badge">Danh sách mẫu</span><br>Các môn đại cương thường gặp ở năm nhất. Hãy chỉnh danh sách theo chương trình đào tạo thực tế; môn nào chưa có tệp sẽ hiển thị "Chưa có tài liệu".</p>
-  <div class="tools" style="grid-template-columns:minmax(0,340px)"><select id="fg" aria-label="Lọc theo nhóm môn"></select></div>
-  <div class="grid" id="fresh"></div>
- </div>
-</section>
-
-<!-- ===== D. GÓC KIẾN THỨC ===== -->
-<section id="articles" style="background:var(--card)">
- <div class="wrap">
-  <h2>Góc kiến thức và bài viết</h2>
-  <p class="lead"><span class="badge">Tiêu đề mẫu</span><br>Các chủ đề dự kiến sẽ được viết. Nội dung đầy đủ sẽ bổ sung dần.</p>
-  <div class="grid" id="arts"></div>
- </div>
-</section>
-
-<!-- ===== E. DỰ ÁN ===== -->
-<section id="projects">
- <div class="wrap">
-  <h2>Dự án cá nhân</h2>
-  <p class="lead"><span class="badge">Nội dung minh họa</span><br>Các dự án dưới đây là ví dụ để minh họa bố cục, chưa phải sản phẩm thực tế của chủ website. Hãy thay bằng dự án thật khi có.</p>
-  <div class="grid" id="projs"></div>
- </div>
-</section>
-
-<!-- ===== F. LIÊN HỆ ===== -->
-<section id="contact" style="background:var(--card)">
- <div class="wrap">
-  <h2>Liên hệ</h2>
-  <p class="lead">Kết nối với mình qua các kênh dưới đây hoặc gửi tin nhắn bằng biểu mẫu.</p>
-  <div class="contact">
-   <div class="panel">
-    <h3>Hà Trần Minh Trí</h3>
-    <ul class="links" style="margin-top:10px">
-     <li><a href="mailto:tri.htm.68cdt@ntu.edu.vn"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#0e7490"/><rect x="8" y="11" width="22" height="16" rx="3" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 13l10 8 10-8" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg><span><strong>Email</strong><small>tri.htm.68cdt@ntu.edu.vn</small></span></a></li>
-     <li><a href="https://www.facebook.com/share/1E6H6hMqB4/" target="_blank" rel="noopener"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#1877f2"/><svg x="7" y="7" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.6V13h2.7v8h3.2z"/></svg></svg><span><strong>Facebook</strong><small>xue.lamthat.6706</small></span></a></li>
-     <li><a href="https://www.instagram.com/tr1ssca?mdxt=NDF6YTg2eHIyOXhm" target="_blank" rel="noopener"><svg viewBox="0 0 38 38" aria-hidden="true"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#feda75"/><stop offset=".35" stop-color="#fa7e1e"/><stop offset=".6" stop-color="#d62976"/><stop offset="1" stop-color="#4f5bd5"/></linearGradient></defs><rect width="38" height="38" rx="9" fill="url(#ig)"/><rect x="9" y="9" width="20" height="20" rx="6" fill="none" stroke="#fff" stroke-width="2"/><circle cx="19" cy="19" r="4.6" fill="none" stroke="#fff" stroke-width="2"/><circle cx="25" cy="13" r="1.4" fill="#fff"/></svg><span><strong>Instagram</strong><small>@tr1ssca</small></span></a></li>
-     <li><a href="https://x.com/trissca2609" target="_blank" rel="noopener"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#000000"/><g transform="translate(7, 7)"><path fill="#ffffff" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></g></svg><span><strong>X</strong><small>Minhtri2609</small></span></a></li>   </div>
-   <form class="panel" id="form" novalidate>
-    <label for="n">Họ và tên</label><input id="n" required>
-    <label for="e">Email</label><input id="e" type="email" required>
-    <label for="s">Chủ đề</label><input id="s" required>
-    <label for="m">Nội dung tin nhắn</label><textarea id="m" rows="4" required></textarea>
-    <button class="btn" type="submit">Gửi liên hệ</button>
-    <p class="note">Biểu mẫu này là giao diện minh hoạ. Chưa kết nối máy chủ nên chưa thể gửi liên hệ.</p>
-   </form>
-  </div>
- </div>
-</section>
-
-</main>
-
-<footer>
- <div class="ft">
-  <div class="sh" aria-hidden="true">
-   <i class="sq s1"></i><i class="sq s2"></i><i class="sq s3"></i><i class="ci c1"></i><i class="ci c2"></i><i class="ci c3"></i>
-   <svg viewBox="0 0 2400 120" preserveAspectRatio="none"><path fill="rgba(103,232,249,.12)" d="M0 60 C200 20 400 100 600 60 S1000 100 1200 60 S1600 100 1800 60 S2200 100 2400 60 V120 H0Z"/></svg>
-   <svg viewBox="0 0 2400 120" preserveAspectRatio="none"><path fill="rgba(255,255,255,.08)" d="M0 60 C200 20 400 100 600 60 S1000 100 1200 60 S1600 100 1800 60 S2200 100 2400 60 V120 H0Z"/></svg>
-  </div>
-  <div class="wrap ft-in">
-   <a class="logo f" href="#home" aria-label="Hà Trần Minh Trí – về đầu trang"><span class="l1">MINH</span> <span class="l2">TR<span class="i">I</span></span></a>
-   <p>Đây là website cá nhân của Hà Trần Minh Trí, nơi lưu trữ và chia sẻ kiến thức, tài liệu học tập.</p>
-   <ul class="soc">
-    <li><a href="mailto:tri.htm.68cdt@ntu.edu.vn" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></a></li>
-    <li><a href="https://www.facebook.com/share/1E6H6hMqB4/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.6V13h2.7v8h3.2z"/></svg></a></li>
-    <li><a href="https://www.instagram.com/tr1ssca?mdxt=NDF6YTg2eHIyOXhm" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="7" r="1.2" fill="currentColor"/></svg></a></li>
-    <li><a href="https://x.com/trissca2609" target="_blank" rel="noopener" aria-label="Twitter" title="Twitter"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="transparent"/><g transform="translate(7, 7)"><path fill="#ffffff" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></g></svg></a></li>
-   </ul>
-  </div> 
- </div> 
- <div class="fb">
-  <div class="wrap">
-   <p>© 2026 Lâm Thất - WEBSITE này dành cho cá nhân, vui lòng liên hệ để gỡ nội dung nếu liên quan. Xin cảm ơn!</p>
-   <div class="fl"><a href="#home">Trang chủ</a><a href="#about">Giới thiệu</a><a href="#contact">Liên hệ</a></div>
-  </div>
- </div>
-</footer>
-<div id="toast" role="status"></div>
-
-<script src="clock.js"></script>
+</script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <div class="wrap bar">
+                <button id="menuBtn" aria-label="Mở menu" aria-expanded="false">
+                    <svg viewBox="0 0 30 30" aria-hidden="true">
+                        <path class="b1" d="M3 7h24"/>
+                        <path class="b2" d="M3 15h24"/>
+                        <path class="b3" d="M3 23h24"/>
+                    </svg>
+                </button>
+                <a class="logo" href="#home" aria-label="Hà Lâm – về đầu trang">
+                    <span class="l1">
+                        HÀ
+                    </span>
+                    <span class="l2">
+                        LÂM
+                    </span>
+                </a>
+                <div class="rt">
+                    <button class="ic" id="themeBtn" aria-label="Chuyển sang giao diện tối" aria-pressed="false">
+                        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor" d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>
+                        </svg>
+                        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4.5" fill="currentColor"/>
+                            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <!-- Khung .sw: hộp tìm kiếm neo vào khung này nên luôn hiện ngay dưới biểu tượng tìm kiếm -->
+                    <div class="sw">
+                        <button class="ic" id="searchBtn" aria-label="Tìm kiếm" aria-expanded="false">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+                                <path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                        <div class="sp" id="sp" hidden>
+                            <div class="wrap">
+                                <input id="sq" type="search" placeholder="Tài liệu, môn học, bài viết, dự án..." aria-label="Tìm kiếm trên website" autocomplete="off">
+                                <ul id="sr" aria-live="polite">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="ic" id="authLink" href="login.html" aria-label="Đăng nhập / Đăng ký" title="Đăng nhập / Đăng ký">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/>
+                            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <nav id="nav" aria-label="Điều hướng chính">
+                <ul>
+                    <li>
+                        <a href="#home">
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about">
+                            Giới thiệu
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#resources">
+                            Tài liệu học tập
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#freshman">
+                            Môn Đại cương
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#electronics">
+                            Công cụ điện tử
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#articles">
+                            Góc Kiến thức
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#projects">
+                            Dự án
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#contact">
+                            Liên hệ
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <!-- ===== A. TRANG CHỦ ===== -->
+            <section id="home">
+                <div class="wrap hero">
+                    <div>
+                        <span class="badge" role="status">
+                            <a href="https://ntu.edu.vn" target="_blank" rel="noopener">
+                                <img class="badge-logo" src="ntu-logo.png" alt="Logo Đại học Nha Trang">
+                                Đại học Nha Trang – NTU
+                            </a>
+                        </span>
+                        <h1>
+                            Hà Trần Minh Trí
+                        </h1>
+                        <p class="sub">
+                            Sinh viên K68 – Ngành Kỹ thuật Cơ điện tử
+                            <br>
+                            Chuyên ngành: Hệ thống nhúng và IoT
+                        </p>
+                        <p>
+                            Website này là nơi mình giới thiệu quá trình học tập tại Trường Đại học Nha Trang và chia sẻ tài liệu, kiến thức cho sinh viên, giảng viên quan tâm đến cơ điện tử, hệ thống nhúng và IoT.
+                        </p>
+                        <a class="btn" href="#resources">
+                            Khám phá tài liệu
+                        </a>
+                        <a class="btn ghost" href="#about">
+                            Tìm hiểu về tôi
+                        </a>
+                    </div>
+                    <!-- Thẻ Đồng hồ + Lịch: cột phải trên máy tính, nằm dưới phần chữ trên điện thoại -->
+                    <div class="tw" role="group" aria-label="Đồng hồ và lịch">
+                        <select class="tzs" data-clock="mainclock" aria-label="Chọn múi giờ">
+                            <option value="Asia/Ho_Chi_Minh" data-city="Nha Trang">
+                                Việt Nam
+                            </option>
+                            <option value="Asia/Shanghai" data-city="Bắc Kinh">
+                                Trung Quốc
+                            </option>
+                            <option value="America/New_York" data-city="New York (miền Đông)">
+                                Mỹ
+                            </option>
+                            <option value="Europe/London" data-city="Luân Đôn">
+                                Luân Đôn
+                            </option>
+                        </select>
+                        <div class="tw-body">
+                            <div class="clk" id="mainclock" data-tz="Asia/Ho_Chi_Minh">
+                            </div>
+                            <button class="cal-toggle-btn" id="calToggle" aria-label="Ẩn hiện lịch" aria-expanded="false" title="Lịch">
+                                <svg viewBox="0 0 24 24" width="18" height="18">
+                                    <path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="cal-collapse-wrap collapsed" id="calCollapseWrap">
+                            <div id="cal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ===== Nút GHI CHÚ: góc phải dưới của phần đầu trang ===== -->
+                <div class="nt" id="notes">
+                    <div class="nt-act" id="ntAct">
+                        <button type="button" id="ntNew">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                            </svg>
+                            Tạo ghi chú mới
+                        </button>
+                        <button type="button" id="ntList">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                            </svg>
+                            Danh sách ghi chú
+                        </button>
+                        <button type="button" class="del" id="ntDel">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Xoá ghi chú
+                        </button>
+                    </div>
+                    <button type="button" class="nt-main" id="ntMain" aria-label="Ghi chú" aria-expanded="false" aria-controls="ntAct">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+                        </svg>
+                        <span class="nt-label">
+                            GHI CHÚ
+                        </span>
+                    </button>
+                </div>
+            </section>
+            <!-- ===== B. GIỚI THIỆU ===== -->
+            <section id="about">
+                <div class="wrap">
+                    <h2>
+                        Giới thiệu bản thân
+                    </h2>
+                    <p class="lead">
+                        Là sinh viên đang học tại Trường Đại học Nha Trang. Học tập để hiểu cách phần cứng, phần mềm và cơ khí cùng tạo nên những hệ thống thông minh.
+                    </p>
+                    <div class="about">
+                        <div class="panel">
+                            <!-- 1. ĐẶT ẢNH LÊN ĐẦU và thêm style float: right -->
+                            <img class="avatar" src="minhtri.webp" alt="Ảnh của Hà Trần Minh Trí" style="float: right; margin-left: 20px; margin-bottom: 10px;">
+                            <!-- 2. NỘI DUNG CHỮ ĐỂ BÌNH THƯỜNG Ở DƯỚI ẢNH -->
+                            <h3>
+                                Thông tin của Trí
+                            </h3>
+                            <ul>
+                                <li>
+                                    Trường: Đại học Nha Trang (NTU)
+                                </li>
+                                <li>
+                                    Khóa: K68
+                                </li>
+                                <li>
+                                    Ngành: Kỹ thuật Cơ điện tử
+                                </li>
+                                <li>
+                                    Chuyên ngành: Hệ thống nhúng và IoT
+                                </li>
+                                <li>
+                                    Khoa/Viện: Trường Kỹ thuật và Công nghệ
+                                </li>
+                            </ul>
+                            <!-- Đoạn văn bản sẽ tự động tràn sang phải lấp đầy khoảng trống -->
+                            <p style="margin-top:14px; color:var(--mut);">
+                                Trí thích tìm hiểu công nghệ, điện tử, lập trình và các hệ thống thông minh. Định hướng của Trí là học chắc nền tảng, thực hành qua các dự án nhỏ và dần đi sâu vào nghiên cứu.
+                            </p>
+                            <!-- Dòng này để xóa float, đảm bảo khung panel bao trọn nội dung -->
+                            <div style="clear: both;">
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <h3>
+                                Mong muốn chia sẻ
+                            </h3>
+                            <p style="color:var(--mut)">
+                                Trí muốn tổng hợp tài liệu và kiến thức hữu ích thành một thư viện mở, được update qua theo quá trình học, để các bạn sinh viên cùng khoá hoặc là khóa sau có thể tham khảo.
+                            </p>
+                            <h3 style="margin-top:16px">
+                                Lĩnh vực quan tâm và đang học
+                            </h3>
+                            <div class="chips">
+                                <span>
+                                    Electronics
+                                </span>
+                                <span>
+                                    Embedded Systems
+                                </span>
+                                <span>
+                                    Internet of Things (IoT)
+                                </span>
+                                <span>
+                                    C/C++ Programming
+                                </span>
+                                <span>
+                                    Microcontrollers
+                                </span>
+                                <span>
+                                    Automation
+                                </span>
+                                <span>
+                                    Technical Documentation
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ===== C. THƯ VIỆN TÀI LIỆU ===== -->
+            <section id="resources" style="background:var(--card)">
+                <div class="wrap">
+                    <h2>
+                        Thư viện tài liệu học tập
+                    </h2>
+                    <p class="lead">
+                        <span class="badge">
+                            Chưa có tài liệu
+                        </span>
+                        <br>
+                        Tìm theo tên, lọc theo danh mục và sắp xếp theo ngày cập nhật. Các thẻ bên dưới là mẫu; khi chưa có tệp thật, thẻ hiển thị "Chưa có tài liệu".
+                    </p>
+                    <div class="tools">
+                        <input id="q" type="search" placeholder="Tìm tài liệu theo tên..." aria-label="Tìm tài liệu theo tên">
+                        <select id="cat" aria-label="Lọc theo danh mục">
+                        </select>
+                        <select id="sort" aria-label="Sắp xếp">
+                            <option value="desc">
+                                Mới cập nhật nhất
+                            </option>
+                            <option value="asc">
+                                Cũ nhất
+                            </option>
+                        </select>
+                    </div>
+                    <p id="count" aria-live="polite">
+                    </p>
+                    <div class="grid" id="docs">
+                    </div>
+                    <button id="more" class="btn ghost">
+                        Xem thêm
+                    </button>
+                </div>
+            </section>
+            <!-- ===== MÔN ĐẠI CƯƠNG ===== -->
+            <section id="freshman">
+                <div class="wrap">
+                    <h2>
+                        Môn Đại cương
+                    </h2>
+                    <p class="lead">
+                        <span class="badge">
+                            Chưa có tài liệu
+                        </span>
+                        <br>
+                        Các môn đại cương thường sẽ gặp ở Đại học. Danh sách theo chương trình đào tạo thực tế; môn chưa có tệp sẽ hiển thị "Chưa có tài liệu".
+                    </p>
+                    <div class="tools" style="grid-template-columns:minmax(0,340px)">
+                        <select id="fg" aria-label="Lọc theo nhóm môn">
+                        </select>
+                    </div>
+                    <div class="grid" id="fresh">
+                    </div>
+                    <button id="moreFresh" class="btn ghost">
+                        Xem thêm
+                    </button>
+                </div>
+            </section>
+            <!-- ===== D. CÔNG CỤ ĐIỆN TỬ VÀ CƠ ĐIỆN TỬ ===== -->
+            <section id="electronics">
+                <div class="wrap">
+                    <h2>
+                        Công cụ điện tử
+                    </h2>
+                    <p class="lead">
+                        Tiện ích tính toán nhanh phục vụ học tập về điều khiển, điện tử công suất và truyền động cơ điện. Kết quả chỉ mang tính tham khảo theo mô hình lý tưởng hóa.
+                    </p>
+                    <div class="tool-grid">
+                        <article class="panel calc-card">
+                            <div class="calc-heading">
+                                <span class="calc-icon" aria-hidden="true">
+                                    PWM
+                                </span>
+                                <div>
+                                    <span class="tag">
+                                        ĐIỆN TỬ CÔNG SUẤT
+                                    </span>
+                                    <h3>
+                                        Tính toán PWM
+                                    </h3>
+                                </div>
+                            </div>
+                            <p class="calc-description">
+                                Ước tính điện áp trung bình, chu kỳ và thời gian bật/tắt từ điện áp nguồn, duty cycle và tần số.
+                            </p>
+                            <div class="calc-fields">
+                                <label for="pwmVoltage">
+                                    Điện áp nguồn (V)
+                                </label>
+                                <input id="pwmVoltage" type="number" min="0.01" max="1000" step="0.1" value="12">
+                                <label for="pwmDuty">
+                                    Duty cycle (%)
+                                </label>
+                                <input id="pwmDuty" type="number" min="0" max="100" step="1" value="50">
+                                <label for="pwmFrequency">
+                                    Tần số PWM (Hz)
+                                </label>
+                                <input id="pwmFrequency" type="number" min="0.01" max="1000000" step="1" value="1000">
+                            </div>
+                            <button class="btn sm" id="calculatePwm" type="button">
+                                Tính toán PWM
+                            </button>
+                            <div class="calc-result" id="pwmResult" role="status" aria-live="polite">
+                                <div>
+                                    <span>
+                                        Điện áp trung bình
+                                    </span>
+                                    <strong id="pwmAverage">
+                                        6.00 V
+                                    </strong>
+                                </div>
+                                <div>
+                                    <span>
+                                        Chu kỳ
+                                    </span>
+                                    <strong id="pwmPeriod">
+                                        1.00 ms
+                                    </strong>
+                                </div>
+                                <div>
+                                    <span>
+                                        Thời gian bật / tắt
+                                    </span>
+                                    <strong id="pwmOnOff">
+                                        0.50 / 0.50 ms
+                                    </strong>
+                                </div>
+                            </div>
+                            <p class="calc-note">
+                                Giả sử tín hiệu PWM chuyển giữa 0 V và điện áp nguồn. Điện áp thực tế tại tải còn phụ thuộc mạch driver, bộ lọc và đặc tính tải.
+                            </p>
+                        </article>
+                        <article class="panel calc-card">
+                            <div class="calc-heading">
+                                <span class="calc-icon motor" aria-hidden="true">
+                                    RPM
+                                </span>
+                                <div>
+                                    <span class="tag">
+                                        TRUYỀN ĐỘNG CƠ ĐIỆN
+                                    </span>
+                                    <h3>
+                                        Tính tốc độ và mô-men sau hộp số
+                                    </h3>
+                                </div>
+                            </div>
+                            <p class="calc-description">
+                                Tính gần đúng tốc độ đầu ra và mô-men đầu ra từ thông số động cơ, tỷ số truyền và hiệu suất hộp số.
+                            </p>
+                            <div class="calc-fields">
+                                <label for="motorRpm">
+                                    Tốc độ động cơ (vòng/phút)
+                                </label>
+                                <input id="motorRpm" type="number" min="0.01" max="1000000" step="1" value="3000">
+                                <label for="motorTorque">
+                                    Mô-men động cơ (N·m)
+                                </label>
+                                <input id="motorTorque" type="number" min="0.001" max="1000000" step="0.01" value="0.2">
+                                <label for="gearRatio">
+                                    Tỷ số truyền giảm tốc (i ≥ 1)
+                                </label>
+                                <input id="gearRatio" type="number" min="1" max="10000" step="0.1" value="20">
+                                <label for="gearEfficiency">
+                                    Hiệu suất hộp số (%)
+                                </label>
+                                <input id="gearEfficiency" type="number" min="0.01" max="100" step="1" value="85">
+                            </div>
+                            <button class="btn sm" id="calculateGear" type="button">
+                                Tính truyền động
+                            </button>
+                            <div class="calc-result" id="gearResult" role="status" aria-live="polite">
+                                <div>
+                                    <span>
+                                        Tốc độ đầu ra
+                                    </span>
+                                    <strong id="gearOutputRpm">
+                                        150 vòng/phút
+                                    </strong>
+                                </div>
+                                <div>
+                                    <span>
+                                        Mô-men đầu ra
+                                    </span>
+                                    <strong id="gearOutputTorque">
+                                        3.40 N·m
+                                    </strong>
+                                </div>
+                                <div>
+                                    <span>
+                                        Công suất cơ đầu ra
+                                    </span>
+                                    <strong id="gearOutputPower">
+                                        53.41 W
+                                    </strong>
+                                </div>
+                            </div>
+                            <p class="calc-note">
+                                Mô hình giả sử hộp số giảm tốc lý tưởng theo tỷ số truyền và chỉ xét tổn hao qua hiệu suất đã nhập; chưa xét giới hạn nhiệt, dòng điện hay tải động.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+            <!-- ===== E. GÓC KIẾN THỨC ===== -->
+            <section id="articles" style="background:var(--card)">
+                <div class="wrap">
+                    <h2>
+                        Góc kiến thức và bài viết
+                    </h2>
+                    <p class="lead">
+                        <span class="badge">
+                            Bài viết chuyên ngành
+                        </span>
+                        <br>
+                        Hai bài viết đầu tiên đã có nội dung chi tiết, hình minh họa và tài liệu tham khảo để bạn đọc tiếp.
+                    </p>
+                    <div class="grid" id="arts">
+                    </div>
+                </div>
+            </section>
+            <!-- ===== E. DỰ ÁN ===== -->
+            <section id="projects">
+                <div class="wrap">
+                    <h2>
+                        Dự án cá nhân
+                    </h2>
+                    <p class="lead">
+                        <span class="badge">
+                            Chưa có thông tin dự án
+                        </span>
+                        <br>
+                        Các dự án dưới đây là ví dụ để minh họa bố cục, chưa phải sản phẩm thực tế của chủ website. Hãy thay bằng dự án thật khi có.
+                    </p>
+                    <div class="grid" id="projs">
+                    </div>
+                </div>
+            </section>
+            <!-- ===== F. LIÊN HỆ ===== -->
+            <section id="contact" style="background:var(--card)">
+                <div class="wrap">
+                    <h2>
+                        Liên hệ
+                    </h2>
+                    <p class="lead">
+                        Kết nối với mình qua các kênh dưới đây hoặc gửi tin nhắn bằng biểu mẫu.
+                    </p>
+                    <div class="contact">
+                        <div class="panel">
+                            <h3>
+                                Hà Trần Minh Trí
+                            </h3>
+                            <ul class="links" style="margin-top:10px">
+                                <li>
+                                    <a href="mailto:tri.htm.68cdt@ntu.edu.vn">
+                                        <svg viewBox="0 0 38 38" aria-hidden="true">
+                                            <rect width="38" height="38" rx="9" fill="#0e7490"/>
+                                            <rect x="8" y="11" width="22" height="16" rx="3" fill="none" stroke="#fff" stroke-width="2"/>
+                                            <path d="M9 13l10 8 10-8" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>
+                                            <strong>
+                                                Email
+                                            </strong>
+                                            <small>
+                                                tri.htm.68cdt@ntu.edu.vn
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.facebook.com/share/1E6H6hMqB4/" target="_blank" rel="noopener">
+                                        <svg viewBox="0 0 38 38" aria-hidden="true">
+                                            <rect width="38" height="38" rx="9" fill="#1877f2"/>
+                                            <svg x="7" y="7" width="24" height="24" viewBox="0 0 24 24">
+                                                <path fill="#fff" d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.6V13h2.7v8h3.2z"/>
+                                            </svg>
+                                        </svg>
+                                        <span>
+                                            <strong>
+                                                Facebook
+                                            </strong>
+                                            <small>
+                                                xue.lamthat.6706
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/tr1ssca?mdxt=NDF6YTg2eHIyOXhm" target="_blank" rel="noopener">
+                                        <svg viewBox="0 0 38 38" aria-hidden="true">
+                                            <defs>
+                                                <linearGradient id="ig" x1="0" y1="1" x2="1" y2="0">
+                                                    <stop offset="0" stop-color="#feda75"/>
+                                                    <stop offset=".35" stop-color="#fa7e1e"/>
+                                                    <stop offset=".6" stop-color="#d62976"/>
+                                                    <stop offset="1" stop-color="#4f5bd5"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <rect width="38" height="38" rx="9" fill="url(#ig)"/>
+                                            <rect x="9" y="9" width="20" height="20" rx="6" fill="none" stroke="#fff" stroke-width="2"/>
+                                            <circle cx="19" cy="19" r="4.6" fill="none" stroke="#fff" stroke-width="2"/>
+                                            <circle cx="25" cy="13" r="1.4" fill="#fff"/>
+                                        </svg>
+                                        <span>
+                                            <strong>
+                                                Instagram
+                                            </strong>
+                                            <small>
+                                                @tr1ssca
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://x.com/trissca2609" target="_blank" rel="noopener">
+                                        <svg viewBox="0 0 38 38" aria-hidden="true">
+                                            <rect width="38" height="38" rx="9" fill="#000000"/>
+                                            <g transform="translate(7, 7)">
+                                                <path fill="#ffffff" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+                                            </g>
+                                        </svg>
+                                        <span>
+                                            <strong>
+                                                X
+                                            </strong>
+                                            <small>
+                                                Minhtri2609
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="github-placeholder" href="#" aria-label="GitHub – cập nhật liên kết sau" title="Bạn có thể thay href bằng liên kết GitHub của mình">
+                                        <svg viewBox="0 0 38 38" aria-hidden="true">
+                                            <rect width="38" height="38" rx="9" fill="#24292f"/>
+                                            <path fill="#fff" d="M19 7.2a11.8 11.8 0 0 0-3.73 23c.59.11.81-.25.81-.57v-2.05c-3.3.72-4-1.4-4-1.4-.54-1.37-1.32-1.74-1.32-1.74-1.08-.74.08-.73.08-.73 1.19.08 1.82 1.23 1.82 1.23 1.06 1.82 2.78 1.29 3.46.98.11-.77.42-1.29.76-1.59-2.64-.3-5.42-1.32-5.42-5.88 0-1.3.46-2.36 1.23-3.19-.12-.3-.53-1.51.12-3.15 0 0 1-.32 3.25 1.22a11.3 11.3 0 0 1 5.92 0c2.25-1.54 3.25-1.22 3.25-1.22.65 1.64.24 2.85.12 3.15.77.83 1.23 1.89 1.23 3.19 0 4.57-2.78 5.57-5.43 5.87.43.37.81 1.09.81 2.2v3.27c0 .32.22.69.82.57A11.8 11.8 0 0 0 19 7.2Z"/>
+                                        </svg>
+                                        <span>
+                                            <strong>
+                                                GitHub
+                                            </strong>
+                                            <small>
+                                                Liên kết sẽ được cập nhật
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form class="panel" id="form" novalidate>
+                            <label for="n">
+                                Họ và tên
+                            </label>
+                            <input id="n" required>
+                            <label for="e">
+                                Email
+                            </label>
+                            <input id="e" type="email" required>
+                            <label for="s">
+                                Chủ đề
+                            </label>
+                            <input id="s" required>
+                            <label for="m">
+                                Nội dung tin nhắn
+                            </label>
+                            <textarea id="m" rows="4" required>
+                            </textarea>
+                            <button class="btn" type="submit">
+                                Gửi liên hệ
+                            </button>
+                            <p class="note">
+                                Biểu mẫu này là giao diện minh hoạ. Chưa kết nối máy chủ nên chưa thể gửi liên hệ.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div class="ft">
+                <div class="sh" aria-hidden="true">
+                    <i class="sq s1">
+                    </i>
+                    <i class="sq s2">
+                    </i>
+                    <i class="sq s3">
+                    </i>
+                    <i class="ci c1">
+                    </i>
+                    <i class="ci c2">
+                    </i>
+                    <i class="ci c3">
+                    </i>
+                    <svg viewBox="0 0 2400 120" preserveAspectRatio="none">
+                        <path fill="rgba(103,232,249,.12)" d="M0 60 C200 20 400 100 600 60 S1000 100 1200 60 S1600 100 1800 60 S2200 100 2400 60 V120 H0Z"/>
+                    </svg>
+                    <svg viewBox="0 0 2400 120" preserveAspectRatio="none">
+                        <path fill="rgba(255,255,255,.08)" d="M0 60 C200 20 400 100 600 60 S1000 100 1200 60 S1600 100 1800 60 S2200 100 2400 60 V120 H0Z"/>
+                    </svg>
+                </div>
+                <div class="wrap ft-in">
+                    <a class="logo f" href="#home" aria-label="Hà Lâm – về đầu trang">
+                        <span class="l1">
+                            HÀ
+                        </span>
+                        <span class="l2">
+                            LÂM
+                        </span>
+                    </a>
+                    <p>
+                        Đây là website cá nhân của Hà Trần Minh Trí, nơi lưu trữ và chia sẻ kiến thức, tài liệu học tập.
+                    </p>
+                    <ul class="soc">
+                        <li>
+                            <a href="mailto:tri.htm.68cdt@ntu.edu.vn" aria-label="Email" title="Email">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M4 8l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/share/1E6H6hMqB4/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.6V13h2.7v8h3.2z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/tr1ssca?mdxt=NDF6YTg2eHIyOXhm" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="17" cy="7" r="1.2" fill="currentColor"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://x.com/trissca2609" target="_blank" rel="noopener" aria-label="Twitter" title="Twitter">
+                                <svg viewBox="0 0 38 38" aria-hidden="true">
+                                    <rect width="38" height="38" rx="9" fill="transparent"/>
+                                    <g transform="translate(7, 7)">
+                                        <path fill="#ffffff" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+                                    </g>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="github-placeholder" href="#" aria-label="GitHub – cập nhật liên kết sau" title="Bạn có thể thay href bằng liên kết GitHub của mình">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M12 2.2a9.8 9.8 0 0 0-3.1 19.1c.49.09.67-.21.67-.48v-1.7c-2.75.6-3.34-1.17-3.34-1.17-.45-1.14-1.1-1.45-1.1-1.45-.9-.62.07-.61.07-.61 1 .07 1.52 1.03 1.52 1.03.88 1.52 2.32 1.08 2.88.82.09-.64.35-1.08.63-1.33-2.2-.25-4.52-1.1-4.52-4.9 0-1.08.39-1.97 1.03-2.66-.1-.25-.44-1.26.1-2.62 0 0 .84-.27 2.71 1.02a9.4 9.4 0 0 1 4.94 0c1.88-1.29 2.71-1.02 2.71-1.02.54 1.36.2 2.37.1 2.62.64.69 1.03 1.57 1.03 2.66 0 3.81-2.32 4.65-4.53 4.9.36.31.67.91.67 1.84v2.57c0 .27.18.58.68.48A9.8 9.8 0 0 0 12 2.2Z"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fb">
+                <div class="wrap">
+                    <p>
+                        © 2026 Hà Lâm - WEBSITE này dành cho cá nhân, vui lòng liên hệ để gỡ nội dung nếu liên quan. Xin cảm ơn!
+                    </p>
+                    <div class="fl">
+                        <a href="#home">
+                            Trang chủ
+                        </a>
+                        <a href="#about">
+                            Giới thiệu
+                        </a>
+                        <a href="#contact">
+                            Liên hệ
+                        </a>
+                    </div>
+                    <span class="designer-credit">
+                        <i>Designed by <strong>Minh Tri</strong></i>
+                    </span>
+                </div>
+            </div>
+        </footer>
+        <div id="toast" role="status">
+        </div>
+        <script src="clock.js"></script>
 <script>
 /* ===== Danh mục ===== */
-const CATS=["Tài liệu đại cương","Toán học và khoa học cơ bản","Vật lý và hóa học","Tin học và lập trình","Cơ sở ngành Kỹ thuật Cơ điện tử","Điện – Điện tử","Hệ thống nhúng (Embedded Systems)","Internet of Things (IoT)","Cơ khí và điều khiển tự động","Tài liệu tham khảo và nghiên cứu"];
-
+const CATS = ["Tài liệu đại cương", "Toán học và khoa học cơ bản", "Vật lý và hóa học", "Tin học và lập trình", "Cơ sở ngành Kỹ thuật Cơ điện tử", "Điện – Điện tử", "Hệ thống nhúng (Embedded Systems)", "Internet of Things (IoT)", "Cơ khí và điều khiển tự động", "Tài liệu tham khảo và nghiên cứu"];
 /* ===== DỮ LIỆU MẪU TÀI LIỆU – thay bằng dữ liệu thật =====
    [chỉ số danh mục, tên, mô tả, định dạng, ngày (YYYY-MM-DD), đường dẫn tệp]
    Để trống đường dẫn => hiện "Chưa có tài liệu".
    Khi có tệp, điền ví dụ "files/giai-tich-1.pdf" (đặt tệp cạnh index.html). */
-const DOCS=[
-[0,"Tóm tắt môn Pháp luật đại cương","Mẫu: tóm tắt các nội dung trọng tâm của môn học.","PDF","2026-09-10",""],
-[1,"Bài tập Giải tích 1","Mẫu: tuyển tập bài tập kèm hướng dẫn giải.","PDF","2026-08-22",""],
-[1,"Đại số tuyến tính – ghi chú","Mẫu: ghi chú lý thuyết và ví dụ minh họa.","DOCX","2026-07-30",""],
-[2,"Vật lý 1 – đề cương ôn tập","Mẫu: hệ thống câu hỏi ôn tập theo chương.","PDF","2026-06-15",""],
-[2,"Hóa học đại cương – bài giảng","Mẫu: slide bài giảng theo từng chương.","PPTX","2026-05-20",""],
-[3,"Nhập môn lập trình C","Mẫu: kiến thức nền tảng và bài tập thực hành.","PDF","2026-10-05",""],
-[3,"Bài tập lập trình C/C++","Mẫu: mã nguồn bài tập đóng gói.","ZIP","2026-09-28",""],
-[4,"Vẽ kỹ thuật – tài liệu tham khảo","Mẫu: quy ước bản vẽ và bài tập.","PDF","2026-04-18",""],
-[5,"Mạch điện – tổng hợp công thức","Mẫu: bảng công thức và ví dụ tính toán.","XLSX","2026-10-12",""],
-[6,"Lập trình vi điều khiển cơ bản","Mẫu: GPIO, timer, ngắt và giao tiếp UART.","PDF","2026-10-20",""],
-[7,"Giao thức MQTT trong IoT","Mẫu: mô hình publish/subscribe và ví dụ.","PPTX","2026-10-28",""],
-[8,"Điều khiển PID – nhập môn","Mẫu: nguyên lý và cách hiệu chỉnh tham số.","PDF","2026-09-02",""],
-[9,"Danh mục tài liệu nghiên cứu IoT","Mẫu: danh sách bài báo và sách đáng đọc.","DOCX","2026-11-01",""]
-].map(([c,t,d,f,dt,u])=>({c,t,d,f,dt,u}));
-
-const ARTS=[
-["Tổng quan về ngành Kỹ thuật Cơ điện tử","Cơ khí, điện tử và điều khiển kết hợp với nhau như thế nào.","2026-10-01",210],
-["Hệ thống nhúng là gì?","Khái niệm, thành phần và ví dụ quen thuộc.","2026-10-08",190],
-["Internet of Things và ứng dụng trong đời sống","Từ nhà thông minh đến nông nghiệp công nghệ cao.","2026-10-15",180],
-["Vai trò của cảm biến trong tự động hóa","Các loại cảm biến thường gặp và cách chọn.","2026-10-22",200],
-["Vi điều khiển và ứng dụng","Cách một vi điều khiển đọc cảm biến và điều khiển thiết bị.","2026-10-29",220],
-["Những kiến thức cơ bản về điện tử","Điện trở, tụ điện, diode, transistor trong một bài viết.","2026-11-02",170],
-["Các dự án học tập liên quan đến IoT","Gợi ý dự án nhỏ để thực hành từng bước.","2026-11-04",195]
+const DOCS = [
+    [0, "Tóm tắt môn Pháp luật đại cương", "Mẫu: tóm tắt các nội dung trọng tâm của môn học.", "PDF", "2026-09-10", ""],
+    [1, "Bài tập Giải tích 1", "Mẫu: tuyển tập bài tập kèm hướng dẫn giải.", "PDF", "2026-08-22", ""],
+    [1, "Đại số tuyến tính – ghi chú", "Mẫu: ghi chú lý thuyết và ví dụ minh họa.", "DOCX", "2026-07-30", ""],
+    [2, "Vật lý 1 – đề cương ôn tập", "Mẫu: hệ thống câu hỏi ôn tập theo chương.", "PDF", "2026-06-15", ""],
+    [2, "Hóa học đại cương – bài giảng", "Mẫu: slide bài giảng theo từng chương.", "PPTX", "2026-05-20", ""],
+    [3, "Nhập môn lập trình C", "Mẫu: kiến thức nền tảng và bài tập thực hành.", "PDF", "2026-10-05", ""],
+    [3, "Bài tập lập trình C/C++", "Mẫu: mã nguồn bài tập đóng gói.", "ZIP", "2026-09-28", ""],
+    [4, "Vẽ kỹ thuật – tài liệu tham khảo", "Mẫu: quy ước bản vẽ và bài tập.", "PDF", "2026-04-18", ""],
+    [5, "Mạch điện – tổng hợp công thức", "Mẫu: bảng công thức và ví dụ tính toán.", "XLSX", "2026-10-12", ""],
+    [6, "Lập trình vi điều khiển cơ bản", "Mẫu: GPIO, timer, ngắt và giao tiếp UART.", "PDF", "2026-10-20", ""],
+    [7, "Giao thức MQTT trong IoT", "Mẫu: mô hình publish/subscribe và ví dụ.", "PPTX", "2026-10-28", ""],
+    [8, "Điều khiển PID – nhập môn", "Mẫu: nguyên lý và cách hiệu chỉnh tham số.", "PDF", "2026-09-02", ""],
+    [9, "Danh mục tài liệu nghiên cứu IoT", "Mẫu: danh sách bài báo và sách đáng đọc.", "DOCX", "2026-11-01", ""]
+].map(([c, t, d, f, dt, u]) => ({ c, t, d, f, dt, u }));
+const ARTS = [
+    ["Tổng quan về ngành Kỹ thuật Cơ điện tử", "Cơ khí, điện tử, lập trình và điều khiển phối hợp để tạo nên các hệ thống thông minh.", "2026-11-08", 210, "articles/tong-quan-co-dien-tu.html", "articles/images/mechatronics-overview.webp"],
+    ["Hệ thống nhúng là gì?", "Tìm hiểu cấu trúc phần cứng, firmware, thời gian thực và ứng dụng trong thiết bị.", "2026-11-08", 190, "articles/he-thong-nhung-la-gi.html", "articles/images/embedded-systems.webp"],
+["IoT (Internet of Things) là gì?", "Cách thiết bị kết nối, gửi dữ liệu lên mạng và ứng dụng từ nhà thông minh đến nông nghiệp.", "2026-11-10", 180, "articles/internet-of-things.html", "articles/images/internet-of-things.webp"],    ["Vai trò của cảm biến trong tự động hóa", "Các loại cảm biến thường gặp và cách chọn.", "2026-10-22", 200, "", ""],
+    ["Vi điều khiển và ứng dụng", "Cách một vi điều khiển đọc cảm biến và điều khiển thiết bị.", "2026-10-29", 220, "", ""],
+    ["Những kiến thức cơ bản về điện tử", "Điện trở, tụ điện, diode, transistor trong một bài viết.", "2026-11-02", 170, "", ""],
+    ["Các dự án học tập liên quan đến IoT", "Gợi ý dự án nhỏ để thực hành từng bước.", "2026-11-04", 195, "", ""]
 ];
-
-const PROJS=[
-["Dự án điện tử","Mạch nguồn điều chỉnh được","Mẫu: thiết kế và đo kiểm mạch nguồn DC.","Altium, đồng hồ đo","Ý tưởng",205],
-["Dự án lập trình","Chương trình quản lý dữ liệu cảm biến","Mẫu: đọc và lưu dữ liệu cảm biến bằng C++.","C/C++","Ý tưởng",215],
-["Dự án hệ thống nhúng","Bộ đo nhiệt độ hiển thị LCD","Mẫu: vi điều khiển đọc cảm biến và hiển thị.","MCU, cảm biến, LCD","Ý tưởng",185],
-["Dự án IoT","Giám sát môi trường qua MQTT","Mẫu: gửi số liệu lên dashboard theo thời gian thực.","ESP32, MQTT","Ý tưởng",175],
-["Dự án cơ điện tử","Cánh tay robot mini","Mẫu: kết hợp cơ khí, động cơ và điều khiển.","Servo, Arduino","Ý tưởng",225]
+const PROJS = [
+    ["Dự án điện tử", "Mạch nguồn điều chỉnh được", "Mẫu: thiết kế và đo kiểm mạch nguồn DC.", "Altium, đồng hồ đo", "Ý tưởng", 205],
+    ["Dự án lập trình", "Chương trình quản lý dữ liệu cảm biến", "Mẫu: đọc và lưu dữ liệu cảm biến bằng C++.", "C/C++", "Ý tưởng", 215],
+    ["Dự án hệ thống nhúng", "Bộ đo nhiệt độ hiển thị LCD", "Mẫu: vi điều khiển đọc cảm biến và hiển thị.", "MCU, cảm biến, LCD", "Ý tưởng", 185],
+    ["Dự án IoT", "Giám sát môi trường qua MQTT", "Mẫu: gửi số liệu lên dashboard theo thời gian thực.", "ESP32, MQTT", "Ý tưởng", 175],
+    ["Dự án cơ điện tử", "Cánh tay robot mini", "Mẫu: kết hợp cơ khí, động cơ và điều khiển.", "Servo, Arduino", "Ý tưởng", 225]
 ];
-
-const $=s=>document.querySelector(s);
-const fmtDate=d=>d.split("-").reverse().join("/");
-function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),3500)}
-
+const $ = s => document.querySelector(s);
+const fmtDate = d => d.split("-").reverse().join("/");
+function toast(t) { const e = $("#toast"); e.textContent = t; e.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove("show"), 3500); }
 /* ===== Thư viện tài liệu: tìm kiếm, lọc, sắp xếp, xem thêm ===== */
-const PAGE=6;let shown=PAGE;
-$("#cat").innerHTML='<option value="-1">Tất cả danh mục</option>'+CATS.map((c,i)=>`<option value="${i}">${c}</option>`).join("");
-const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d");
-function renderDocs(){
- const q=norm($("#q").value.trim()),cat=+$("#cat").value,dir=$("#sort").value==="asc"?1:-1;
- const list=DOCS.filter(d=>(cat<0||d.c===cat)&&norm(d.t).includes(q)).sort((a,b)=>dir*a.dt.localeCompare(b.dt));
- const part=list.slice(0,shown);
- $("#count").textContent=list.length?`Hiển thị ${part.length} / ${list.length} tài liệu`:"";
- $("#docs").innerHTML=part.length?part.map(d=>`<article class="card"><div class="body"><span class="tag">${CATS[d.c]}</span><h3>${d.t}</h3><p>${d.d}</p>
+const PAGE = 6;
+let shown = PAGE;
+$("#cat").innerHTML = '<option value="-1">Tất cả danh mục</option>' + CATS.map((c, i) => `<option value="${i}">${c}</option>`).join("");
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+function renderDocs() {
+    const q = norm($("#q").value.trim()), cat = +$("#cat").value, dir = $("#sort").value === "asc" ? 1 : -1;
+    const list = DOCS.filter(d => (cat < 0 || d.c === cat) && norm(d.t).includes(q)).sort((a, b) => dir * a.dt.localeCompare(b.dt));
+    const part = list.slice(0, shown);
+    $("#count").textContent = list.length ? `Hiển thị ${part.length} / ${list.length} tài liệu` : "";
+    $("#docs").innerHTML = part.length ? part.map(d => `<article class="card"><div class="body"><span class="tag">${CATS[d.c]}</span><h3>${d.t}</h3><p>${d.d}</p>
  <div class="meta"><span class="fmt">${d.f}</span><time datetime="${d.dt}">Cập nhật ${fmtDate(d.dt)}</time></div>
- <div class="act">${d.u?`<a class="btn sm" href="${d.u}" target="_blank" rel="noopener">Xem tài liệu</a><a class="btn sm ghost" href="${d.u}" download>Tải xuống</a>`:`<span class="nofile">Chưa có tài liệu</span>`}</div></div></article>`).join("")
- :`<div class="empty"><strong>Không tìm thấy tài liệu phù hợp.</strong><br>Thử đổi từ khóa hoặc chọn "Tất cả danh mục".</div>`;
- $("#more").style.display=list.length>shown?"block":"none";
+ <div class="act">${d.u ? `<a class="btn sm" href="${d.u}" target="_blank" rel="noopener">Xem tài liệu</a><a class="btn sm ghost" href="${d.u}" download>Tải xuống</a>` : `<span class="nofile">Chưa có tài liệu</span>`}</div></div></article>`).join("")
+        : `<div class="empty"><strong>Không tìm thấy tài liệu phù hợp.</strong><br>Thử đổi từ khóa hoặc chọn "Tất cả danh mục".</div>`;
+    $("#more").style.display = list.length > PAGE ? "block" : "none";
+    $("#more").textContent = part.length < list.length ? "Xem thêm" : "Rút gọn";
+    $("#more").setAttribute("aria-expanded", part.length === list.length ? "true" : "false");
 }
-["#q","#cat","#sort"].forEach(s=>$(s).addEventListener("input",()=>{shown=PAGE;renderDocs()}));
-$("#more").addEventListener("click",()=>{shown+=PAGE;renderDocs()});
+["#q", "#cat", "#sort"].forEach(s => $(s).addEventListener("input", () => { shown = PAGE; renderDocs(); }));
+$("#more").addEventListener("click", () => {
+    const total = DOCS.filter(d => { const q = norm($("#q").value.trim()), cat = +$("#cat").value; return (cat < 0 || d.c === cat) && norm(d.t).includes(q); }).length;
+    shown = shown >= total ? PAGE : shown + PAGE;
+    renderDocs();
+});
 renderDocs();
-
 /* ===== Môn đại cương năm nhất =====
    [nhóm môn, tên môn, đường dẫn tệp]. Để trống đường dẫn => "Chưa có tài liệu". Chỉnh theo chương trình thực tế. */
-const FRESH=[
-["Lý luận chính trị","Triết học Mác – Lênin",""],
-["Lý luận chính trị","Kinh tế chính trị Mác – Lênin",""],
-["Lý luận chính trị","Chủ nghĩa xã hội khoa học",""],
-["Pháp luật","Pháp luật đại cương",""],
-["Toán và khoa học cơ bản","Giải tích 1",""],
-["Toán và khoa học cơ bản","Đại số tuyến tính",""],
-["Toán và khoa học cơ bản","Vật lý 1",""],
-["Toán và khoa học cơ bản","Hóa học đại cương",""],
-["Tin học và ngoại ngữ","Nhập môn lập trình",""],
-["Tin học và ngoại ngữ","Tiếng Anh cơ bản",""]
-].map(([g,n,u])=>({g,n,u}));
-$("#fg").innerHTML='<option value="">Tất cả nhóm môn</option>'+[...new Set(FRESH.map(f=>f.g))].map(g=>`<option>${g}</option>`).join("");
-function renderFresh(){
- const g=$("#fg").value;
- $("#fresh").innerHTML=FRESH.filter(f=>!g||f.g===g).map(f=>`<article class="card"><div class="body"><span class="tag">${f.g}</span><h3>${f.n}</h3><p>Mẫu: đề cương, bài giảng và bài tập của môn học.</p><div class="act">${f.u?`<a class="btn sm" href="${f.u}" target="_blank" rel="noopener">Xem tài liệu</a><a class="btn sm ghost" href="${f.u}" download>Tải xuống</a>`:`<span class="nofile">Chưa có tài liệu</span>`}</div></div></article>`).join("");
-}
-$("#fg").addEventListener("input",renderFresh);renderFresh();
+const FRESH = [
+    ["Lý luận chính trị", "Triết học Mác – Lênin", ""],
+    ["Lý luận chính trị", "Kinh tế chính trị Mác – Lênin", ""],
+    ["Lý luận chính trị", "Tư duy phản biện", ""],
+    ["Toán và khoa học cơ bản", "Toán ứng dụng 1", ""],
+    ["Toán và khoa học cơ bản", "Toán ứng dụng 2", ""],
+    ["Toán và khoa học cơ bản", "Vật lý ứng dụng 1", ""],
+    ["Toán và khoa học cơ bản", "Hóa học đại cương B", ""],
+    ["Ngoại ngữ", "Tiếng Anh sơ cấp", ""],
+    ["Ngoại ngữ", "Tiếng anh tiền trung cấp", ""],
+    ["Ngoại ngữ", "Tiếng Anh giao tiếp 1", ""],
+    ["Ngoại ngữ", "Tiếng Anh học thuật", ""],
+    ["Môn nhập Ngành", "Kỹ thuật điện - điện tử", ""],
+    ["Môn nhập Ngành", "Tin học ứng dụng trong cơ điện tử", ""],
+    ["Môn nhập Ngành", "Nhập môn lập trình", ""],
+    ["Môn nhập Ngành", "Vẽ kỹ thuật", ""]
+]
+.map(([g, n, u]) => ({ g, n, u }));
+$("#fg").innerHTML = '<option value="">Tất cả nhóm môn</option>' + [...new Set(FRESH.map(f => f.g))].map(g => `<option>${g}</option>`).join("");
+const FRESH_PAGE = 6;
+let freshShown = FRESH_PAGE;
 
+function renderFresh() {
+    const g = $("#fg").value;
+    const list = FRESH.filter(f => !g || f.g === g);
+    const part = list.slice(0, freshShown);
+    $("#fresh").innerHTML = part.map(f => `<article class="card"><div class="body"><span class="tag">${f.g}</span><h3>${f.n}</h3><p>Mẫu: đề cương, bài giảng và bài tập của môn học.</p><div class="act">${f.u ? `<a class="btn sm" href="${f.u}" target="_blank" rel="noopener">Xem tài liệu</a><a class="btn sm ghost" href="${f.u}" download>Tải xuống</a>` : `<span class="nofile">Chưa có tài liệu</span>`}</div></div></article>`).join("");
+    $("#moreFresh").style.display = list.length > FRESH_PAGE ? "block" : "none";
+    $("#moreFresh").textContent = part.length < list.length ? "Xem thêm" : "Rút gọn";
+}
+
+$("#fg").addEventListener("input", () => {
+    freshShown = FRESH_PAGE;
+    renderFresh();
+});
+
+$("#moreFresh").addEventListener("click", () => {
+    const g = $("#fg").value;
+    const total = FRESH.filter(f => !g || f.g === g).length;
+    freshShown = freshShown >= total ? FRESH_PAGE : freshShown + FRESH_PAGE;
+    renderFresh();
+});
+
+renderFresh();
 /* ===== Bài viết & dự án ===== */
-$("#arts").innerHTML=ARTS.map(a=>`<article class="card"><div class="thumb" style="--h:${a[3]}">Ảnh minh họa</div><div class="body"><h3>${a[0]}</h3><p>${a[1]}</p><div class="meta"><time datetime="${a[2]}">${fmtDate(a[2])}</time></div><div class="act"><button class="btn sm ghost read">Đọc tiếp</button></div></div></article>`).join("");
-document.querySelectorAll(".read").forEach(b=>b.addEventListener("click",()=>toast("Bài viết minh họa: nội dung đầy đủ chưa được đăng.")));
-$("#projs").innerHTML=PROJS.map(p=>`<article class="card"><div class="thumb" style="--h:${p[5]}">${p[0]}</div><div class="body"><h3>${p[1]}</h3><p>${p[2]}</p><div class="meta"><span>${p[3]}</span><span class="fmt">${p[4]}</span></div></div></article>`).join("");
-
-/* ===== Biểu mẫu liên hệ (chỉ minh họa, không giả lập gửi thành công) ===== */
-$("#form").addEventListener("submit",e=>{
- e.preventDefault();
- const ok=[...e.target.querySelectorAll("[required]")].every(i=>i.value.trim()&&i.checkValidity());
- toast(ok?"Đây là giao diện minh họa nên tin nhắn chưa được gửi đi.":"Vui lòng điền đầy đủ họ tên, email hợp lệ, chủ đề và nội dung.");
+$("#arts").innerHTML = ARTS.map(a => {
+    const image = a[5]
+        ? `<img class="article-cover" src="${a[5]}" alt="Minh họa chủ đề ${a[0]}" loading="lazy" width="800" height="450">`
+        : `<div class="thumb" style="--h:${a[3]}">Ảnh minh họa</div>`;
+    const action = a[4]
+        ? `<a class="btn sm ghost" href="${a[4]}">Đọc bài viết</a>`
+        : `<button class="btn sm ghost read" type="button">Đọc tiếp</button>`;
+    return `<article class="card">${image}<div class="body"><h3>${a[0]}</h3><p>${a[1]}</p><div class="meta"><time datetime="${a[2]}">${fmtDate(a[2])}</time></div><div class="act">${action}</div></div></article>`;
+}).join("");
+document.querySelectorAll(".read").forEach(button => {
+    button.addEventListener("click", () => toast("Bài viết này sẽ được bổ sung trong bản cập nhật tiếp theo."));
 });
-
-/* ===== Menu: thu gọn trên điện thoại + đánh dấu mục đang xem ===== */
-const nav=$("#nav"),btn=$("#menuBtn");
-btn.addEventListener("click",()=>btn.setAttribute("aria-expanded",nav.classList.toggle("open")));
-nav.addEventListener("click",e=>{if(e.target.closest("a")){nav.classList.remove("open");btn.setAttribute("aria-expanded","false")}});
-new MutationObserver(()=>btn.setAttribute("aria-label",btn.getAttribute("aria-expanded")==="true"?"Đóng menu":"Mở menu")).observe(btn,{attributes:true,attributeFilter:["aria-expanded"]});
-const links=[...nav.querySelectorAll("a")],secs=links.map(a=>$(a.getAttribute("href")));
-function spy(){
- const y=scrollY+120;let i=0;
- secs.forEach((s,k)=>{if(s.offsetTop<=y)i=k});
- if(innerHeight+scrollY>=document.body.scrollHeight-4)i=secs.length-1;
- links.forEach((a,k)=>a.classList.toggle("active",k===i));
- if(spy.l!==i){spy.l=i;const a=links[i];if(nav.scrollWidth>nav.clientWidth)nav.scrollTo({left:a.offsetLeft-(nav.clientWidth-a.offsetWidth)/2,behavior:"smooth"})} // đưa mục đang xem vào giữa hàng menu
+$("#projs").innerHTML = PROJS.map(p => `<article class="card"><div class="thumb" style="--h:${p[5]}">${p[0]}</div><div class="body"><h3>${p[1]}</h3><p>${p[2]}</p><div class="meta"><span>${p[3]}</span><span class="fmt">${p[4]}</span></div></div></article>`).join("");
+/* ===== Công cụ điện tử: PWM và truyền động hộp số ===== */
+function readNumber(id) {
+    const input = document.getElementById(id);
+    const value = Number(input.value);
+    return Number.isFinite(value) ? value : NaN;
 }
-addEventListener("scroll",spy,{passive:true});spy();
+function calculatePwm() {
+    const voltage = readNumber("pwmVoltage");
+    const duty = readNumber("pwmDuty");
+    const frequency = readNumber("pwmFrequency");
+    const result = $("#pwmResult");
+    if (!(voltage > 0) || duty < 0 || duty > 100 || !(frequency > 0)) {
+        result.classList.add("is-error");
+        result.querySelector("#pwmAverage").textContent = "Kiểm tra dữ liệu";
+        result.querySelector("#pwmPeriod").textContent = "—";
+        result.querySelector("#pwmOnOff").textContent = "—";
+        return;
+    }
+    const periodMs = 1000 / frequency;
+    const onMs = periodMs * duty / 100;
+    const offMs = periodMs - onMs;
+    result.classList.remove("is-error");
+    $("#pwmAverage").textContent = `${(voltage * duty / 100).toFixed(2)} V`;
+    $("#pwmPeriod").textContent = `${periodMs >= 1 ? periodMs.toFixed(2) : (periodMs * 1000).toFixed(2) + " µs"}` + (periodMs >= 1 ? " ms" : "");
+    $("#pwmOnOff").textContent = `${onMs >= 1 ? onMs.toFixed(2) + " ms" : (onMs * 1000).toFixed(2) + " µs"} / ${offMs >= 1 ? offMs.toFixed(2) + " ms" : (offMs * 1000).toFixed(2) + " µs"}`;
+}
+function calculateGear() {
+    const rpm = readNumber("motorRpm");
+    const torque = readNumber("motorTorque");
+    const ratio = readNumber("gearRatio");
+    const efficiency = readNumber("gearEfficiency");
+    const result = $("#gearResult");
+    if (!(rpm > 0) || !(torque > 0) || !(ratio >= 1) || !(efficiency > 0 && efficiency <= 100)) {
+        result.classList.add("is-error");
+        $("#gearOutputRpm").textContent = "Kiểm tra dữ liệu";
+        $("#gearOutputTorque").textContent = "—";
+        $("#gearOutputPower").textContent = "—";
+        return;
+    }
+    const outputRpm = rpm / ratio;
+    const outputTorque = torque * ratio * efficiency / 100;
+    const outputPower = outputTorque * 2 * Math.PI * outputRpm / 60;
+    result.classList.remove("is-error");
+    $("#gearOutputRpm").textContent = `${outputRpm.toFixed(2)} vòng/phút`;
+    $("#gearOutputTorque").textContent = `${outputTorque.toFixed(2)} N·m`;
+    $("#gearOutputPower").textContent = `${outputPower.toFixed(2)} W`;
+}
+$("#calculatePwm").addEventListener("click", calculatePwm);
+$("#calculateGear").addEventListener("click", calculateGear);
+["pwmVoltage", "pwmDuty", "pwmFrequency"].forEach(id => $("#" + id).addEventListener("input", calculatePwm));
+["motorRpm", "motorTorque", "gearRatio", "gearEfficiency"].forEach(id => $("#" + id).addEventListener("input", calculateGear));
+calculatePwm();
+calculateGear();
+/* GitHub đang là liên kết chờ chủ website cập nhật. */
+document.querySelectorAll(".github-placeholder").forEach(link => {
+    link.addEventListener("click", event => {
+        if (link.getAttribute("href") === "#") {
+            event.preventDefault();
+            toast("Hãy thay href của biểu tượng GitHub bằng đường dẫn hồ sơ của bạn.");
+        }
+    });
+});
+/* ===== Biểu mẫu liên hệ (chỉ minh họa, không giả lập gửi thành công) ===== */
+$("#form").addEventListener("submit", e => {
+    e.preventDefault();
+    const ok = [...e.target.querySelectorAll("[required]")].every(i => i.value.trim() && i.checkValidity());
+    toast(ok ? "Đây là giao diện minh họa nên tin nhắn chưa được gửi đi." : "Vui lòng điền đầy đủ họ tên, email hợp lệ, chủ đề và nội dung.");
+});
+/* ===== Menu: thu gọn trên điện thoại + đánh dấu mục đang xem ===== */
+const nav = $("#nav"), btn = $("#menuBtn");
+btn.addEventListener("click", () => btn.setAttribute("aria-expanded", nav.classList.toggle("open")));
+nav.addEventListener("click", e => { if (e.target.closest("a")) {
+    nav.classList.remove("open");
+    btn.setAttribute("aria-expanded", "false");
+} });
+new MutationObserver(() => btn.setAttribute("aria-label", btn.getAttribute("aria-expanded") === "true" ? "Đóng menu" : "Mở menu")).observe(btn, { attributes: true, attributeFilter: ["aria-expanded"] });
+const links = [...nav.querySelectorAll("a")], secs = links.map(a => $(a.getAttribute("href")));
+function spy() {
+    const y = scrollY + 120;
+    let i = 0;
+    secs.forEach((s, k) => { if (s.offsetTop <= y)
+        i = k; });
+    if (innerHeight + scrollY >= document.body.scrollHeight - 4)
+        i = secs.length - 1;
+    links.forEach((a, k) => a.classList.toggle("active", k === i));
+    if (spy.l !== i) {
+        spy.l = i;
+        const a = links[i];
+        if (nav.scrollWidth > nav.clientWidth)
+            nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: "smooth" });
+    } // đưa mục đang xem vào giữa hàng menu
+}
+addEventListener("scroll", spy, { passive: true });
+spy();
 /* ===== Tài khoản thử nghiệm (từ login.html): đã đăng nhập thì hiện chữ cái đầu của tên ===== */
-try{const u=JSON.parse(localStorage.getItem("demo_session")||"null"),a=$("#authLink");
-if(u&&u.name){a.textContent=u.name.trim().charAt(0).toUpperCase();a.title="Tài khoản: "+u.name;a.setAttribute("aria-label","Tài khoản của "+u.name)}}catch(e){}
-
+try {
+    const u = JSON.parse(localStorage.getItem("demo_session") || "null"), a = $("#authLink");
+    if (u && u.name) {
+        a.textContent = u.name.trim().charAt(0).toUpperCase();
+        a.title = "Tài khoản: " + u.name;
+        a.setAttribute("aria-label", "Tài khoản của " + u.name);
+    }
+}
+catch (e) { }
 /* ===== Chế độ sáng/tối (nhớ lựa chọn khi bấm) ===== */
-const root=document.documentElement,tb=$("#themeBtn");
-function applyTheme(t){root.dataset.theme=t;tb.setAttribute("aria-pressed",t==="dark");tb.setAttribute("aria-label",t==="dark"?"Chuyển sang giao diện sáng":"Chuyển sang giao diện tối")}
-applyTheme(root.dataset.theme||"light");
-tb.addEventListener("click",()=>{const t=root.dataset.theme==="dark"?"light":"dark";applyTheme(t);try{localStorage.setItem("theme",t)}catch(e){}});
-
+const root = document.documentElement, tb = $("#themeBtn");
+function applyTheme(t) { root.dataset.theme = t; tb.setAttribute("aria-pressed", t === "dark"); tb.setAttribute("aria-label", t === "dark" ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối"); }
+applyTheme(root.dataset.theme || "light");
+tb.addEventListener("click", () => { const t = root.dataset.theme === "dark" ? "light" : "dark"; applyTheme(t); try {
+    localStorage.setItem("theme", t);
+}
+catch (e) { } });
 /* ===== Tìm kiếm toàn trang: tài liệu, môn học, bài viết, dự án ===== */
-const sp=$("#sp"),sq=$("#sq"),sr=$("#sr"),sb=$("#searchBtn");
-const INDEX=[...DOCS.map(d=>({t:d.t,s:"Tài liệu học tập",id:"resources",q:d.t})),...FRESH.map(f=>({t:f.n,s:"Môn Đại cương năm nhất",id:"freshman"})),...ARTS.map(a=>({t:a[0],s:"Góc kiến thức",id:"articles"})),...PROJS.map(p=>({t:p[1],s:"Dự án",id:"projects"}))];
-function closeAll(){nav.classList.remove("open");btn.setAttribute("aria-expanded","false");sp.hidden=true;sb.setAttribute("aria-expanded","false")}
-sb.addEventListener("click",()=>{const open=sp.hidden;closeAll();if(open){sp.hidden=false;sb.setAttribute("aria-expanded","true");sq.focus()}});
-btn.addEventListener("click",()=>{sp.hidden=true;sb.setAttribute("aria-expanded","false")});
-sq.addEventListener("input",()=>{
- const q=norm(sq.value.trim());
- if(!q){sr.innerHTML="";return}
- const hit=INDEX.map((r,i)=>[r,i]).filter(([r])=>norm(r.t).includes(q)).slice(0,8);
- sr.innerHTML=hit.length?hit.map(([r,i])=>`<li><button data-i="${i}">${r.t}<small>${r.s}</small></button></li>`).join(""):'<li class="none">Không tìm thấy kết quả. Thử từ khóa khác.</li>';
+const sp = $("#sp"), sq = $("#sq"), sr = $("#sr"), sb = $("#searchBtn");
+const INDEX = [...DOCS.map(d => ({ t: d.t, s: "Tài liệu học tập", id: "resources", q: d.t })), ...FRESH.map(f => ({ t: f.n, s: "Môn Đại cương năm nhất", id: "freshman" })), ...ARTS.map(a => ({ t: a[0], s: "Góc kiến thức", id: "articles", h: a[4] })), { t: "Tính toán PWM", s: "Công cụ điện tử", id: "electronics" }, { t: "Tốc độ và mô-men hộp số", s: "Công cụ điện tử", id: "electronics" }, ...PROJS.map(p => ({ t: p[1], s: "Dự án", id: "projects" }))];
+let searchCloseTimer;
+function closeSearch() {
+    sp.classList.remove("is-open");
+    sb.setAttribute("aria-expanded", "false");
+    clearTimeout(searchCloseTimer);
+    searchCloseTimer = setTimeout(() => { sp.hidden = true; }, 260);
+}
+function closeAll() {
+    nav.classList.remove("open");
+    btn.setAttribute("aria-expanded", "false");
+    closeSearch();
+}
+function renderSearchSuggestions() {
+    const preferred = [
+        item => item.s === "Tài liệu học tập",
+        item => item.t.toLowerCase().includes("cơ điện tử"),
+        item => item.t.toLowerCase().includes("hệ thống nhúng"),
+        item => item.s === "Dự án"
+    ];
+    const picks = preferred.map(match => INDEX.findIndex(match))
+        .filter((index, position, all) => index >= 0 && all.indexOf(index) === position)
+        .slice(0, 4);
+    sr.innerHTML = picks.length
+        ? '<li class="search-caption">Gợi ý tìm kiếm</li>' + picks.map(index => {
+            const item = INDEX[index];
+            return `<li><button type="button" data-i="${index}"><span class="search-spark">⌕</span><span>${item.t}<small>${item.s}</small></span></button></li>`;
+        }).join("")
+        : '<li class="none">Nhập từ khóa để tìm tài liệu, bài viết và dự án.</li>';
+}
+sb.addEventListener("click", () => {
+    const shouldOpen = sp.hidden || !sp.classList.contains("is-open");
+    closeAll();
+    if (shouldOpen) {
+        clearTimeout(searchCloseTimer);
+        sp.hidden = false;
+        renderSearchSuggestions();
+        requestAnimationFrame(() => sp.classList.add("is-open"));
+        sb.setAttribute("aria-expanded", "true");
+        sq.focus();
+    }
 });
-sr.addEventListener("click",e=>{
- const b=e.target.closest("button");if(!b)return;
- const r=INDEX[b.dataset.i];
- if(r.q){$("#q").value=r.q;$("#cat").value="-1";shown=PAGE;renderDocs()}
- closeAll();document.getElementById(r.id).scrollIntoView();
+btn.addEventListener("click", () => closeSearch());
+sq.addEventListener("input", () => {
+    const q = norm(sq.value.trim());
+    if (!q) {
+        renderSearchSuggestions();
+        return;
+    }
+    const hit = INDEX.map((r, i) => [r, i]).filter(([r]) => norm(r.t).includes(q)).slice(0, 8);
+    sr.innerHTML = hit.length ? hit.map(([r, i]) => `<li><button data-i="${i}">${r.t}<small>${r.s}</small></button></li>`).join("") : '<li class="none">Không tìm thấy kết quả. Thử từ khóa khác.</li>';
 });
-document.addEventListener("click",e=>{if(!e.target.closest("header"))closeAll()});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAll()});
+sr.addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b)
+        return;
+    const r = INDEX[b.dataset.i];
+    if (r.h) {
+        closeAll();
+        window.location.href = r.h;
+        return;
+    }
+    if (r.q) {
+        $("#q").value = r.q;
+        $("#cat").value = "-1";
+        shown = PAGE;
+        renderDocs();
+    }
+    closeAll();
+    document.getElementById(r.id).scrollIntoView({ behavior: "smooth", block: "start" });
+});
+document.addEventListener("click", e => { if (!e.target.closest("header"))
+    closeAll(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape")
+    closeAll(); });
 /* ===== Footer: hiện dần khi cuộn tới ===== */
-const ft=$(".ft");ft.classList.add("rv");
-if("IntersectionObserver" in window)new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){ft.classList.add("in");o.disconnect()}},{threshold:.15}).observe(ft);else ft.classList.add("in");
+const ft = $(".ft");
+ft.classList.add("rv");
+if ("IntersectionObserver" in window)
+    new IntersectionObserver((es, o) => { if (es[0].isIntersecting) {
+        ft.classList.add("in");
+        o.disconnect();
+    } }, { threshold: .15 }).observe(ft);
+else
+    ft.classList.add("in");
 
 </script>
-<!-- Nút quay về đầu trang ở góc phải dưới cùng -->
-<a href="#home" id="backToTopBtn" aria-label="Quay về đầu trang" title="Về đầu trang">
- <svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M18 15l-6-6-6 6"/></svg>
-</a>
-
-<script>
+        <!-- Nút quay về đầu trang ở góc phải dưới cùng -->
+        <a href="#home" id="backToTopBtn" aria-label="Quay về đầu trang" title="Về đầu trang">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+                <path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M18 15l-6-6-6 6"/>
+            </svg>
+        </a>
+        <script>
 /* ... (giữ nguyên các đoạn mã JavaScript khác của bạn ở đây) ... */
-
 /* Thêm đoạn script điều khiển ẩn/hiện lịch và nút cuộn trang */
 const calToggle = document.getElementById("calToggle");
 const calWrap = document.getElementById("calCollapseWrap");
 calToggle.addEventListener("click", () => {
- const isExpanded = calToggle.getAttribute("aria-expanded") === "true";
- calToggle.setAttribute("aria-expanded", !isExpanded);
- calWrap.classList.toggle("collapsed", isExpanded);
+    const isExpanded = calToggle.getAttribute("aria-expanded") === "true";
+    calToggle.setAttribute("aria-expanded", !isExpanded);
+    calWrap.classList.toggle("collapsed", isExpanded);
 });
-
 const btp = document.getElementById("backToTopBtn");
 window.addEventListener("scroll", () => {
- if (window.scrollY > 300) { btp.classList.add("show"); } 
- else { btp.classList.remove("show"); }
+    if (window.scrollY > 300) {
+        btp.classList.add("show");
+    }
+    else {
+        btp.classList.remove("show");
+    }
 }, { passive: true });
+
 </script>
-
-<!-- ===== Hộp thoại GHI CHÚ ===== -->
-<div class="nm" id="nm" role="dialog" aria-modal="true" aria-labelledby="nmT" aria-hidden="true" data-mode="create">
- <div class="nm-box">
-  <div class="nm-h"><h3 id="nmT">Tạo ghi chú mới</h3><button type="button" class="nm-x" id="nmX" aria-label="Đóng">✕</button></div>
-  <div class="nm-b">
-   <div class="nm-ed">
-    <textarea id="nmTxt" maxlength="2000" placeholder="Viết ghi chú của bạn..." aria-label="Nội dung ghi chú"></textarea>
-    <div class="row"><small id="nmCnt">0/2000</small><button type="button" class="btn sm" id="nmSave">Lưu ghi chú</button></div>
-   </div>
-   <p class="note" id="nmMsg" role="status" aria-live="polite"></p>
-   <div class="nm-tools"><button type="button" class="rm" id="nmAll">Xoá tất cả</button></div>
-   <ul class="nm-list" id="nmList"></ul>
-  </div>
- </div>
-</div>
-
-<script>
+        <!-- ===== Hộp thoại GHI CHÚ ===== -->
+        <div class="nm" id="nm" role="dialog" aria-modal="true" aria-labelledby="nmT" aria-hidden="true" data-mode="create">
+            <div class="nm-box">
+                <div class="nm-h">
+                    <h3 id="nmT">
+                        Tạo ghi chú mới
+                    </h3>
+                    <button type="button" class="nm-x" id="nmX" aria-label="Đóng">
+                        ✕
+                    </button>
+                </div>
+                <div class="nm-b">
+                    <div class="nm-ed">
+                        <textarea id="nmTxt" maxlength="2000" placeholder="Viết ghi chú của bạn..." aria-label="Nội dung ghi chú">
+                        </textarea>
+                        <div class="row">
+                            <small id="nmCnt">
+                                0/2000
+                            </small>
+                            <button type="button" class="btn sm" id="nmSave">
+                                Lưu ghi chú
+                            </button>
+                        </div>
+                    </div>
+                    <p class="note" id="nmMsg" role="status" aria-live="polite">
+                    </p>
+                    <div class="nm-tools">
+                        <button type="button" class="rm" id="nmAll">
+                            Xoá tất cả
+                        </button>
+                    </div>
+                    <ul class="nm-list" id="nmList">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script>
 /* ===== GHI CHÚ: lưu trong localStorage của trình duyệt (khóa "ghichu_notes"), có ngày giờ viết =====
    Dữ liệu chỉ nằm trên thiết bị/trình duyệt này, không gửi lên máy chủ hay GitHub. */
 (function () {
-  var KEY = "ghichu_notes";
-  var $ = function (s) { return document.querySelector(s); };
-  var box = $("#notes"), main = $("#ntMain"), m = $("#nm"), txt = $("#nmTxt"), cnt = $("#nmCnt"),
-      msgEl = $("#nmMsg"), list = $("#nmList"), allBtn = $("#nmAll"), title = $("#nmT");
-  var lastFocus = null, allTimer = 0;
-  function load() { try { var a = JSON.parse(localStorage.getItem(KEY) || "[]"); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
-  function save(a) { try { localStorage.setItem(KEY, JSON.stringify(a)); return true; } catch (e) { return false; } }
-  function pad(n) { return n < 10 ? "0" + n : "" + n; }
-  function fmt(iso) { var d = new Date(iso); return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear() + " " + pad(d.getHours()) + ":" + pad(d.getMinutes()); }
-  function say(t, ok) { msgEl.textContent = t; msgEl.className = "note" + (t ? (ok ? " nm-ok" : " nm-err") : ""); }
-  function setOpen(v) { box.classList.toggle("open", v); main.setAttribute("aria-expanded", v ? "true" : "false"); }
-
-  function render() {
-    var a = load().sort(function (x, y) { return x.created < y.created ? 1 : -1; });
-    list.innerHTML = "";
-    allBtn.hidden = !a.length;
-    if (!a.length) { var e = document.createElement("li"); e.className = "nm-empty"; e.textContent = "Chưa có ghi chú nào."; list.appendChild(e); return; }
-    a.forEach(function (n) {
-      var li = document.createElement("li"), t = document.createElement("time"), p = document.createElement("p"), b = document.createElement("button");
-      li.className = "nm-it"; li.setAttribute("data-id", n.id);
-      t.setAttribute("datetime", n.created); t.textContent = "Viết lúc " + fmt(n.created);
-      p.textContent = n.text;
-      b.type = "button"; b.className = "rm"; b.textContent = "Xoá"; b.setAttribute("data-id", n.id); b.setAttribute("aria-label", "Xoá ghi chú viết lúc " + fmt(n.created));
-      li.appendChild(t); li.appendChild(p); li.appendChild(b); list.appendChild(li);
-    });
-  }
-  function openM(mode) {
-    m.setAttribute("data-mode", mode);
-    title.textContent = { create: "Tạo ghi chú mới", list: "Danh sách ghi chú", del: "Xoá ghi chú" }[mode === "delete" ? "del" : mode];
-    say(""); allBtn.textContent = "Xoá tất cả"; render();
-    lastFocus = main; setOpen(false);
-    m.classList.add("show"); m.setAttribute("aria-hidden", "false");
-    (mode === "create" ? txt : $("#nmX")).focus();
-  }
-  function closeM() { m.classList.remove("show"); m.setAttribute("aria-hidden", "true"); if (lastFocus) lastFocus.focus(); }
-
-  main.addEventListener("click", function () { setOpen(!box.classList.contains("open")); });
-  $("#ntNew").addEventListener("click", function () { openM("create"); });
-  $("#ntList").addEventListener("click", function () { openM("list"); });
-  $("#ntDel").addEventListener("click", function () { openM("delete"); });
-  $("#nmX").addEventListener("click", closeM);
-  m.addEventListener("click", function (e) { if (e.target === m) closeM(); });
-  document.addEventListener("click", function (e) { if (!box.contains(e.target)) setOpen(false); });
-  document.addEventListener("keydown", function (e) {
-    if (e.key !== "Escape") return;
-    if (m.classList.contains("show")) closeM(); else setOpen(false);
-  });
-
-  txt.addEventListener("input", function () { cnt.textContent = txt.value.length + "/2000"; });
-  txt.addEventListener("keydown", function (e) { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) $("#nmSave").click(); });
-  $("#nmSave").addEventListener("click", function () {
-    var t = txt.value.trim();
-    if (!t) { say("Hãy viết nội dung ghi chú trước khi lưu."); txt.focus(); return; }
-    var a = load();
-    a.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), text: t, created: new Date().toISOString() });
-    if (!save(a)) { say("Không lưu được: trình duyệt đang chặn lưu dữ liệu."); return; }
-    txt.value = ""; cnt.textContent = "0/2000"; render(); say("Đã lưu ghi chú.", true); txt.focus();
-  });
-  list.addEventListener("click", function (e) {
-    var b = e.target.closest(".rm"); if (!b) return;
-    var li = b.closest(".nm-it"), id = b.getAttribute("data-id");
-    li.classList.add("out");
-    setTimeout(function () { save(load().filter(function (n) { return n.id !== id; })); render(); say("Đã xoá ghi chú.", true); }, 250);
-  });
-  allBtn.addEventListener("click", function () {
-    if (allBtn.getAttribute("data-ask") !== "1") {
-      allBtn.setAttribute("data-ask", "1"); allBtn.textContent = "Bấm lần nữa để xoá tất cả";
-      clearTimeout(allTimer); allTimer = setTimeout(function () { allBtn.removeAttribute("data-ask"); allBtn.textContent = "Xoá tất cả"; }, 4000);
-      return;
+    var KEY = "ghichu_notes";
+    var $ = function (s) { return document.querySelector(s); };
+    var box = $("#notes"), main = $("#ntMain"), m = $("#nm"), txt = $("#nmTxt"), cnt = $("#nmCnt"), msgEl = $("#nmMsg"), list = $("#nmList"), allBtn = $("#nmAll"), title = $("#nmT");
+    var lastFocus = null, allTimer = 0;
+    function load() { try {
+        var a = JSON.parse(localStorage.getItem(KEY) || "[]");
+        return Array.isArray(a) ? a : [];
     }
-    clearTimeout(allTimer); allBtn.removeAttribute("data-ask");
-    if (save([])) { render(); say("Đã xoá tất cả ghi chú.", true); } else say("Không xoá được: trình duyệt đang chặn lưu dữ liệu.");
-  });
+    catch (e) {
+        return [];
+    } }
+    function save(a) { try {
+        localStorage.setItem(KEY, JSON.stringify(a));
+        return true;
+    }
+    catch (e) {
+        return false;
+    } }
+    function pad(n) { return n < 10 ? "0" + n : "" + n; }
+    function fmt(iso) { var d = new Date(iso); return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear() + " " + pad(d.getHours()) + ":" + pad(d.getMinutes()); }
+    function say(t, ok) { msgEl.textContent = t; msgEl.className = "note" + (t ? (ok ? " nm-ok" : " nm-err") : ""); }
+    function setOpen(v) { box.classList.toggle("open", v); main.setAttribute("aria-expanded", v ? "true" : "false"); }
+    function render() {
+        var a = load().sort(function (x, y) { return x.created < y.created ? 1 : -1; });
+        list.innerHTML = "";
+        allBtn.hidden = !a.length;
+        if (!a.length) {
+            var e = document.createElement("li");
+            e.className = "nm-empty";
+            e.textContent = "Chưa có ghi chú nào.";
+            list.appendChild(e);
+            return;
+        }
+        a.forEach(function (n) {
+            var li = document.createElement("li"), t = document.createElement("time"), p = document.createElement("p"), b = document.createElement("button");
+            li.className = "nm-it";
+            li.setAttribute("data-id", n.id);
+            t.setAttribute("datetime", n.created);
+            t.textContent = "Viết lúc " + fmt(n.created);
+            p.textContent = n.text;
+            b.type = "button";
+            b.className = "rm";
+            b.textContent = "Xoá";
+            b.setAttribute("data-id", n.id);
+            b.setAttribute("aria-label", "Xoá ghi chú viết lúc " + fmt(n.created));
+            li.appendChild(t);
+            li.appendChild(p);
+            li.appendChild(b);
+            list.appendChild(li);
+        });
+    }
+    function openM(mode) {
+        m.setAttribute("data-mode", mode);
+        title.textContent = { create: "Tạo ghi chú mới", list: "Danh sách ghi chú", del: "Xoá ghi chú" }[mode === "delete" ? "del" : mode];
+        say("");
+        allBtn.textContent = "Xoá tất cả";
+        render();
+        lastFocus = main;
+        setOpen(false);
+        m.classList.add("show");
+        m.setAttribute("aria-hidden", "false");
+        (mode === "create" ? txt : $("#nmX")).focus();
+    }
+    function closeM() { m.classList.remove("show"); m.setAttribute("aria-hidden", "true"); if (lastFocus)
+        lastFocus.focus(); }
+    main.addEventListener("click", function () { setOpen(!box.classList.contains("open")); });
+    $("#ntNew").addEventListener("click", function () { openM("create"); });
+    $("#ntList").addEventListener("click", function () { openM("list"); });
+    $("#ntDel").addEventListener("click", function () { openM("delete"); });
+    $("#nmX").addEventListener("click", closeM);
+    m.addEventListener("click", function (e) { if (e.target === m)
+        closeM(); });
+    document.addEventListener("click", function (e) { if (!box.contains(e.target))
+        setOpen(false); });
+    document.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape")
+            return;
+        if (m.classList.contains("show"))
+            closeM();
+        else
+            setOpen(false);
+    });
+    txt.addEventListener("input", function () { cnt.textContent = txt.value.length + "/2000"; });
+    txt.addEventListener("keydown", function (e) { if (e.key === "Enter" && (e.ctrlKey || e.metaKey))
+        $("#nmSave").click(); });
+    $("#nmSave").addEventListener("click", function () {
+        var t = txt.value.trim();
+        if (!t) {
+            say("Hãy viết nội dung ghi chú trước khi lưu.");
+            txt.focus();
+            return;
+        }
+        var a = load();
+        a.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), text: t, created: new Date().toISOString() });
+        if (!save(a)) {
+            say("Không lưu được: trình duyệt đang chặn lưu dữ liệu.");
+            return;
+        }
+        txt.value = "";
+        cnt.textContent = "0/2000";
+        render();
+        say("Đã lưu ghi chú.", true);
+        txt.focus();
+    });
+    list.addEventListener("click", function (e) {
+        var b = e.target.closest(".rm");
+        if (!b)
+            return;
+        var li = b.closest(".nm-it"), id = b.getAttribute("data-id");
+        li.classList.add("out");
+        setTimeout(function () { save(load().filter(function (n) { return n.id !== id; })); render(); say("Đã xoá ghi chú.", true); }, 250);
+    });
+    allBtn.addEventListener("click", function () {
+        if (allBtn.getAttribute("data-ask") !== "1") {
+            allBtn.setAttribute("data-ask", "1");
+            allBtn.textContent = "Bấm lần nữa để xoá tất cả";
+            clearTimeout(allTimer);
+            allTimer = setTimeout(function () { allBtn.removeAttribute("data-ask"); allBtn.textContent = "Xoá tất cả"; }, 4000);
+            return;
+        }
+        clearTimeout(allTimer);
+        allBtn.removeAttribute("data-ask");
+        if (save([])) {
+            render();
+            say("Đã xoá tất cả ghi chú.", true);
+        }
+        else
+            say("Không xoá được: trình duyệt đang chặn lưu dữ liệu.");
+    });
+})();
+
+</script>
+<script>
+/* Menu chọn quốc gia tùy biến: giữ <select> gốc làm nguồn dữ liệu để clock.js hoạt động như cũ */
+(function () {
+    const sel = document.querySelector(".tzs");
+    if (!sel) return;
+
+    // Bọc select vào khung .dd rồi ẩn select gốc
+    const wrap = document.createElement("div");
+    wrap.className = "dd";
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+    sel.classList.add("dd-native");
+    sel.tabIndex = -1;
+
+    // Nút hiển thị và danh sách lựa chọn
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "dd-btn";
+    btn.setAttribute("aria-haspopup", "listbox");
+    btn.setAttribute("aria-expanded", "false");
+
+    const list = document.createElement("ul");
+    list.className = "dd-list";
+    list.setAttribute("role", "listbox");
+
+    wrap.appendChild(btn);
+    wrap.appendChild(list);
+
+    function render() {
+        btn.textContent = sel.options[sel.selectedIndex].textContent.trim();
+        list.innerHTML = "";
+        Array.from(sel.options).forEach(function (op, i) {
+            const li = document.createElement("li");
+            li.setAttribute("role", "option");
+            li.dataset.i = i;
+            li.textContent = op.textContent.trim();
+            if (i === sel.selectedIndex) {
+                li.classList.add("sel");
+                li.setAttribute("aria-selected", "true");
+            }
+            list.appendChild(li);
+        });
+    }
+
+    function setOpen(open) {
+        wrap.classList.toggle("open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    function choose(i) {
+        sel.selectedIndex = i;
+        // Báo cho clock.js biết đã đổi múi giờ
+        sel.dispatchEvent(new Event("change", { bubbles: true }));
+        render();
+    }
+
+    btn.addEventListener("click", function () {
+        setOpen(!wrap.classList.contains("open"));
+    });
+
+    list.addEventListener("click", function (e) {
+        const li = e.target.closest("li");
+        if (!li) return;
+        choose(+li.dataset.i);
+        setOpen(false);
+        btn.focus();
+    });
+
+    // Bấm ra ngoài hoặc nhấn Esc thì đóng; mũi tên lên/xuống đổi lựa chọn
+    document.addEventListener("click", function (e) {
+        if (!wrap.contains(e.target)) setOpen(false);
+    });
+    wrap.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+            setOpen(false);
+            btn.focus();
+        } else if (e.key === "ArrowDown" && sel.selectedIndex < sel.options.length - 1) {
+            e.preventDefault();
+            choose(sel.selectedIndex + 1);
+        } else if (e.key === "ArrowUp" && sel.selectedIndex > 0) {
+            e.preventDefault();
+            choose(sel.selectedIndex - 1);
+        }
+    });
+
+    render();
 })();
 </script>
-</body>
+    </body>
 </html>
