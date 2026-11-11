@@ -3917,3 +3917,93 @@ body.page-leave {
     .sky i { display: none; }
     .sky::before, .caret { animation: none; }
 }
+
+/* ===== Bảng cảm biến giả lập (IoT) ===== */
+.sensor-card {
+    grid-column: 1 / -1;            /* chiếm hết chiều ngang vì lưới có 2 cột */
+}
+
+.calc-icon.sensor {
+    background: linear-gradient(135deg, #059669, #06b6d4);
+}
+
+.sensor-card .calc-heading {
+    flex-wrap: wrap;
+}
+
+.sensor-status {
+    margin-left: auto;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(16, 185, 129, .14);
+    color: #059669;
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.sensor-status.off {
+    background: rgba(220, 38, 38, .12);
+    color: #dc2626;
+}
+
+.sensor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.sensor-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+}
+
+.sensor-box span {
+    color: var(--mut);
+    font-size: .88rem;
+    font-weight: 650;
+}
+
+.sensor-box strong {
+    color: var(--head);
+    font-size: 2rem;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;     /* số không nhảy khi đổi chữ số */
+}
+
+.sensor-box small {
+    color: var(--mut);
+    font-size: .8rem;
+}
+
+/* Đèn LED */
+.sensor-led {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #94a3b8;                    /* tắt */
+    border: 3px solid rgba(255, 255, 255, .6);
+    box-shadow: inset 0 -3px 6px rgba(0, 0, 0, .25);
+    transition: background .15s ease, box-shadow .15s ease;
+}
+
+.sensor-led.on {
+    background: #22c55e;                    /* sáng xanh: bình thường */
+    box-shadow: 0 0 16px 4px rgba(34, 197, 94, .7);
+}
+
+.sensor-led.on.warn {
+    background: #ef4444;                    /* sáng đỏ: nhiệt độ cao */
+    box-shadow: 0 0 16px 4px rgba(239, 68, 68, .7);
+}
+
+@media (max-width: 700px) {
+    .sensor-grid {
+        grid-template-columns: 1fr;
+    }
+}
