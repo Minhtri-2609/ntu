@@ -3689,21 +3689,26 @@ body.page-leave {
     opacity: 0;
 }
 
-/* ================= ĐỒNG HỒ (bản thay thế hoàn toàn) ================= */
+/* ================= ĐỒNG HỒ v3: một bố cục duy nhất, mở/đóng đều mượt ================= */
 .tw {
-    --spd: .6s;                      /* tốc độ mở/đóng: tăng số này để chậm hơn */
+    --spd: 1s;                                   /* tốc độ mở/đóng */
+    --ease: cubic-bezier(.4, 0, .2, 1);
+    --dial: 112px;                               /* cỡ mặt đồng hồ */
     position: relative;
+    width: 190px;                                /* thu gọn */
     max-width: 330px;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: rgba(22, 25, 111, .72);
-    transition: width var(--spd) cubic-bezier(.22, .8, .2, 1);
+    transition: width var(--spd) var(--ease);
 }
-.tw .dial { width: 96px; height: 96px; }
+.tw.open { width: 100%; }                        /* mở */
+
+.tw .dial { width: var(--dial); height: var(--dial); flex: none; }
 .tw .ck-time { display: block; font-size: 1.45rem; }
 .tw .dd { width: 100%; margin-bottom: 10px; }
 
-/* --- "Việt Nam" nằm trên đầu; khi mở thì nở ra thành thanh chọn --- */
+/* --- "Việt Nam" nằm trên đầu, nở thành thanh chọn khi mở --- */
 .dd-btn {
     position: relative;
     justify-content: center;
@@ -3716,53 +3721,65 @@ body.page-leave {
     margin-top: -7px;
     transition: opacity var(--spd) ease, transform .25s ease, margin .25s ease;
 }
-.dd.open .dd-btn::after {
-    margin-top: -1px;
-    transform: rotate(-135deg);
-}
+.dd.open .dd-btn::after { margin-top: -1px; transform: rotate(-135deg); }
 
-/* --- THU GỌN (mặc định) --- */
-.tw:not(.open) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 170px;
-    cursor: pointer;
-}
-.tw:not(.open) .tw-body {
-    display: block;
-    padding: 0 !important;
-    border: 0 !important;          /* bỏ đường kẻ ngang trong ảnh bạn gửi */
-}
-.tw:not(.open) .clk {
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    text-align: center;
-}
-.tw:not(.open) .cal-toggle-btn,
-.tw:not(.open) .ck-date,
-.tw:not(.open) .ck-tz { display: none; }
-
-.tw:not(.open) .dd { pointer-events: none; }          /* chưa bấm được, chỉ là nhãn */
-.tw:not(.open) .dd-btn {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-}
+.tw:not(.open) .dd { pointer-events: none; }
+.tw:not(.open) .dd-btn { background: transparent; border-color: transparent; box-shadow: none; }
 .tw:not(.open) .dd-btn::after { opacity: 0; }
 
-.tw:not(.open) .ck-time { opacity: 0; transition: opacity .3s ease; }
-.tw:not(.open):hover .ck-time { opacity: 1; }          /* rê chuột: hiện giờ */
+/* --- Hàng đồng hồ: mặt đồng hồ luôn ở giữa khi thu gọn, chữ trượt ra khi mở --- */
+.tw-body {
+    justify-content: center;
+    gap: 0;
+    margin-top: 4px;
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+.tw .clk { gap: 0; justify-content: center; }
 
-/* --- MỞ (sau khi bấm) --- */
-.tw.open { width: 100%; }
-.tw.open .cal-toggle-btn,
-.tw.open .ck-date,
-.tw.open .ck-tz { animation: twFade .5s ease .25s backwards; }
-@keyframes twFade { from { opacity: 0; } to { opacity: 1; } }
+.tw .ck-txt {
+    max-width: 0;
+    margin-left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transition: max-width var(--spd) var(--ease),
+                margin-left var(--spd) var(--ease),
+                opacity .4s ease;
+}
+.tw.open .ck-txt {
+    max-width: 180px;
+    margin-left: 12px;
+    opacity: 1;
+    transition: max-width var(--spd) var(--ease),
+                margin-left var(--spd) var(--ease),
+                opacity .5s ease .25s;
+}
 
-/* --- LỊCH: bảng nổi bên dưới thẻ, chỉ animate opacity + transform --- */
+/* --- Nút mũi tên xổ lịch: thu về 0 khi thu gọn --- */
+.tw-body .cal-toggle-btn {
+    width: 0;
+    min-width: 0;
+    padding: 0;
+    margin-left: 0;
+    border-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: width var(--spd) var(--ease), margin-left var(--spd) var(--ease),
+                opacity .4s ease, background .2s;
+}
+.tw.open .tw-body .cal-toggle-btn {
+    width: 30px;
+    margin-left: 10px;
+    border-width: 1px;
+    opacity: 1;
+    pointer-events: auto;
+    transition: width var(--spd) var(--ease), margin-left var(--spd) var(--ease),
+                opacity .5s ease .25s, background .2s;
+}
+
+/* --- Lịch: bảng nổi bên dưới thẻ, chỉ animate opacity + transform --- */
 .cal-collapse-wrap {
     position: absolute;
     top: calc(100% + 8px);
@@ -3782,7 +3799,7 @@ body.page-leave {
     visibility: visible;
     transform: none;
     will-change: transform, opacity;
-    transition: opacity .45s ease, transform .55s cubic-bezier(.2, .8, .2, 1), visibility 0s;
+    transition: opacity .6s ease, transform .8s cubic-bezier(.2, .8, .2, 1), visibility 0s;
 }
 .cal-collapse-wrap.collapsed {
     max-height: none;
@@ -3791,11 +3808,112 @@ body.page-leave {
     visibility: hidden;
     transform: translateY(-12px) scale(.96);
     pointer-events: none;
-    transition: opacity .3s ease, transform .35s ease, visibility 0s linear .35s;
+    transition: opacity .4s ease, transform .5s ease, visibility 0s linear .5s;
 }
 .cal-toggle-btn svg { transition: transform .4s ease; }
 
 @media (max-width: 820px) {
     .tw:not(.open) { justify-self: start; }
     .tw.open { max-width: none; }
+}
+
+/* ===== Chữ tên nước: đậm hơn và to hơn ===== */
+.dd-btn {
+    font-size: 1.1rem;        /* to hơn (trước đó khoảng .9rem) */
+    font-weight: 700;         /* in đậm */
+    letter-spacing: .2px;
+}
+
+.dd-list li {
+    font-size: 1.02rem;
+    font-weight: 700;
+}
+
+/* ===== Bầu trời: sao băng + sao lấp lánh ===== */
+#home > .sky {
+    position: absolute;
+    inset: -24px;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    will-change: transform;
+}
+.sky::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(1.6px 1.6px at 12% 18%, #fff, transparent 60%),
+        radial-gradient(1.2px 1.2px at 27% 8%,  #fff, transparent 60%),
+        radial-gradient(1.8px 1.8px at 43% 22%, #fff, transparent 60%),
+        radial-gradient(1.2px 1.2px at 58% 10%, #fff, transparent 60%),
+        radial-gradient(1.6px 1.6px at 71% 26%, #fff, transparent 60%),
+        radial-gradient(1.2px 1.2px at 84% 12%, #fff, transparent 60%),
+        radial-gradient(1.4px 1.4px at 92% 30%, #fff, transparent 60%),
+        radial-gradient(1.2px 1.2px at 6%  34%, #fff, transparent 60%);
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
+@keyframes twinkle { from { opacity: .3; } to { opacity: .9; } }
+
+.sky i {
+    position: absolute;
+    width: 150px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff);
+    box-shadow: 0 0 8px 1px rgba(160, 200, 255, .6);
+    opacity: 0;
+    transform: rotate(28deg);
+    animation: shoot 11s linear infinite;
+}
+.sky i:nth-child(1) { top: 10%; left: 55%; animation-duration: 11s; animation-delay: 2s; }
+.sky i:nth-child(2) { top: 22%; left: 20%; animation-duration: 15s; animation-delay: 6s; }
+.sky i:nth-child(3) { top: 6%;  left: 75%; animation-duration: 13s; animation-delay: 9s; }
+.sky i:nth-child(4) { top: 30%; left: 45%; animation-duration: 17s; animation-delay: 12s; }
+
+@keyframes shoot {
+    0%   { opacity: 0; transform: rotate(28deg) translateX(0); }
+    1.5% { opacity: 1; }
+    7%   { opacity: 0; transform: rotate(28deg) translateX(480px); }
+    100% { opacity: 0; transform: rotate(28deg) translateX(480px); }
+}
+
+/* ===== Chữ gõ tự động: con trỏ nhấp nháy ===== */
+.caret {
+    display: inline-block;
+    width: 2px;
+    height: 1.05em;
+    margin-left: 3px;
+    vertical-align: -.15em;
+    background: #67e8f9;
+    animation: caretBlink 1s steps(1) infinite;
+}
+@keyframes caretBlink { 50% { opacity: 0; } }
+
+/* ===== Số liệu ===== */
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 30px;
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+}
+.stats li { display: flex; flex-direction: column; }
+.stats b {
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+}
+.stats span {
+    margin-top: 2px;
+    font-size: .82rem;
+    color: #cfd3ff;
+}
+
+/* Người dùng bật "giảm chuyển động" thì tắt hiệu ứng */
+@media (prefers-reduced-motion: reduce) {
+    .sky i { display: none; }
+    .sky::before, .caret { animation: none; }
 }

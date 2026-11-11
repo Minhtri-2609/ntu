@@ -19,7 +19,7 @@ try {
 catch (e) { }
 
 </script>
-        <link rel="stylesheet" href="style.css?v=2">
+        <link rel="stylesheet" href="style.css?v=3">
     </head>
     <body>
         <header>
@@ -31,7 +31,7 @@ catch (e) { }
                         <path class="b3" d="M3 23h24"/>
                     </svg>
                 </button>
-                <a class="logo" href="#home" aria-label="Hà Lâm – về đầu trang">
+                <a class="logo" href="#home" aria-label="Minh Trí – về đầu trang">
                     <span class="l1">
                         MINH 
                     </span>
@@ -121,6 +121,7 @@ catch (e) { }
         <main>
             <!-- ===== A. TRANG CHỦ ===== -->
             <section id="home">
+                <div class="sky" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
                 <div class="wrap hero">
                     <div>
                         <span class="badge" role="status">
@@ -137,7 +138,7 @@ catch (e) { }
                         <p class="sub">
                             Sinh viên K68 – Ngành Kỹ thuật Cơ điện tử
                             <br>
-                            Chuyên ngành: Hệ thống nhúng và IoT
+                            Chuyên ngành: <span id="typed">Hệ thống nhúng và IoT</span><span class="caret" aria-hidden="true"></span>
                         </p>
                         <p>
                             Website này là nơi mình giới thiệu quá trình học tập tại Trường Đại học Nha Trang và chia sẻ tài liệu, kiến thức cho sinh viên, giảng viên quan tâm đến cơ điện tử, hệ thống nhúng và IoT.
@@ -145,9 +146,12 @@ catch (e) { }
                         <a class="btn" href="#resources">
                             Khám phá tài liệu
                         </a>
-                        <a class="btn ghost" href="#about">
-                            Tìm hiểu về tôi
-                        </a>
+                        <a class="btn ghost" href="#about">Tìm hiểu về tôi</a>
+                        <ul class="stats">
+                             <li><b data-count="20" data-suffix="+">0</b><span>Tài liệu</span></li>
+                             <li><b data-count="3">0</b><span>Bài viết</span></li>
+                             <li><b data-count="5">0</b><span>Dự án</span></li>
+                        </ul>
                     </div>
                     <!-- Thẻ Đồng hồ + Lịch: cột phải trên máy tính, nằm dưới phần chữ trên điện thoại -->
                     <div class="tw" role="group" aria-label="Đồng hồ và lịch">
@@ -1496,11 +1500,11 @@ addEventListener('pageshow', () => document.body.classList.remove('page-leave'))
     // Rê chuột vào: mở ngay. Rê ra: đợi 250ms rồi mới thu gọn
 tw.addEventListener('mouseenter', function () {
     clearTimeout(timer);
-    timer = setTimeout(function () { setOpen(true); }, 250);   // 400 = 0,4 giây
+    timer = setTimeout(function () { setOpen(true); }, 0);   // 400 = 0,4 giây
 });
 tw.addEventListener('mouseleave', function () {
         clearTimeout(timer);
-        timer = setTimeout(function () { setOpen(false); }, 700);
+        timer = setTimeout(function () { setOpen(false); }, 50);
 });
 
     // Điện thoại / máy tính bảng không có rê chuột: bấm để mở, bấm ra ngoài để đóng
@@ -1512,6 +1516,95 @@ tw.addEventListener('click', function () {
         if (!e.composedPath().includes(tw)) setOpen(false);
     });
 })();
-</script>    
+</script> 
+<script>
+(function () {
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---------- 1. Chữ gõ tự động ---------- */
+    var el = document.getElementById('typed');
+    if (el && !reduce) {
+        var words = [
+            el.textContent.trim(),            // câu gốc trong HTML luôn là câu đầu tiên
+            'Lập trình vi điều khiển',
+            'Tự động hóa và điều khiển',
+            'Thiết kế mạch điện tử'
+        ];                                    // <-- sửa/thêm cụm từ ở đây
+        var w = 0, i = words[0].length, deleting = true;
+        (function step() {
+            var word = words[w], delay;
+            if (!deleting) {
+                i++;
+                el.textContent = word.slice(0, i);
+                if (i === word.length) { deleting = true; delay = 2200; } else delay = 70;
+            } else {
+                i--;
+                el.textContent = word.slice(0, i);
+                if (i === 0) { deleting = false; w = (w + 1) % words.length; delay = 350; } else delay = 35;
+            }
+            setTimeout(step, delay);
+        })();
+        // dừng 2,5 giây ở câu đầu rồi mới bắt đầu xóa
+        // (hàm step() chạy ngay, nên bước xóa đầu tiên cách 35ms; muốn trễ hơn thì bọc step trong setTimeout)
+    }
+
+    /* ---------- 2. Sao băng: mỗi lần lặp đổi sang vị trí ngẫu nhiên ---------- */
+    document.querySelectorAll('#home .sky i').forEach(function (s) {
+        s.addEventListener('animationiteration', function () {
+            s.style.top = (4 + Math.random() * 30) + '%';
+            s.style.left = (5 + Math.random() * 80) + '%';
+        });
+    });
+
+    /* ---------- 3. Parallax theo chuột (chỉ máy có chuột) ---------- */
+    var home = document.getElementById('home');
+    if (home && !reduce && matchMedia('(hover:hover) and (pointer:fine)').matches) {
+        var sky = home.querySelector('.sky');
+        var txt = home.querySelector('.hero > div');   // cột chữ bên trái
+        var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+        function loop() {
+            cx += (tx - cx) * .08;
+            cy += (ty - cy) * .08;
+            if (sky) sky.style.transform = 'translate3d(' + (-cx * 14).toFixed(2) + 'px,' + (-cy * 8).toFixed(2) + 'px,0)';
+            if (txt) txt.style.transform = 'translate3d(' + (cx * 6).toFixed(2) + 'px,' + (cy * 4).toFixed(2) + 'px,0)';
+            raf = (Math.abs(tx - cx) > .001 || Math.abs(ty - cy) > .001) ? requestAnimationFrame(loop) : 0;
+        }
+        home.addEventListener('mousemove', function (e) {
+            var r = home.getBoundingClientRect();
+            tx = (e.clientX - r.left) / r.width * 2 - 1;
+            ty = (e.clientY - r.top) / r.height * 2 - 1;
+            if (!raf) raf = requestAnimationFrame(loop);
+        });
+        home.addEventListener('mouseleave', function () {
+            tx = 0; ty = 0;
+            if (!raf) raf = requestAnimationFrame(loop);
+        });
+    }
+
+    /* ---------- 4. Số liệu đếm tăng dần ---------- */
+    var nums = document.querySelectorAll('.stats b[data-count]');
+    function run(b) {
+        var target = +b.getAttribute('data-count'), suf = b.getAttribute('data-suffix') || '';
+        if (reduce) { b.textContent = target + suf; return; }
+        var t0 = null, dur = 1400;
+        (function f(t) {
+            if (t0 === null) t0 = t;
+            var p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);   // êm dần về cuối
+            b.textContent = Math.round(target * e) + (p === 1 ? suf : '');
+            if (p < 1) requestAnimationFrame(f);
+        })(performance.now());
+    }
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (list) {
+            list.forEach(function (x) { if (x.isIntersecting) { run(x.target); io.unobserve(x.target); } });
+        }, { threshold: .4 });
+        nums.forEach(function (b) { io.observe(b); });
+    } else {
+        nums.forEach(run);
+    }
+})();
+</script>
+
+
 </body>
 </html>
