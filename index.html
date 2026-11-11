@@ -1494,20 +1494,20 @@ addEventListener('pageshow', () => document.body.classList.remove('page-leave'))
     }
 
     // Rê chuột vào: mở ngay. Rê ra: đợi 250ms rồi mới thu gọn
-    tw.addEventListener('mouseenter', function () {
+tw.addEventListener('mouseenter', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () { setOpen(true); }, 300);   // 300 = 0,3 giây
+});
+tw.addEventListener('mouseleave', function () {
         clearTimeout(timer);
-        setOpen(true);
-    });
-    tw.addEventListener('mouseleave', function () {
-        clearTimeout(timer);
-        timer = setTimeout(function () { setOpen(false); }, 250);
-    });
+        timer = setTimeout(function () { setOpen(false); }, 700);
+});
 
     // Điện thoại / máy tính bảng không có rê chuột: bấm để mở, bấm ra ngoài để đóng
-    tw.addEventListener('click', function () {
+tw.addEventListener('click', function () {
         clearTimeout(timer);
         if (!tw.classList.contains('open')) setOpen(true);
-    });
+});
     document.addEventListener('click', function (e) {
         if (!e.composedPath().includes(tw)) setOpen(false);
     });
