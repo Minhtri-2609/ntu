@@ -3552,7 +3552,7 @@ header .sw {
     right: 0;
     left: auto;
     z-index: 1;
-    width: min(400px, calc(100vw - 80px));
+    width: min(390px, calc(100vw - 80px));
     padding: 0;
     border: 0;
     border-radius: 0;
