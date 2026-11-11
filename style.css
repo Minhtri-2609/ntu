@@ -3656,3 +3656,27 @@ html[data-theme="dark"] #sq::placeholder {
         width: calc(100vw - 80px);
     }
 }
+
+/* ===== Nút đăng nhập: viền xanh + phóng to nhẹ khi rê chuột ===== */
+#authLink {
+    border: 2px solid transparent;          /* giữ sẵn chỗ cho viền, tránh bị giật khi hover */
+    transition: transform .25s ease, box-shadow .25s ease,
+                border-color .25s ease, color .25s ease;
+}
+
+#authLink:hover,
+#authLink:focus-visible {
+    transform: scale(1.09);
+    border-color: #168cff;
+    color: #168cff;
+    filter: none;                           /* bỏ hiệu ứng tối đi của .ic:hover cũ */
+    box-shadow: 0 0 0 4px rgba(30, 144, 255, .14),
+                0 0 18px rgba(0, 132, 255, .30);
+}
+
+/* Giao diện tối */
+html[data-theme="dark"] #authLink:hover,
+html[data-theme="dark"] #authLink:focus-visible {
+    border-color: #4da6ff;
+    color: #4da6ff;
+}
