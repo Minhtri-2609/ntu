@@ -232,26 +232,43 @@
         </div>
     </div>
 
-    <script>
-        const container = document.querySelector('.container');
-        const registerLink = document.querySelector('.register-link');
-        const loginLink = document.querySelector('.login-link');
+<script>
+const container = document.querySelector('.container');
+const registerLink = document.querySelector('.register-link');
+const loginLink = document.querySelector('.login-link');
+// Chỉ đổi địa chỉ khi đã đưa lên web, không đổi khi chạy thử ở máy
+const CLEAN_URL = !["127.0.0.1", "localhost"].includes(location.hostname);
 
-        registerLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            container.classList.add('active');
-        });
+function setMode(isRegister, push) {
+    container.classList.toggle('active', isRegister);
+    if (push && CLEAN_URL) {
+        history.pushState(null, "", isRegister ? "/sign-in" : "/login");
+    }
+}
 
-        loginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            container.classList.remove('active');
-        });
-    </script>
-    <script>
-/* Bỏ ".html" trên thanh địa chỉ (chỉ khi đã đưa lên web) */
-if (!["127.0.0.1", "localhost"].includes(location.hostname) && location.pathname.endsWith(".html")) {
+registerLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    setMode(true, true);
+});
+
+loginLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    setMode(false, true);
+});
+
+// Nút Back/Forward của trình duyệt
+addEventListener('popstate', () => {
+    setMode(/sign-in(\.html)?$/.test(location.pathname), false);
+});
+
+// Mở thẳng /sign-in thì hiện luôn form đăng ký
+if (/sign-in(\.html)?$/.test(location.pathname)) {
+    container.classList.add('active');
+}
+
+// Bỏ ".html" trên thanh địa chỉ
+if (CLEAN_URL && location.pathname.endsWith(".html")) {
     history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
 }
-</script>
-</body>
+</script></body>
 </html>
