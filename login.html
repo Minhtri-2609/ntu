@@ -208,6 +208,12 @@
     from { opacity: 0; transform: translateY(24px) scale(.96); }
     to   { opacity: 1; transform: none; }
         }
+        .form-msg {
+    min-height: 1.2em;
+    margin: -10px 0 10px;
+    color: #ffd2d2;
+    font-size: 13.5px;
+        }
     </style>
 </head>
 <body>
@@ -227,6 +233,7 @@
                 <div class="forgot-link">
                     <a href="#">Quên mật khẩu?</a>
                 </div>
+                <p class="form-msg" role="alert"></p>
                 <button type="submit" class="btn">Đăng nhập</button>
                 <p>Chưa có tài khoản? <a href="#" class="register-link">Đăng ký</a></p>
             </form>
@@ -247,6 +254,7 @@
                     <input type="password" placeholder="Mật khẩu" required>
                     <i class='bx bxs-lock-alt'></i>
                 </div>
+                <p class="form-msg" role="alert"></p>
                 <button type="submit" class="btn">Đăng ký</button>
                 <p>Đã có tài khoản? <a href="#" class="login-link">Đăng nhập</a></p>
             </form>
@@ -297,6 +305,52 @@ document.querySelector('.back-home').addEventListener('click', function (e) {
     setTimeout(() => { location.href = this.href; }, 300);
 });
 addEventListener('pageshow', () => document.body.classList.remove('page-leave'));
+const API = CLEAN_URL ? "https://tr1ssca.pythonanywhere.com/api/me" : "http://127.0.0.1:5000";
+
+function showMessage(form, text) {
+    form.querySelector(".form-msg").textContent = text;
+}
+
+async function sendAuth(path, body, form) {
+    const button = form.querySelector(".btn");
+    button.disabled = true;
+    showMessage(form, "");
+    try {
+        const response = await fetch(API + path, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(body)
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+            showMessage(form, data.error || "Có lỗi xảy ra, vui lòng thử lại.");
+            return;
+        }
+        try {
+            localStorage.setItem("demo_session", JSON.stringify({ name: data.user.username }));
+        } catch (error) {
+            // Không lưu được cũng không sao.
+        }
+        location.href = CLEAN_URL ? "/" : "index.html";
+    } catch (error) {
+        showMessage(form, "Không kết nối được máy chủ. Vui lòng thử lại sau.");
+    } finally {
+        button.disabled = false;
+    }
+}
+
+document.querySelector(".form-box.login form").addEventListener("submit", e => {
+    e.preventDefault();
+    const inputs = e.target.querySelectorAll("input");
+    sendAuth("/api/login", { username: inputs[0].value, password: inputs[1].value }, e.target);
+});
+
+document.querySelector(".form-box.register form").addEventListener("submit", e => {
+    e.preventDefault();
+    const inputs = e.target.querySelectorAll("input");
+    sendAuth("/api/register", { username: inputs[0].value, email: inputs[1].value, password: inputs[2].value }, e.target);
+});
 </script>
 </body>
 </html>
