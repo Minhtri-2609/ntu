@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="/favicon1.png">
         <meta name="description" content="Tìm hiểu hệ thống nhúng, cấu trúc phần cứng, firmware, vi điều khiển, thời gian thực, ứng dụng và lộ trình học.">
         <meta name="theme-color" content="#0b1f44">
         <title>
-            Hệ thống nhúng là gì? | Lâm Thất
+            Hệ thống nhúng là gì? | Minh Trí
         </title>
         
  <style>
@@ -650,12 +651,12 @@ tr:last-child td {
         </div>
         <header class="site-header">
             <div class="header-inner">
-                <a class="brand" href="../index.html" aria-label="Lâm Thất – về trang chủ">
+                <a class="brand" href="../index.html" aria-label="Minh Trí – về trang chủ">
                     <span>
-                        LÂM
+                        MINH
                     </span>
                     <span>
-                        THẤT
+                        TRÍ
                     </span>
                 </a>
                 <div class="header-actions">
@@ -1171,7 +1172,7 @@ while (1) {
         <footer class="article-footer">
             <div class="footer-inner">
                 <span>
-                    © 2026 Lâm Thất · Nội dung phục vụ mục đích học tập.
+                    © 2026 Minh Trí · Nội dung phục vụ mục đích học tập.
                 </span>
                 <a href="../index.html">
                     Trở về trang chủ ↑
@@ -1265,6 +1266,21 @@ while (1) {
 })();
 </script>
 
+<script>
+/* Mục lục: cuộn mượt tới mục mà không để lại #... trên thanh địa chỉ */
+document.addEventListener("click", function (e) {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    const target = document.getElementById(link.getAttribute("href").slice(1));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 
+/* Bỏ ".html" trên thanh địa chỉ (chỉ khi đã đưa lên web) */
+if (!["127.0.0.1", "localhost"].includes(location.hostname) && location.pathname.endsWith(".html")) {
+    history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
+}
+</script>
     </body>
 </html>

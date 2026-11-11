@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="/favicon1.png">
         <title>
-            Lâm Thất
+            Minh Trí
         </title>
-        <meta name="description" content="Website cá nhân và thư viện tài liệu học tập của Lâm Thất, sinh viên K68 ngành Kỹ thuật Cơ điện tử, Đại học Nha Trang.">
+        <meta name="description" content="Website cá nhân và thư viện tài liệu học tập của Minh Trí, sinh viên K68 ngành Kỹ thuật Cơ điện tử, Đại học Nha Trang.">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
@@ -31,10 +32,10 @@ catch (e) { }
                 </button>
                 <a class="logo" href="#home" aria-label="Hà Lâm – về đầu trang">
                     <span class="l1">
-                        HÀ
+                        MINH 
                     </span>
                     <span class="l2">
-                        LÂM
+                        TRÍ
                     </span>
                 </a>
                 <div class="rt">
@@ -128,7 +129,9 @@ catch (e) { }
                             </a>
                         </span>
                         <h1>
-                            Hà Trần Minh Trí
+                            <a href="p/don-nhan.html">
+                                Hà Trần Minh Trí
+                            </a>
                         </h1>
                         <p class="sub">
                             Sinh viên K68 – Ngành Kỹ thuật Cơ điện tử
@@ -255,7 +258,7 @@ catch (e) { }
                                 Mong muốn chia sẻ
                             </h3>
                             <p style="color:var(--mut)">
-                                Trí muốn tổng hợp tài liệu và kiến thức hữu ích thành một thư viện mở, được update qua theo quá trình học, để các bạn sinh viên cùng khoá hoặc là khóa sau có thể tham khảo.
+                                Trí muốn tổng hợp tài liệu và kiến thức hữu ích thành một thư viện mở, được update theo quá trình học, để các bạn sinh viên cùng khoá hoặc là khóa sau có thể tham khảo.
                             </p>
                             <h3 style="margin-top:16px">
                                 Lĩnh vực quan tâm và đang học
@@ -691,10 +694,10 @@ catch (e) { }
                 <div class="wrap ft-in">
                     <a class="logo f" href="#home" aria-label="Hà Lâm – về đầu trang">
                         <span class="l1">
-                            HÀ
+                            MINH
                         </span>
                         <span class="l2">
-                            LÂM
+                            TRÍ
                         </span>
                     </a>
                     <p>
@@ -748,7 +751,7 @@ catch (e) { }
             <div class="fb">
                 <div class="wrap">
                     <p>
-                        © 2026 Hà Lâm - WEBSITE này dành cho cá nhân, vui lòng liên hệ để gỡ nội dung nếu liên quan. Xin cảm ơn!
+                        © 2026 Minh Trí - WEBSITE này dành cho cá nhân, vui lòng liên hệ để gỡ nội dung nếu liên quan. Xin cảm ơn!
                     </p>
                     <div class="fl">
                         <a href="#home">
@@ -1078,7 +1081,7 @@ sr.addEventListener("click", e => {
         renderDocs();
     }
     closeAll();
-    document.getElementById(r.id).scrollIntoView({ behavior: "smooth", block: "start" });
+    goTo(r.id, true);
 });
 document.addEventListener("click", e => { if (!e.target.closest("header"))
     closeAll(); });
@@ -1095,7 +1098,54 @@ if ("IntersectionObserver" in window)
 else
     ft.classList.add("in");
 
+/* ===== Địa chỉ gọn: bấm menu thì thanh địa chỉ hiện /home, /du-an... thay vì #home ===== */
+const PAGES = {
+    home: "/home",
+    about: "/gioi-thieu",
+    resources: "/tai-lieu",
+    freshman: "/mon-dai-cuong",
+    electronics: "/cong-cu",
+    articles: "/goc-kien-thuc",
+    projects: "/du-an",
+    contact: "/lien-he"
+};
+const ID_BY_PATH = Object.fromEntries(Object.entries(PAGES).map(([id, path]) => [path, id]));
+// Chỉ đổi địa chỉ khi đã đưa lên web, không đổi khi chạy thử ở máy
+const CLEAN_URL = !["127.0.0.1", "localhost"].includes(location.hostname);
+
+function goTo(id, push) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (push && CLEAN_URL && PAGES[id] && location.pathname !== PAGES[id]) {
+        history.pushState({ id: id }, "", PAGES[id]);
+    }
+}
+
+// Bấm bất kỳ liên kết dạng #xxx (menu, logo, nút về đầu trang, footer...)
+document.addEventListener("click", e => {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    const id = link.getAttribute("href").slice(1);
+    if (!id || !document.getElementById(id)) return;
+    e.preventDefault();
+    goTo(id, true);
+});
+
+// Nút Back/Forward của trình duyệt
+addEventListener("popstate", () => {
+    const id = ID_BY_PATH[location.pathname];
+    if (id) goTo(id, false);
+});
+
+// Mở thẳng địa chỉ như /du-an thì cuộn tới đúng mục; địa chỉ /index.html đổi thành /
+const firstId = ID_BY_PATH[location.pathname];
+if (firstId) addEventListener("load", () => setTimeout(() => goTo(firstId, false), 80));
+if (CLEAN_URL && location.pathname.endsWith("/index.html")) {
+    history.replaceState(null, "", "/" + location.hash);
+}
 </script>
+
         <!-- Nút quay về đầu trang ở góc phải dưới cùng -->
         <a href="#home" id="backToTopBtn" aria-label="Quay về đầu trang" title="Về đầu trang">
             <svg viewBox="0 0 24 24" width="22" height="22">
@@ -1382,6 +1432,22 @@ window.addEventListener("scroll", () => {
 
     render();
 })();
+</script>
+<script>
+/* Mục lục: cuộn mượt tới mục mà không để lại #... trên thanh địa chỉ */
+document.addEventListener("click", function (e) {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    const target = document.getElementById(link.getAttribute("href").slice(1));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+/* Bỏ ".html" trên thanh địa chỉ (chỉ khi đã đưa lên web) */
+if (!["127.0.0.1", "localhost"].includes(location.hostname) && location.pathname.endsWith(".html")) {
+    history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
+}
 </script>
     </body>
 </html>

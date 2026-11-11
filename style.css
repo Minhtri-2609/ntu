@@ -3521,3 +3521,138 @@ html[data-theme="dark"] .rt #themeBtn.ic .moon {
     background: linear-gradient(90deg, #2563eb, #22d3ee);
     color: #ffffff;
 }
+/* Tên ở phần đầu trang là đường link tới bài "Đón Nhận" */
+.hero h1 a {
+    color: inherit;                 /* giữ màu trắng như cũ */
+    text-decoration: none;          /* bỏ gạch chân */
+    transition: color .25s ease, text-shadow .25s ease;
+}
+
+.hero h1 a:hover {
+    color: #7ee7ff;                 /* rê chuột thì đổi sang xanh cyan */
+    text-shadow: 0 0 18px rgba(126, 231, 255, .55);
+}
+
+/* ===== Tìm kiếm: bấm kính lúp thì ô tìm kiếm kéo sang trái (che nút sáng/tối) ===== */
+header .sw {
+    --sh: 44px;                 /* chiều cao ô tìm kiếm = cỡ nút kính lúp */
+    position: relative;
+    z-index: 5;
+}
+
+#searchBtn {
+    position: relative;
+    z-index: 2;                 /* nằm trên ô tìm kiếm, làm "đầu tròn" bên phải */
+}
+
+/* Khung chứa ô nhập: neo sát mép phải nút kính lúp, ngang hàng với nút */
+#sp {
+    position: absolute;
+    top: calc(50% - var(--sh) / 2);
+    right: 0;
+    left: auto;
+    z-index: 1;
+    width: min(400px, calc(100vw - 80px));
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: none;
+    pointer-events: none;
+}
+
+#sp.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+}
+
+#sp[hidden] {
+    display: none;
+}
+
+/* Ô nhập: lúc đóng chỉ thấy phần đầu bằng nút kính lúp, lúc mở lộ dần sang trái */
+#sq {
+    display: block;
+    width: 100%;
+    height: var(--sh);
+    min-height: var(--sh);
+    padding: 0 calc(var(--sh) + 6px) 0 18px;
+    border: 1px solid #c9d6ff;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #17133c;
+    box-shadow: none;
+    clip-path: inset(0 0 0 calc(100% - var(--sh)) round 999px);
+    transition: clip-path .26s cubic-bezier(.2, .8, .2, 1), border-color .2s ease;
+}
+
+#sp.is-open #sq {
+    clip-path: inset(0 0 0 0 round 999px);
+}
+
+#sq:focus {
+    border-color: #7aa7ff;
+    box-shadow: none;
+}
+
+html[data-theme="dark"] #sq {
+    border-color: #344563;
+    background: #15213a;
+    color: #e6edf7;
+}
+
+html[data-theme="dark"] #sq::placeholder {
+    color: #9fb0cc;
+}
+
+/* Bảng gợi ý: hiện ngay dưới ô nhập, xuất hiện sau khi ô đã kéo ra */
+#sr {
+    position: absolute;
+    top: calc(var(--sh) + 10px);
+    right: 0;
+    left: 0;
+    max-height: min(55vh, 360px);
+    margin: 0;
+    padding: 10px;
+    overflow-y: auto;
+    list-style: none;
+    border: 1px solid rgba(183, 157, 255, .55);
+    border-radius: 18px;
+    background: linear-gradient(145deg, rgba(52, 28, 112, .96), rgba(31, 42, 116, .94));
+    box-shadow: 0 18px 45px rgba(32, 13, 91, .35);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity .2s ease .12s, transform .25s cubic-bezier(.2, .8, .2, 1) .12s;
+}
+
+#sp.is-open #sr {
+    opacity: 1;
+    transform: none;
+}
+
+/* Màn hình nhỏ: nút kính lúp nhỏ hơn nên ô tìm kiếm cũng thấp hơn */
+@media (max-width: 1279px) {
+    header .sw {
+        --sh: 38px;
+    }
+}
+
+@media (max-width: 560px) {
+    header .sw {
+        position: relative;
+    }
+
+    #sp {
+        top: calc(50% - var(--sh) / 2);
+        right: 0;
+        width: calc(100vw - 80px);
+    }
+}
