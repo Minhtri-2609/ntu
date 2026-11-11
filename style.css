@@ -3688,3 +3688,106 @@ body {
 body.page-leave {
     opacity: 0;
 }
+
+/* ===== Lịch xổ mượt hơn ===== */
+.tw {
+    backdrop-filter: none;               /* bỏ làm mờ nền: giảm lag nhiều nhất */
+    -webkit-backdrop-filter: none;
+    background: rgba(22, 25, 111, .72);  /* tăng độ đặc để bù lại */
+}
+
+.cal-collapse-wrap {
+    display: grid;
+    grid-template-rows: 1fr;
+    max-height: none;
+    overflow: hidden;
+    transition: grid-template-rows .3s ease, opacity .25s ease, margin-top .3s ease;
+}
+.cal-collapse-wrap.collapsed {
+    grid-template-rows: 0fr;
+    max-height: none;
+    opacity: 0;
+    margin-top: 0;
+}
+.cal-collapse-wrap > #cal {
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* ===== Đồng hồ to hơn ===== */
+.tw .dial { width: 96px; height: 96px; }
+.tw .ck-time { font-size: 1.45rem; }
+.tw .ck-time { display: block; }
+
+/* ===== Trạng thái THU GỌN (mặc định): chỉ có mặt đồng hồ + tên nước ===== */
+.tw {
+    transition: width .35s cubic-bezier(.2, .8, .2, 1);
+}
+.tw:not(.open) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 170px;
+    max-width: 170px;
+    padding: 14px 12px 12px;
+    cursor: pointer;
+}
+.tw:not(.open) .tw-body {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.tw:not(.open) .clk {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+.tw:not(.open) .cal-toggle-btn,
+.tw:not(.open) .ck-date,
+.tw:not(.open) .ck-tz {
+    display: none;
+}
+
+/* Tên nước nằm dưới mặt đồng hồ, như một nhãn (chưa bấm được) */
+.tw:not(.open) .dd {
+    order: 2;
+    pointer-events: none;
+    margin-top: 2px;
+}
+.tw:not(.open) .dd-btn {
+    justify-content: center;
+    padding: 0;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+}
+.tw:not(.open) .dd-btn::after { display: none; }
+
+/* Rê chuột: hiện giờ */
+.tw:not(.open) .ck-time {
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+.tw:not(.open):hover .ck-time { opacity: 1; }
+
+/* ===== Trạng thái MỞ (sau khi bấm): giống ảnh bạn gửi ===== */
+.tw.open {
+    width: 100%;
+    max-width: 340px;
+}
+.tw.open .cal-toggle-btn,
+.tw.open .ck-date,
+.tw.open .ck-tz {
+    animation: twFade .35s ease;
+}
+@keyframes twFade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@media (max-width: 820px) {
+    .tw:not(.open) { justify-self: start; }
+    .tw.open { max-width: none; }
+}

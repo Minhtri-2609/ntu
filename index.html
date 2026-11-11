@@ -1470,5 +1470,31 @@ document.getElementById('authLink').addEventListener('click', function (e) {
 // Khi bấm nút Back quay lại, bỏ trạng thái mờ
 addEventListener('pageshow', () => document.body.classList.remove('page-leave'));
 </script>
+<script>
+(function () {
+    const tw = document.querySelector('.tw');
+    const calToggle = document.getElementById('calToggle');
+    const calWrap = document.getElementById('calCollapseWrap');
+    if (!tw) return;
+
+    function setOpen(open) {
+        tw.classList.toggle('open', open);
+        if (!open) {                       // thu gọn thì cũng gập lịch lại
+            calToggle.setAttribute('aria-expanded', 'false');
+            calWrap.classList.add('collapsed');
+        }
+    }
+
+    tw.addEventListener('click', function (e) {
+        if (!tw.classList.contains('open')) setOpen(true);       // bấm vào thẻ thu gọn: mở
+        else if (e.target.closest('.clk')) setOpen(false);       // bấm vào mặt đồng hồ khi đang mở: thu gọn
+    });
+
+    // Bấm ra ngoài thì thu gọn (dùng composedPath vì menu chọn nước vẽ lại danh sách sau khi bấm)
+    document.addEventListener('click', function (e) {
+        if (!e.composedPath().includes(tw)) setOpen(false);
+    });
+})();
+</script>
     </body>
 </html>
