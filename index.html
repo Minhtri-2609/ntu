@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="/favicon1.png">
+        <link rel="prefetch" href="login.html">
         <title>
             Minh Trí
         </title>
@@ -1456,6 +1457,18 @@ document.addEventListener("click", function (e) {
 if (!["127.0.0.1", "localhost"].includes(location.hostname) && location.pathname.endsWith(".html")) {
     history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
 }
+</script>
+<script>
+document.getElementById('authLink').addEventListener('click', function (e) {
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return; // giữ nguyên Ctrl+click mở tab mới
+    e.preventDefault();
+    const url = this.href;
+    document.body.classList.add('page-leave');
+    setTimeout(() => { location.href = url; }, 350);
+});
+
+// Khi bấm nút Back quay lại, bỏ trạng thái mờ
+addEventListener('pageshow', () => document.body.classList.remove('page-leave'));
 </script>
     </body>
 </html>

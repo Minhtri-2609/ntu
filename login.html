@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/favicon1.png">
+    <link rel="preload" as="image" href="img.jpg">
     <title>Đăng nhập / Đăng ký</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
@@ -187,6 +188,26 @@
             background: rgba(255, 255, 255, 0.2);
             transform: translateX(-5px); /* Hiệu ứng rê chuột sẽ trượt nhẹ nút sang trái */
         }
+        /* Hiện dần khi vào trang */
+        body {
+    animation: pageIn .5s ease backwards;
+    transition: opacity .3s ease;
+        }
+        body.page-leave { opacity: 0; }
+
+        .container {
+    animation: cardIn .6s cubic-bezier(.2, .8, .2, 1) backwards;
+        }
+
+        @keyframes pageIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+        }
+
+        @keyframes cardIn {
+    from { opacity: 0; transform: translateY(24px) scale(.96); }
+    to   { opacity: 1; transform: none; }
+        }
     </style>
 </head>
 <body>
@@ -270,6 +291,12 @@ if (/sign-in(\.html)?$/.test(location.pathname)) {
 if (CLEAN_URL && location.pathname.endsWith(".html")) {
     history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
 }
+document.querySelector('.back-home').addEventListener('click', function (e) {
+    e.preventDefault();
+    document.body.classList.add('page-leave');
+    setTimeout(() => { location.href = this.href; }, 300);
+});
+addEventListener('pageshow', () => document.body.classList.remove('page-leave'));
 </script>
 </body>
 </html>

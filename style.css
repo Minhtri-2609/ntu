@@ -3680,3 +3680,11 @@ html[data-theme="dark"] #authLink:focus-visible {
     border-color: #4da6ff;
     color: #4da6ff;
 }
+
+/* ===== Hiệu ứng rời trang ===== */
+body {
+    transition: opacity .35s ease;
+}
+body.page-leave {
+    opacity: 0;
+}
