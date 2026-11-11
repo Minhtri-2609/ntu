@@ -1141,8 +1141,16 @@ addEventListener("popstate", () => {
 // Mở thẳng địa chỉ như /du-an thì cuộn tới đúng mục; địa chỉ /index.html đổi thành /
 const firstId = ID_BY_PATH[location.pathname];
 if (firstId) addEventListener("load", () => setTimeout(() => goTo(firstId, false), 80));
+const hashId = location.hash.slice(1);
 if (CLEAN_URL && location.pathname.endsWith("/index.html")) {
     history.replaceState(null, "", "/" + location.hash);
+}
+// Đến từ link dạng /#articles: cuộn tới mục rồi xóa dấu #
+if (hashId && PAGES[hashId]) {
+    addEventListener("load", () => setTimeout(() => {
+        goTo(hashId, false);
+        if (CLEAN_URL) history.replaceState(null, "", "/");
+    }, 80));
 }
 </script>
 

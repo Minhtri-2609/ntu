@@ -246,5 +246,11 @@
             container.classList.remove('active');
         });
     </script>
+    <script>
+/* Bỏ ".html" trên thanh địa chỉ (chỉ khi đã đưa lên web) */
+if (!["127.0.0.1", "localhost"].includes(location.hostname) && location.pathname.endsWith(".html")) {
+    history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
+}
+</script>
 </body>
 </html>
