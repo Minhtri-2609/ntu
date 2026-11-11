@@ -1496,7 +1496,7 @@ addEventListener('pageshow', () => document.body.classList.remove('page-leave'))
     // Rê chuột vào: mở ngay. Rê ra: đợi 250ms rồi mới thu gọn
 tw.addEventListener('mouseenter', function () {
     clearTimeout(timer);
-    timer = setTimeout(function () { setOpen(true); }, 300);   // 300 = 0,3 giây
+    timer = setTimeout(function () { setOpen(true); }, 500);   // 300 = 0,3 giây
 });
 tw.addEventListener('mouseleave', function () {
         clearTimeout(timer);
