@@ -4007,3 +4007,178 @@ body.page-leave {
         grid-template-columns: 1fr;
     }
 }
+
+/* ===== GIAO DIỆN VÀ HOẠT ẢNH USER DROPDOWN MENU ===== */
+.user-menu-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Nút Icon / Chữ cái đại diện */
+#authLink {
+    position: relative;
+    z-index: 10;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                box-shadow 0.25s ease, 
+                border-color 0.25s ease, 
+                background 0.25s ease, 
+                color 0.25s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Hoạt ảnh phóng to nút khi mở menu */
+.user-menu-wrapper.is-open #authLink {
+    transform: scale(1.18);
+    background: linear-gradient(135deg, var(--blue), var(--cyan)) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.25), 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Khung menu thả xuống */
+.user-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 220px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 16px 36px rgba(11, 31, 68, 0.18);
+    padding: 8px;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transform-origin: top right;
+    transition: opacity 0.22s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.22s ease;
+}
+
+/* Hiển thị dropdown khi kích hoạt mở */
+.user-menu-wrapper.is-open .user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.user-dropdown-header {
+    padding: 10px 12px 8px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 6px;
+}
+
+.user-dropdown-header strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--head);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-dropdown-header small {
+    font-size: 0.78rem;
+    color: var(--mut);
+}
+
+.user-dropdown-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-dropdown-list li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.user-dropdown-list li a i {
+    font-size: 1.18rem;
+    color: var(--blue);
+    transition: color 0.2s ease;
+}
+
+.user-dropdown-list li a:hover {
+    background: rgba(6, 182, 212, 0.12);
+    color: var(--blue);
+    transform: translateX(3px);
+}
+
+.user-dropdown-list li.dropdown-divider {
+    height: 1px;
+    background: var(--line);
+    margin: 6px 0;
+}
+
+/* Riêng nút Đăng xuất có chữ và biểu tượng màu đỏ */
+.user-dropdown-list li a.logout-item {
+    color: #ef4444;
+}
+
+.user-dropdown-list li a.logout-item i {
+    color: #ef4444;
+}
+
+.user-dropdown-list li a.logout-item:hover {
+    background: rgba(239, 68, 68, 0.12);
+    color: #dc2626;
+}
+
+/* Thích ứng chế độ tối (Dark mode) */
+html[data-theme="dark"] .user-dropdown-list li a:hover {
+    background: rgba(56, 189, 248, 0.18);
+    color: #7dd3fc;
+}
+
+html[data-theme="dark"] .user-dropdown-list li a i {
+    color: #38bdf8;
+}
+
+html[data-theme="dark"] .user-dropdown-list li a.logout-item i,
+html[data-theme="dark"] .user-dropdown-list li a.logout-item {
+    color: #f87171;
+}
+
+html[data-theme="dark"] .user-dropdown-list li a.logout-item:hover {
+    background: rgba(248, 113, 113, 0.18);
+    color: #fca5a5;
+}
+
+/* Các mục trong menu trượt vào lần lượt khi mở */
+.user-dropdown-list li {
+    opacity: 0;
+    transform: translateX(10px);
+    transition: opacity .2s ease, transform .25s ease;
+}
+
+.user-menu-wrapper.is-open .user-dropdown-list li {
+    opacity: 1;
+    transform: none;
+}
+
+.user-menu-wrapper.is-open .user-dropdown-list li:nth-child(1) { transition-delay: .05s; }
+.user-menu-wrapper.is-open .user-dropdown-list li:nth-child(2) { transition-delay: .08s; }
+.user-menu-wrapper.is-open .user-dropdown-list li:nth-child(3) { transition-delay: .11s; }
+.user-menu-wrapper.is-open .user-dropdown-list li:nth-child(4) { transition-delay: .14s; }
+.user-menu-wrapper.is-open .user-dropdown-list li:nth-child(5) { transition-delay: .17s; }
+.user-menu-wrapper.is-open .user-dropdown-list li:nth-child(6) { transition-delay: .20s; }
+.user-menu-wrapper.is-open .user-dropdown-list li:nth-child(7) { transition-delay: .23s; }
+
+/* Ảnh đại diện trong nút tròn trên header */
+#authLink img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}

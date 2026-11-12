@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ của tôi | Minh Trí</title>
+    <!-- Kế thừa giao diện chung -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Icon Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <script>
+        // Lấy chủ đề sáng/tối đã lưu
+        try {
+            document.documentElement.dataset.theme = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light");
+        } catch (e) {}
+    </script>
+
+    <style>
+        /* ===== STYLE RIÊNG CHO TRANG PROFILE ===== */
+        body {
+            padding-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--mut);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .back-home:hover {
+            color: var(--blue);
+            transform: translateX(-4px);
+        }
+
+        .profile-container {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--r);
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(11, 31, 68, 0.08);
+            animation: cardIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+        }
+
+        /* Ảnh bìa */
+        .cover-photo {
+            width: 100%;
+            height: 240px;
+            background-color: var(--head);
+            /* Thay link ảnh bìa của bạn vào URL bên dưới */
+            background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .profile-header-content {
+            padding: 0 30px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: -65px;
+            position: relative;
+        }
+
+        .profile-user-details {
+            display: flex;
+            align-items: flex-end;
+            gap: 24px;
+        }
+
+        /* Avatar tròn */
+        .profile-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 5px solid var(--card);
+            background: var(--bg);
+            object-fit: cover;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .profile-text h1 {
+            font-size: 1.8rem;
+            color: var(--head);
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+
+        .profile-text .nickname {
+            display: inline-block;
+            color: var(--blue);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 6px;
+            background: rgba(29, 78, 216, 0.1);
+            padding: 2px 10px;
+            border-radius: 99px;
+        }
+
+        .profile-text .join-date {
+            color: var(--mut);
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .profile-actions .btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 18px;
+        }
+
+        .profile-body {
+            padding: 30px;
+            border-top: 1px solid var(--line);
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .profile-section h3 {
+            font-size: 1.15rem;
+            color: var(--head);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-section h3 i {
+            color: var(--cyan);
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--mut);
+            font-size: 0.92rem;
+        }
+
+        .info-list li i {
+            font-size: 1.2rem;
+            color: var(--blue);
+            margin-top: 2px;
+        }
+
+        .info-list li strong {
+            color: var(--ink);
+            display: block;
+        }
+
+        .activity-timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--line);
+        }
+
+        .activity-item {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .activity-item::before {
+            content: '';
+            position: absolute;
+            left: -27px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--cyan);
+            border: 2px solid var(--card);
+        }
+
+        .activity-item time {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--mut);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .activity-item p {
+            color: var(--ink);
+            font-size: 0.95rem;
+            background: var(--bg);
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+        }
+
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(24px) scale(.98); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        @media (max-width: 768px) {
+            .profile-header-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .profile-user-details {
+                flex-direction: column;
+                align-items: center;
+                gap: 14px;
+            }
+            .profile-actions {
+                margin-top: 24px;
+            }
+            .profile-body {
+                grid-template-columns: 1fr;
+            }
+            .profile-text .join-date {
+                justify-content: center;
+            }
+        }
+        
+        /* Đồng bộ Dark Mode bổ sung */
+        html[data-theme="dark"] .profile-text .nickname {
+            background: rgba(56, 189, 248, 0.15);
+            color: #7dd3fc;
+        }
+        html[data-theme="dark"] .activity-item p {
+            background: #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrap">
+        <a href="index.html" class="back-home"><i class='bx bx-left-arrow-alt'></i> Trở về Trang chủ</a>
+        
+        <div class="profile-container">
+            <!-- Ảnh bìa -->
+            <div class="cover-photo"></div>
+
+            <!-- Header Hồ sơ -->
+            <div class="profile-header-content">
+                <div class="profile-user-details">
+                    <!-- Ảnh đại diện -->
+                    <img class="profile-avatar" id="avatarImg" src="https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff&size=256" alt="Ảnh đại diện">
+                    
+                    <div class="profile-text">
+                        <h1 id="profileName">Người dùng</h1>
+                        <span class="nickname" id="profileNickname">@thanhvien</span>
+                        <div class="join-date">
+                            <i class='bx bxs-calendar'></i> Tham gia tháng 11, 2026
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn sm" onclick="alert('Chức năng sửa hồ sơ sẽ cập nhật sau!')">
+                        <i class='bx bxs-edit'></i> Sửa hồ sơ
+                    </button>
+                    <button class="btn sm ghost">
+                        <i class='bx bx-history'></i> Hoạt động
+                    </button>
+                </div>
+            </div>
+
+            <!-- Nội dung dưới -->
+            <div class="profile-body">
+                <!-- Cột trái: Thông tin -->
+                <div class="profile-section">
+                    <h3><i class='bx bxs-user-detail'></i> Giới thiệu</h3>
+                    <ul class="info-list">
+                        <li>
+                            <i class='bx bxs-graduation'></i>
+                            <div>
+                                <strong>Học vấn</strong>
+                                Đại học Nha Trang (NTU)
+                            </div>
+                        </li>
+                        <li>
+                            <i class='bx bxs-map'></i>
+                            <div>
+                                <strong>Đến từ</strong>
+                                Khánh Hòa, Việt Nam
+                            </div>
+                        </li>
+                        <li>
+                            <i class='bx bxs-envelope'></i>
+                            <div>
+                                <strong>Email liên hệ</strong>
+                                <span id="profileEmail">Chưa cập nhật</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Cột phải: Hoạt động gần đây -->
+                <div class="profile-section">
+                    <h3><i class='bx bxs-bolt-circle'></i> Hoạt động gần đây</h3>
+                    <div class="activity-timeline">
+                        <div class="activity-item">
+                            <time>Hôm nay, 09:30</time>
+                            <p>Đã xem bài viết <strong>"Hệ thống nhúng là gì?"</strong></p>
+                        </div>
+                        <div class="activity-item">
+                            <time>Hôm qua, 14:15</time>
+                            <p>Sử dụng công cụ <strong>Tính toán PWM</strong></p>
+                        </div>
+                        <div class="activity-item">
+                            <time>11 Tháng 11, 2026</time>
+                            <p>Tạo tài khoản thành công và tham gia website.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tự động lấy tên tài khoản đã đăng nhập từ localStorage
+        document.addEventListener("DOMContentLoaded", function() {
+            try {
+                const u = JSON.parse(localStorage.getItem("demo_session") || "null");
+                if (u && u.name) {
+                    document.getElementById("profileName").textContent = u.name;
+                    // Tạo nickname giả lập dựa trên tên, xóa dấu cách
+                    const nick = u.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "");
+                    document.getElementById("profileNickname").textContent = "@" + nick;
+                    // Đổi avatar thành chữ cái đầu của tên
+                    document.getElementById("avatarImg").src = `https://ui-avatars.com/api/?name=${u.name}&background=155eef&color=fff&size=256&font-size=0.4`;
+                }
+            } catch (e) {
+                console.error("Lỗi tải thông tin:", e);
+            }
+        });
+    </script>
+</body>
+</html>

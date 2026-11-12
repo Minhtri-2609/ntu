@@ -12,6 +12,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <script>
 try {
     document.documentElement.dataset.theme = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light");
@@ -19,7 +20,7 @@ try {
 catch (e) { }
 
 </script>
-        <link rel="stylesheet" href="style.css?v=4">
+        <link rel="stylesheet" href="style.css?v=5">
     </head>
     <body>
         <header>
@@ -65,13 +66,32 @@ catch (e) { }
                             </div>
                         </div>
                     </div>
-                    <a class="ic" id="authLink" href="login.html" aria-label="Đăng nhập / Đăng ký" title="Đăng nhập / Đăng ký">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/>
-                            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                        </svg>
-                    </a>
-                </div>
+<!-- Cụm nút tài khoản và Menu thả xuống -->
+<div class="user-menu-wrapper">
+    <a class="ic" id="authLink" href="login.html" aria-label="Đăng nhập / Đăng ký" title="Đăng nhập / Đăng ký">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+    </a>
+
+    <!-- Menu xổ xuống (Dropdown) -->
+    <div class="user-dropdown" id="userDropdown" hidden>
+        <div class="user-dropdown-header">
+            <strong id="dropdownUserName">Tài khoản</strong>
+            <small>Sinh viên NTU</small>
+        </div>
+        <ul class="user-dropdown-list">
+            <li><a href="account.html"><i class='bx bxs-user-account'></i> Tài khoản của tôi</a></li>
+            <li><a href="profile.html"><i class='bx bxs-user-detail'></i> Hồ sơ của tôi</a></li>
+            <li><a href="settings.html"><i class='bx bxs-cog'></i> Cài đặt tài khoản</a></li>
+            <li><a href="#"><i class='bx bxs-bookmark-star'></i> Theo dõi</a></li>
+            <li><a href="#"><i class='bx bxs-award'></i> Danh hiệu</a></li>
+            <li class="dropdown-divider"></li>
+            <li><a href="#" id="logoutBtn" class="logout-item"><i class='bx bxs-log-out'></i> Đăng xuất</a></li>
+        </ul>
+    </div>
+</div>                </div>
             </div>
             <nav id="nav" aria-label="Điều hướng chính">
                 <ul>
@@ -1081,16 +1101,88 @@ function spy() {
 }
 addEventListener("scroll", spy, { passive: true });
 spy();
-/* ===== Tài khoản thử nghiệm (từ login.html): đã đăng nhập thì hiện chữ cái đầu của tên ===== */
-try {
-    const u = JSON.parse(localStorage.getItem("demo_session") || "null"), a = $("#authLink");
-    if (u && u.name) {
-        a.textContent = u.name.trim().charAt(0).toUpperCase();
-        a.title = "Tài khoản: " + u.name;
-        a.setAttribute("aria-label", "Tài khoản của " + u.name);
+/* ===== Quản lý đăng nhập & Menu thả xuống (User Dropdown) ===== */
+(async function () {
+    const authLink = document.getElementById("authLink");
+    const wrapper = authLink ? authLink.closest(".user-menu-wrapper") : null;
+    const dropdown = document.getElementById("userDropdown");
+    const nameBox = document.getElementById("dropdownUserName");
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (!authLink || !wrapper) return;
+
+    // 1. Hỏi máy chủ xem còn đăng nhập không (đáng tin hơn localStorage)
+    let user = null;
+    try {
+        const response = await fetch(API + "/api/me", { credentials: "include" });
+        const data = await response.json();
+        user = data.user;
+    } catch (error) {
+        // Máy chủ không phản hồi: tạm dùng thông tin đã lưu trên máy
+        try {
+            const saved = JSON.parse(localStorage.getItem("demo_session") || "null");
+            if (saved && saved.name) user = saved;
+        } catch (e) {
+            user = null;
+        }
     }
-}
-catch (e) { }
+
+    if (!user) {
+        try {
+            localStorage.removeItem("demo_session");
+        } catch (e) {}
+        return;     // chưa đăng nhập: giữ biểu tượng người, bấm vào đi tới login.html
+    }
+
+    try {
+        localStorage.setItem("demo_session", JSON.stringify({ name: user.name, avatar: user.avatar || "" }));
+    } catch (e) {}
+
+    // 2. Hiện ảnh đại diện (nếu có) hoặc chữ cái đầu của tên
+    authLink.textContent = "";
+    if (user.avatar) {
+        const img = document.createElement("img");
+        img.src = API + user.avatar;
+        img.alt = "";
+        authLink.appendChild(img);
+    } else {
+        authLink.textContent = user.name.trim().charAt(0).toUpperCase();
+    }
+    authLink.title = "Tài khoản: " + user.name;
+    authLink.setAttribute("aria-label", "Tài khoản của " + user.name);
+    authLink.removeAttribute("href");
+    if (nameBox) nameBox.textContent = user.name;
+
+    // Bỏ "hidden" để hoạt ảnh CSS chạy được (hiện/ẩn do class is-open điều khiển)
+    if (dropdown) dropdown.hidden = false;
+
+    // 3. Bấm nút thì mở/đóng; bấm ra ngoài hoặc nhấn Esc thì đóng
+    authLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        wrapper.classList.toggle("is-open");
+    });
+    document.addEventListener("click", function (e) {
+        if (!wrapper.contains(e.target)) wrapper.classList.remove("is-open");
+    });
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") wrapper.classList.remove("is-open");
+    });
+
+    // 4. Đăng xuất: báo máy chủ xóa phiên đăng nhập, rồi xóa dữ liệu trên máy
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", async function (e) {
+            e.preventDefault();
+            try {
+                await fetch(API + "/api/logout", { method: "POST", credentials: "include" });
+            } catch (error) {}
+            try {
+                localStorage.removeItem("demo_session");
+            } catch (error) {}
+            if (typeof toast === "function") toast("Đã đăng xuất thành công!");
+            setTimeout(() => location.reload(), 400);
+        });
+    }
+})();
 /* ===== Chế độ sáng/tối (nhớ lựa chọn khi bấm) ===== */
 const root = document.documentElement, tb = $("#themeBtn");
 function applyTheme(t) { root.dataset.theme = t; tb.setAttribute("aria-pressed", t === "dark"); tb.setAttribute("aria-label", t === "dark" ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối"); }
@@ -1548,7 +1640,15 @@ if (!["127.0.0.1", "localhost"].includes(location.hostname) && location.pathname
 </script>
 <script>
 document.getElementById('authLink').addEventListener('click', function (e) {
-    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return; // giữ nguyên Ctrl+click mở tab mới
+    // 1. Kiểm tra xem người dùng đã đăng nhập hay chưa
+    const u = JSON.parse(localStorage.getItem("demo_session") || "null");
+    if (u && u.name) {
+        // Nếu ĐÃ ĐĂNG NHẬP: dừng đoạn mã này lại để script User Menu xử lý (không làm mờ trang, không chuyển hướng)
+        return;
+    }
+
+    // 2. Nếu CHƯA ĐĂNG NHẬP: mới chạy hiệu ứng mờ trang và chuyển sang trang login.html
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
     e.preventDefault();
     const url = this.href;
     document.body.classList.add('page-leave');

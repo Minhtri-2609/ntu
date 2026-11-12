@@ -10,3 +10,4 @@
 /articles/tong-quan-co-dien-tu     /articles/tong-quan-co-dien-tu.html  200
 /articles/internet-of-things       /articles/internet-of-things.html    200
 /articles/don-nhan                 /articles/don-nhan.html              200
+/api/*  https://tr1ssca.pythonanywhere.com/api/:splat  200
