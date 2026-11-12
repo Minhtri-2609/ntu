@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tài khoản | Minh Trí</title>
+<link rel="stylesheet" href="style.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<script>
+try { document.documentElement.dataset.theme = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light"); } catch (e) {}
+</script>
+<style>
+body { padding: 40px 0 60px; }
+.back-home { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px; color: var(--mut); font-weight: 600; text-decoration: none; transition: color .2s, transform .2s; }
+.back-home:hover { color: var(--blue); transform: translateX(-4px); }
+.acc { max-width: 760px; margin: 0 auto; padding: 24px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 10px 30px rgba(11, 31, 68, .08); }
+.a-tabs { display: flex; flex-wrap: wrap; gap: 4px; width: fit-content; max-width: 100%; margin-bottom: 22px; padding: 5px; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; }
+.atab { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 0; border-radius: 999px; background: transparent; color: var(--mut); font: inherit; font-size: .9rem; font-weight: 650; cursor: pointer; transition: background .2s, color .2s; }
+.atab.on { background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; }
+.a-panel { animation: aFade .3s ease; }
+.a-panel[hidden] { display: none; }
+@keyframes aFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.a-me { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.a-me img { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; }
+.a-me h2 { margin: 0; }
+.a-me small { color: var(--mut); }
+.a-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; padding: 12px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; }
+.a-row > span { color: var(--mut); }
+.a-row a { color: var(--ink); font-weight: 600; text-decoration: none; }
+.a-row a:hover { color: var(--blue); }
+.a-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 18px 0; }
+.a-stats div { padding: 14px; text-align: center; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; }
+.a-stats b { display: block; font-size: 1.5rem; }
+.a-stats small { color: var(--mut); }
+.a-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.a-btn { padding: 9px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink); font: inherit; font-size: .9rem; font-weight: 650; text-decoration: none; cursor: pointer; }
+.a-btn:hover { border-color: var(--cyan); }
+.a-btn.on, .a-btn.main { border-color: transparent; background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; }
+.a-btn:disabled { opacity: .6; cursor: default; }
+.a-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.a-field span { color: var(--mut); font-size: .85rem; font-weight: 650; }
+.a-field input { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); font: inherit; }
+.a-field input:focus { border-color: var(--cyan); outline: none; box-shadow: 0 0 0 3px rgba(6, 182, 212, .18); }
+.a-msg { min-height: 1.3em; margin: 0 0 12px; color: #d93025; font-size: .9rem; }
+/* ===== Danh hiệu ===== */
+.b-lv1{--bc:#94a3b8}.b-lv2{--bc:#22c55e}.b-lv3{--bc:#06b6d4}.b-lv4{--bc:#3b82f6}.b-lv5{--bc:#8b5cf6}.b-lv6{--bc:#ec4899}.b-lv7{--bc:#f59e0b}.b-lv8{--bc:#ff5a1f}.b-lv9{--bc:#facc15}.b-dev{--bc:#ef4444}.b-admin{--bc:#a855f7}
+.a-next { margin: 0 0 14px; color: var(--mut); font-size: .9rem; }
+.a-more { margin-bottom: 14px; }
+.a-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.a-list[hidden] { display: none; }
+.a-badge { position: relative; isolation: isolate; overflow: hidden; padding: 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 16px; }
+.a-badge.big { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.a-badge.big .a-ico { margin: 0; }
+.a-badge.locked { opacity: .5; filter: grayscale(.8); }
+.a-ico { position: relative; display: grid; place-items: center; flex: none; width: 46px; height: 46px; margin-bottom: 8px; border-radius: 50%; background: var(--bc); color: #fff; font-size: 1.5rem; }
+.a-badge .lv { color: var(--mut); font-size: .72rem; font-weight: 700; letter-spacing: .5px; }
+.a-badge h4 { margin: 2px 0 4px; }
+.a-badge ul { margin: 8px 0 0; padding: 0; list-style: none; font-size: .82rem; color: var(--mut); }
+.a-badge li.ok { color: #16a34a; font-weight: 650; }
+.a-chip { display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: var(--bc); color: #fff; font-size: .75rem; font-weight: 700; vertical-align: middle; }
+.a-chip[hidden] { display: none; }
+.a-chip.b-admin { background: linear-gradient(90deg, #f59e0b, #a855f7); }
+
+/* Cấp 1-7: hiệu ứng nhẹ, tăng dần */
+.a-badge.earned[class*="b-lv"] { border-color: var(--bc); }
+.a-badge.earned:is(.b-lv2,.b-lv3,.b-lv4,.b-lv5,.b-lv6,.b-lv7) .a-ico { animation: aPulse 3s ease-in-out infinite; }
+.a-badge.earned:is(.b-lv5,.b-lv6,.b-lv7)::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; box-shadow: inset 0 0 22px var(--bc); opacity: .18; animation: aGlow 3s ease-in-out infinite; }
+.a-badge.earned:is(.b-lv7,.b-lv9)::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.35) 50%, transparent 60%); transform: translateX(-120%); animation: aSweep 5s ease-in-out infinite; }
+
+/* Cấp 8: ngọn lửa */
+.a-badge.earned.b-lv8 { border-color: #ff5a1f; background: linear-gradient(160deg, rgba(255,106,0,.16), rgba(255,45,85,.10)); }
+.a-badge.earned.b-lv8::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70%; z-index: -1; background: linear-gradient(to top, rgba(255,90,0,.45), transparent); transform-origin: bottom; animation: aFlame 1.6s ease-in-out infinite; }
+.a-badge.earned.b-lv8 .a-ico { background: linear-gradient(160deg, #ffb347, #ff2d55); animation: aFlick 1.2s ease-in-out infinite; }
+
+/* Cấp 9: vương miện vàng lấp lánh */
+.a-badge.earned.b-lv9 { border-color: #facc15; background: linear-gradient(145deg, rgba(250,204,21,.18), rgba(245,158,11,.08)); }
+.a-badge.earned.b-lv9::before { animation-duration: 3s; }
+.a-badge.earned.b-lv9::after { content: "✦  ✦"; position: absolute; top: 8px; right: 12px; color: #facc15; letter-spacing: 10px; animation: aTwinkle 1.8s ease-in-out infinite; }
+.a-badge.earned.b-lv9 .a-ico { background: linear-gradient(145deg, #fde047, #f59e0b); animation: aBounce 2.4s ease-in-out infinite; }
+
+/* Dev: nền đỏ, viền bo nhẹ, phát sáng */
+.a-badge.earned.b-dev { border: 1px solid rgba(248,113,113,.6); border-radius: 18px; background: linear-gradient(145deg, #c62828, #7f1d1d); color: #fff; animation: aDev 2.4s ease-in-out infinite; }
+.a-badge.earned.b-dev .lv, .a-badge.earned.b-dev ul { color: #fecaca; }
+.a-badge.earned.b-dev .a-ico { background: rgba(255,255,255,.18); }
+.a-badge.earned.b-dev h4::after { content: "_"; margin-left: 2px; animation: aBlink 1s steps(1) infinite; }
+
+/* Admin: viền cầu vồng xoay, cực quang, vòng quỹ đạo quanh biểu tượng */
+.a-badge.earned.b-admin { border-color: transparent; background: transparent; color: #fff; }
+.a-badge.earned.b-admin::before { content: ""; position: absolute; inset: -60%; z-index: -2; background: conic-gradient(from 0deg, #ffd166, #06b6d4, #a855f7, #ff4d6d, #ffd166); animation: aSpin 4s linear infinite; }
+.a-badge.earned.b-admin::after { content: ""; position: absolute; inset: 2px; z-index: -1; border-radius: 14px; background: radial-gradient(circle at 20% 0%, #2b1a6b, #0b1030 70%); }
+.a-badge.earned.b-admin .lv, .a-badge.earned.b-admin ul { color: #cbd5e1; }
+.a-badge.earned.b-admin .a-ico { background: linear-gradient(145deg, #ffd166, #a855f7); }
+.a-badge.earned.b-admin .a-ico::after { content: ""; position: absolute; inset: -6px; border: 2px dotted #ffd166; border-radius: 50%; animation: aSpin 6s linear infinite; }
+.a-badge.earned.b-admin h4 { background: linear-gradient(90deg, #ffd166, #fff, #06b6d4, #ffd166); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: aSlide 3s linear infinite; }
+
+@keyframes aPulse { 50% { transform: scale(1.08); } }
+@keyframes aGlow { 50% { opacity: .45; } }
+@keyframes aSweep { 0%, 60% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+@keyframes aFlame { 0%, 100% { opacity: .7; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.15); } }
+@keyframes aFlick { 0%, 100% { transform: scale(1) rotate(0); } 30% { transform: scale(1.1) rotate(-4deg); } 60% { transform: scale(.96) rotate(3deg); } }
+@keyframes aTwinkle { 50% { opacity: .25; } }
+@keyframes aBounce { 50% { transform: translateY(-4px) scale(1.06); } }
+@keyframes aDev { 0%, 100% { box-shadow: 0 0 10px rgba(239,68,68,.35); } 50% { box-shadow: 0 0 28px rgba(239,68,68,.75); } }
+@keyframes aBlink { 50% { opacity: 0; } }
+@keyframes aSpin { to { transform: rotate(360deg); } }
+@keyframes aSlide { to { background-position: 200% 0; } }
+@media (prefers-reduced-motion: reduce) { .a-badge, .a-badge *, .a-badge::before, .a-badge::after { animation: none !important; } }
+.a-toast { position: fixed; left: 50%; bottom: 28px; z-index: 400; padding: 10px 18px; border-radius: 12px; background: #0b1f44; color: #fff; font-size: .92rem; opacity: 0; transform: translate(-50%, 20px); transition: opacity .3s, transform .3s; }
+.a-toast.show { opacity: 1; transform: translate(-50%, 0); }
+@media (max-width: 560px) { .a-stats { grid-template-columns: 1fr; } .atab { padding: 8px 12px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <a href="index.html" class="back-home"><i class='bx bx-left-arrow-alt'></i> Trở về Trang chủ</a>
+
+    <div class="acc">
+        <div class="a-tabs" role="tablist">
+            <button class="atab" data-tab="account" role="tab"><i class='bx bxs-user-account'></i> Tài khoản</button>
+            <button class="atab" data-tab="settings" role="tab"><i class='bx bxs-cog'></i> Cài đặt</button>
+            <button class="atab" data-tab="follow" role="tab"><i class='bx bxs-bookmark-star'></i> Theo dõi</button>
+            <button class="atab" data-tab="badges" role="tab"><i class='bx bxs-award'></i> Danh hiệu</button>
+        </div>
+
+        <!-- Tài khoản -->
+        <section class="a-panel" id="p-account">
+            <div class="a-me">
+                <img id="aAvatar" src="https://ui-avatars.com/api/?name=User&background=155eef&color=fff&size=256" alt="Ảnh đại diện">
+                <div><h2 id="aName">Người dùng</h2><small id="aNick">@thanhvien</small><span class="a-chip" id="aTitle" hidden></span></div>
+            </div>
+            <div class="a-row"><span>Tên đăng nhập</span><b id="aUser">-</b></div>
+            <div class="a-row"><span>Email</span><b id="aEmail">-</b></div>
+            <div class="a-row"><span>Ngày tham gia</span><b id="aJoined">-</b></div>
+            <div class="a-stats">
+                <div><b id="sComments">0</b><small>Bình luận</small></div>
+                <div><b id="sFollows">0</b><small>Đang theo dõi</small></div>
+                <div><b id="sBadges">0</b><small>Danh hiệu</small></div>
+            </div>
+            <div class="a-actions">
+                <a class="a-btn main" href="profile.html">Sửa hồ sơ</a>
+                <button class="a-btn" id="logoutBtn" type="button">Đăng xuất</button>
+            </div>
+        </section>
+
+        <!-- Cài đặt: đổi mật khẩu -->
+        <section class="a-panel" id="p-settings" hidden>
+            <h3 style="margin-top:0">Đổi mật khẩu</h3>
+            <form id="pwForm" autocomplete="off">
+                <label class="a-field"><span>Mật khẩu hiện tại</span><input id="pwCur" type="password" required></label>
+                <label class="a-field"><span>Mật khẩu mới (từ 8 ký tự)</span><input id="pwNew" type="password" required></label>
+                <label class="a-field"><span>Nhập lại mật khẩu mới</span><input id="pwNew2" type="password" required></label>
+                <p class="a-msg" id="pwMsg" role="alert"></p>
+                <button class="a-btn main" id="pwBtn" type="submit">Lưu mật khẩu</button>
+            </form>
+        </section>
+
+        <!-- Theo dõi -->
+        <section class="a-panel" id="p-follow" hidden>
+            <p style="margin-top:0;color:var(--mut)">Chọn các bài viết bạn muốn theo dõi.</p>
+            <div id="followList"></div>
+        </section>
+
+        <!-- Danh hiệu -->
+        <section class="a-panel" id="p-badges" hidden>
+            <div id="curBadge"></div>
+            <p class="a-next" id="nextBadge"></p>
+            <button class="a-btn a-more" id="moreBadge" type="button">Xem tất cả danh hiệu</button>
+            <div class="a-list" id="badgeList" hidden></div>
+        </section>
+    </div>
+</div>
+
+<script>
+const LOCAL = ["127.0.0.1", "localhost"].includes(location.hostname);
+const API = LOCAL ? "http://127.0.0.1:5000" : "https://tr1ssca.pythonanywhere.com";
+// Đường dẫn tới từng bài viết (sửa nếu file của bạn nằm chỗ khác)
+const HREFS = {
+    "tong-quan-co-dien-tu": "articles/tong-quan-co-dien-tu.html",
+    "internet-of-things": "articles/internet-of-things.html",
+    "he-thong-nhung-la-gi": "articles/he-thong-nhung-la-gi.html",
+    "don-nhan": "articles/don-nhan.html"
+};
+const $ = (s) => document.querySelector(s);
+const JSON_HEAD = { "Content-Type": "application/json" };
+
+function toast(message) {
+    const box = document.createElement("div");
+    box.className = "a-toast";
+    box.textContent = message;
+    document.body.appendChild(box);
+    requestAnimationFrame(() => box.classList.add("show"));
+    setTimeout(() => { box.classList.remove("show"); setTimeout(() => box.remove(), 300); }, 2600);
+}
+
+async function api(path, options = {}) {
+    const response = await fetch(API + path, { credentials: "include", ...options });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+        const error = new Error(data.error || "Có lỗi xảy ra, vui lòng thử lại.");
+        error.status = response.status;
+        throw error;
+    }
+    return data;
+}
+
+function fail(error) {
+    if (error.status === 401) { location.href = "login.html"; return; }   // chưa đăng nhập
+    toast(error.message);
+}
+
+/* ---------- Tài khoản ---------- */
+async function loadAccount() {
+    try {
+        const p = await api("/api/profile");
+        $("#aAvatar").src = p.avatar ? API + p.avatar
+            : "https://ui-avatars.com/api/?name=" + encodeURIComponent(p.display_name) + "&background=155eef&color=fff&size=256";
+        $("#aName").textContent = p.display_name;
+        $("#aNick").textContent = "@" + p.nickname;
+        $("#aUser").textContent = p.username;
+        $("#aEmail").textContent = p.email;
+        const d = new Date(p.joined);
+        $("#aJoined").textContent = isNaN(d.getTime()) ? "" : d.toLocaleDateString("vi-VN");
+        const [c, f, b] = await Promise.all([api("/api/profile/comments"), api("/api/follows"), api("/api/badges")]);
+        $("#sComments").textContent = c.length;
+        $("#sFollows").textContent = f.filter((x) => x.followed).length;
+        $("#sBadges").textContent = b.badges.filter((x) => x.earned).length;
+        const cur = b.badges.find((x) => x.id === b.current);
+        const chip = $("#aTitle");
+        chip.className = "a-chip " + bcls(cur);
+        chip.textContent = cur.name;
+        chip.hidden = false;
+    } catch (error) { fail(error); }
+}
+
+$("#logoutBtn").addEventListener("click", async () => {
+    try { await api("/api/logout", { method: "POST" }); } catch (e) {}
+    try { localStorage.removeItem("demo_session"); } catch (e) {}
+    location.href = LOCAL ? "index.html" : "/";
+});
+
+/* ---------- Cài đặt: đổi mật khẩu ---------- */
+$("#pwForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = $("#pwMsg"), btn = $("#pwBtn");
+    const current = $("#pwCur").value, next = $("#pwNew").value;
+    msg.textContent = "";
+    if (next.length < 8) { msg.textContent = "Mật khẩu mới cần ít nhất 8 ký tự."; return; }
+    if (next !== $("#pwNew2").value) { msg.textContent = "Mật khẩu nhập lại không khớp."; return; }
+    btn.disabled = true;
+    try {
+        await api("/api/account/password", { method: "POST", headers: JSON_HEAD, body: JSON.stringify({ current: current, new: next }) });
+        e.target.reset();
+        toast("Đã đổi mật khẩu.");
+    } catch (error) {
+        if (error.status === 401) fail(error); else msg.textContent = error.message;
+    } finally { btn.disabled = false; }
+});
+
+/* ---------- Theo dõi ---------- */
+async function loadFollow() {
+    try {
+        const items = await api("/api/follows");
+        const box = $("#followList");
+        box.textContent = "";
+        items.forEach((it) => {
+            const row = document.createElement("div");
+            row.className = "a-row";
+            const link = document.createElement("a");
+            link.href = HREFS[it.slug] || "#";
+            link.textContent = it.title;
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "a-btn" + (it.followed ? " on" : "");
+            btn.textContent = it.followed ? "Đang theo dõi" : "Theo dõi";
+            btn.addEventListener("click", async () => {
+                btn.disabled = true;
+                try {
+                    await api("/api/follows", { method: "POST", headers: JSON_HEAD, body: JSON.stringify({ slug: it.slug, follow: !it.followed }) });
+                    loadFollow();
+                } catch (error) { btn.disabled = false; fail(error); }
+            });
+            row.append(link, btn);
+            box.appendChild(row);
+        });
+    } catch (error) { fail(error); }
+}
+
+/* ---------- Danh hiệu ---------- */
+function bcls(b) { return b.id === "dev" ? "b-dev" : b.id === "admin" ? "b-admin" : "b-lv" + b.level; }
+
+function badgeCard(b, big) {
+    const card = document.createElement("div");
+    card.className = "a-badge " + bcls(b) + (b.earned ? " earned" : " locked") + (big ? " big" : "");
+    const ico = document.createElement("div");
+    ico.className = "a-ico";
+    const i = document.createElement("i");
+    i.className = "bx " + b.icon;
+    ico.appendChild(i);
+    const text = document.createElement("div");
+    const lv = document.createElement("div");
+    lv.className = "lv";
+    lv.textContent = b.kind === "special" ? "ĐẶC BIỆT" : "CẤP " + b.level;
+    const name = document.createElement("h4");
+    name.textContent = b.name;
+    text.append(lv, name);
+    if (!big) {
+        const ul = document.createElement("ul");
+        if (b.note) {
+            const li = document.createElement("li");
+            li.textContent = b.note;
+            ul.appendChild(li);
+        }
+        b.reqs.forEach((r) => {
+            const li = document.createElement("li");
+            const ok = r.value >= r.goal;
+            li.className = ok ? "ok" : "";
+            li.textContent = (ok ? "✓ " : "○ ") + r.label + (ok ? "" : " (" + r.value + "/" + r.goal + ")");
+            ul.appendChild(li);
+        });
+        text.appendChild(ul);
+    }
+    card.append(ico, text);
+    if (!big) { card.style.display = "flex"; card.style.gap = "12px"; ico.style.marginBottom = "0"; }
+    return card;
+}
+
+async function loadBadges() {
+    try {
+        const data = await api("/api/badges");
+        const list = data.badges;
+        $("#curBadge").replaceChildren(badgeCard(list.find((b) => b.id === data.current), true));
+        const next = list.find((b) => b.kind === "normal" && !b.earned);
+        const miss = next && next.reqs.find((r) => r.value < r.goal);
+        $("#nextBadge").textContent = next ? "Tiếp theo: " + next.name + " (" + miss.label + ": " + miss.value + "/" + miss.goal + ")" : "Bạn đã đạt tất cả danh hiệu thường!";
+        $("#badgeList").replaceChildren(...list.map((b) => badgeCard(b, false)));
+    } catch (error) { fail(error); }
+}
+
+$("#moreBadge").addEventListener("click", () => {
+    const box = $("#badgeList");
+    box.hidden = !box.hidden;
+    $("#moreBadge").textContent = box.hidden ? "Xem tất cả danh hiệu" : "Thu gọn";
+});
+
+/* ---------- Chuyển tab (đọc ?tab=... trên địa chỉ) ---------- */
+const TABS = ["account", "settings", "follow", "badges"];
+const LOADERS = { account: loadAccount, settings: () => {}, follow: loadFollow, badges: loadBadges };
+
+function show(tab) {
+    if (!TABS.includes(tab)) tab = "account";
+    document.querySelectorAll(".atab").forEach((b) => {
+        const on = b.dataset.tab === tab;
+        b.classList.toggle("on", on);
+        b.setAttribute("aria-selected", on);
+    });
+    TABS.forEach((t) => { $("#p-" + t).hidden = t !== tab; });
+    history.replaceState(null, "", "?tab=" + tab);
+    LOADERS[tab]();
+}
+
+document.querySelectorAll(".atab").forEach((b) => b.addEventListener("click", () => show(b.dataset.tab)));
+
+// Bỏ ".html" trên thanh địa chỉ (chỉ khi đã đưa lên web)
+if (!LOCAL && location.pathname.endsWith(".html")) {
+    history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
+}
+show(new URLSearchParams(location.search).get("tab") || "account");
+</script>
+</body>
+</html>
