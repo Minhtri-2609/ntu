@@ -1,0 +1,322 @@
+/* ===== print.css: định dạng khi in bài viết ra PDF ===== */
+@page {
+    size: A4;
+    margin: 2cm 2cm 2.2cm 2.5cm;
+}
+
+/* Ẩn mọi thứ không phải nội dung */
+.progress-track,
+.site-header,
+.toc,
+.back-top,
+.article-footer,
+.hero-meta,
+.eyebrow,
+.article-hero img,
+.article-hero::after,
+.toc-tools,
+.post-social-actions,
+.post-rating,
+.comments {
+    display: none !important;
+}
+
+html,
+body {
+    background: #fff !important;
+    color: #000 !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+}
+
+/* Bỏ hiệu ứng hiện dần: nếu không sẽ mất nội dung chưa cuộn tới */
+.reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Bố cục một cột, không khung, không đổ bóng */
+.article-layout {
+    display: block !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+.article-content {
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Phông chữ: Times New Roman 12.5pt, căn đều hai bên */
+.article-hero,
+.article-content,
+.article-content * {
+    font-family: "Times New Roman", Times, serif !important;
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+.article-content {
+    font-size: 12.5pt !important;
+    line-height: 1.5 !important;
+}
+
+.article-content p,
+.article-content li,
+.article-content td,
+.article-content th {
+    font-size: 12.5pt !important;
+    line-height: 1.5 !important;
+    text-align: justify;
+}
+
+.article-content p {
+    margin: 0 0 8pt !important;
+}
+
+/* Tiêu đề lớn của bài (lấy từ phần hero) */
+.article-hero {
+    display: block !important;
+    min-height: 0 !important;
+    margin: 0 0 14pt !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border-bottom: 1.5pt solid #000;
+    background: #fff !important;
+}
+
+.hero-content {
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 0 10pt !important;
+}
+
+.hero-content h1 {
+    max-width: none !important;
+    margin: 0 0 6pt !important;
+    color: #000 !important;
+    font-size: 22pt !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.hero-summary {
+    max-width: none !important;
+    margin: 0 !important;
+    color: #000 !important;
+    font-size: 12.5pt !important;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Tiêu đề nhỏ */
+.article-content h2 {
+    margin: 18pt 0 6pt !important;
+    padding: 0 !important;
+    border: 0 !important;
+    font-size: 15pt !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    text-align: left;
+    break-after: avoid;
+    page-break-after: avoid;
+}
+
+.article-content h3 {
+    margin: 12pt 0 4pt !important;
+    font-size: 13.5pt !important;
+    font-weight: 700 !important;
+    font-style: italic;
+    text-align: left;
+    break-after: avoid;
+    page-break-after: avoid;
+}
+
+.lead-paragraph {
+    font-size: 12.5pt !important;
+}
+
+/* Danh sách */
+.article-content ul,
+.article-content ol {
+    margin: 0 0 8pt 20pt !important;
+    padding: 0 !important;
+}
+
+.article-content li {
+    margin: 2pt 0 !important;
+    padding: 0 !important;
+}
+
+/* Khối ví dụ, khung ý chính */
+.callout {
+    margin: 10pt 0 !important;
+    padding: 6pt 10pt !important;
+    border: 0 !important;
+    border-left: 3pt solid #000 !important;
+    border-radius: 0 !important;
+    break-inside: avoid;
+}
+
+.key-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8pt !important;
+    margin: 10pt 0 !important;
+}
+
+.key-card,
+.diagram {
+    padding: 8pt !important;
+    border: 0.75pt solid #000 !important;
+    border-radius: 0 !important;
+    break-inside: avoid;
+}
+
+.key-card .number {
+    display: none !important;
+}
+
+.key-card h3 {
+    margin: 0 0 2pt !important;
+    font-size: 12.5pt !important;
+    font-style: normal;
+}
+
+.key-card p {
+    margin: 0 !important;
+}
+
+.diagram-title {
+    margin-bottom: 8pt !important;
+    font-weight: 700 !important;
+}
+
+.flow-row {
+    display: flex !important;
+    flex-wrap: wrap;
+    flex-direction: row !important;
+    gap: 4pt !important;
+}
+
+.flow-node {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: auto !important;
+    padding: 4pt 6pt !important;
+    border: 0.75pt solid #000 !important;
+    border-radius: 0 !important;
+    font-size: 11pt !important;
+    text-align: center !important;
+}
+
+.flow-node small {
+    font-size: 9.5pt !important;
+}
+
+.flow-arrow {
+    transform: none !important;
+    font-size: 12.5pt !important;
+}
+
+/* Bảng */
+.table-wrap {
+    overflow: visible !important;
+    margin: 10pt 0 !important;
+    border: 0 !important;
+    break-inside: avoid;
+}
+
+table {
+    min-width: 0 !important;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 4pt 6pt !important;
+    border: 0.75pt solid #000 !important;
+    text-align: left !important;
+    vertical-align: top;
+}
+
+th {
+    font-weight: 700 !important;
+}
+
+/* Khối mã */
+.code-block {
+    padding: 6pt 8pt !important;
+    overflow: visible !important;
+    border: 0.75pt solid #777 !important;
+    border-radius: 0 !important;
+    font-family: "Courier New", monospace !important;
+    font-size: 10.5pt !important;
+    white-space: pre-wrap !important;
+    break-inside: avoid;
+}
+
+.code-block code {
+    font-family: "Courier New", monospace !important;
+}
+
+/* Tài liệu tham khảo */
+.references {
+    margin-top: 14pt !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+
+.references a {
+    color: #000 !important;
+    text-decoration: none !important;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    text-align: left;
+}
+
+/* Ảnh trong bài (trang "Đón Nhận") */
+.article-content .post-image {
+    max-width: 100% !important;
+    max-height: 9cm;
+    margin: 0 auto 10pt !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    object-fit: contain;
+}
+
+.article-content .post-text {
+    margin-bottom: 10pt !important;
+}
+
+.dropcap {
+    color: #000 !important;
+}
+
+.post-meta-footer {
+    border: 0 !important;
+}
+
+/* Dòng ký tên cuối bài, in ở cuối nội dung */
+.article-content::after {
+    content: "Compiled by Minh Tri";
+    display: block;
+    margin-top: 24pt;
+    padding-top: 8pt;
+    border-top: 0.75pt solid #000;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12.5pt;
+    font-style: italic;
+    text-align: right;
+    color: #000;
+}

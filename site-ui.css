@@ -264,3 +264,200 @@ html[data-theme="dark"] {
 .su-menu-list a.su-logout i {
     color: #e5484d;
 }
+/* --- NÚT TOGGLE SÁNG/TỐI (Bản Fix Trùng Màu) --- */
+.theme-switch {
+    position: relative;
+    width: 58px;
+    height: 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    box-sizing: border-box;
+    display: inline-block;
+    outline: none;
+    border: 2px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* 2 Icon nằm cố định trên thanh trượt */
+.theme-switch .track-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    z-index: 1;
+    transition: opacity 0.3s, color 0.3s;
+}
+
+.theme-switch .moon-icon {
+    left: 6px;
+}
+
+.theme-switch .sun-icon {
+    right: 6px;
+}
+
+/* Cục tròn di chuyển (Thumb) */
+.theme-switch .switch-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    z-index: 2;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ---- KHI Ở GIAO DIỆN SÁNG (Light Mode) ---- */
+html[data-theme="light"] .theme-switch {
+    background-color: #dbe5f3; /* Nền xám nhạt (dễ nhìn) */
+    border-color: #b5c7e3;
+}
+html[data-theme="light"] .theme-switch .switch-thumb {
+    transform: translateX(0);  /* Cục tròn nằm bên trái */
+    background-color: #ffffff; /* Cục tròn màu trắng */
+}
+html[data-theme="light"] .theme-switch .sun-icon {
+    color: #f59e0b;  /* Mặt trời màu vàng cam cực kỳ nổi bật bên phải */
+    opacity: 1;      
+}
+html[data-theme="light"] .theme-switch .moon-icon {
+    opacity: 0;      /* Ẩn mặt trăng đi vì đang ở chế độ sáng */
+}
+
+/* ---- KHI Ở GIAO DIỆN TỐI (Dark Mode) ---- */
+html[data-theme="dark"] .theme-switch {
+    background-color: #1e293b; /* Nền xám đen như ảnh gốc */
+    border-color: #334155;     
+}
+html[data-theme="dark"] .theme-switch .switch-thumb {
+    transform: translateX(28px); /* Cục tròn trượt sang phải */
+    background: linear-gradient(135deg, #3b82f6, #06b6d4); /* Cục tròn xanh gradient rất đẹp */
+}
+html[data-theme="dark"] .theme-switch .moon-icon {
+    color: #cbd5e1;  /* Mặt trăng màu xám sáng bên trái */
+    opacity: 1;      
+}
+html[data-theme="dark"] .theme-switch .sun-icon {
+    opacity: 0;      /* Ẩn mặt trời đi vì đang ở chế độ tối */
+}
+/* --- NÚT TOGGLE SÁNG/TỐI (Bản Fix Trùng Màu) --- */
+.theme-switch {
+    position: relative;
+    width: 58px;
+    height: 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    box-sizing: border-box;
+    display: inline-block;
+    outline: none;
+    border: 2px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* 2 Icon nằm cố định trên thanh trượt */
+.theme-switch .track-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    z-index: 1;
+    transition: opacity 0.3s, color 0.3s;
+}
+
+.theme-switch .moon-icon {
+    left: 6px;
+}
+
+.theme-switch .sun-icon {
+    right: 6px;
+}
+
+/* Cục tròn di chuyển (Thumb) */
+.theme-switch .switch-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    z-index: 2;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ---- KHI Ở GIAO DIỆN SÁNG (Light Mode) ---- */
+html[data-theme="light"] .theme-switch {
+    background-color: #dbe5f3; /* Nền xám nhạt (dễ nhìn) */
+    border-color: #b5c7e3;
+}
+html[data-theme="light"] .theme-switch .switch-thumb {
+    transform: translateX(0);  /* Cục tròn nằm bên trái */
+    background-color: #ffffff; /* Cục tròn màu trắng */
+}
+html[data-theme="light"] .theme-switch .sun-icon {
+    color: #f59e0b;  /* Mặt trời màu vàng cam cực kỳ nổi bật bên phải */
+    opacity: 1;      
+}
+html[data-theme="light"] .theme-switch .moon-icon {
+    opacity: 0;      /* Ẩn mặt trăng đi vì đang ở chế độ sáng */
+}
+
+/* ---- KHI Ở GIAO DIỆN TỐI (Dark Mode) ---- */
+html[data-theme="dark"] .theme-switch {
+    background-color: #1e293b; /* Nền xám đen như ảnh gốc */
+    border-color: #334155;     
+}
+html[data-theme="dark"] .theme-switch .switch-thumb {
+    transform: translateX(28px); /* Cục tròn trượt sang phải */
+    background: linear-gradient(135deg, #3b82f6, #06b6d4); /* Cục tròn xanh gradient rất đẹp */
+}
+html[data-theme="dark"] .theme-switch .moon-icon {
+    color: #cbd5e1;  /* Mặt trăng màu xám sáng bên trái */
+    opacity: 1;      
+}
+html[data-theme="dark"] 
+.theme-switch .sun-icon {
+    opacity: 0;      /* Ẩn mặt trời đi vì đang ở chế độ tối */
+}
+
+/* ===== Công tắc sáng/tối: hiện cả mặt trăng và mặt trời, biểu tượng nằm trên núm tròn ===== */
+.theme-switch .track-icon {
+    z-index: 3;            /* nằm trên núm tròn */
+    opacity: 1 !important; /* luôn hiện cả hai */
+}
+
+/* --- Giao diện sáng: núm trắng bên trái (che mặt trăng), mặt trời cam ở bên phải --- */
+html[data-theme="light"] .theme-switch .switch-thumb {
+    transform: translateX(0);
+    background: #ffffff;
+}
+html[data-theme="light"] .theme-switch .moon-icon {
+    color: #1e3a8a;        /* mặt trăng xanh đậm, nằm trong núm trắng */
+}
+html[data-theme="light"] .theme-switch .sun-icon {
+    color: #000000;
+}
+
+/* --- Giao diện tối: núm trắng trượt sang phải (che mặt trời), mặt trăng ở bên trái --- */
+html[data-theme="dark"] .theme-switch {
+    background: linear-gradient(135deg, #1d4ed8, #38bdf8);
+    border-color: #93c5fd;
+}
+html[data-theme="dark"] .theme-switch .switch-thumb {
+    transform: translateX(28px);
+    background: #ffffff;   /* bỏ gradient xanh để mặt trời cam nổi lên */
+}
+html[data-theme="dark"] .theme-switch .moon-icon {
+    color: #ffffff;
+}
+html[data-theme="dark"] .theme-switch .sun-icon {
+    color: #f59e0b;        /* mặt trời cam nằm trong núm trắng */
+}

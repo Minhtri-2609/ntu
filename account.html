@@ -295,7 +295,7 @@ const HREFS = {
     "tong-quan-co-dien-tu": "articles/tong-quan-co-dien-tu.html",
     "internet-of-things": "articles/internet-of-things.html",
     "he-thong-nhung-la-gi": "articles/he-thong-nhung-la-gi.html",
-    "don-nhan": "articles/don-nhan.html"
+    "don-nhan": "p/don-nhan.html"
 };
 const $ = (s) => document.querySelector(s);
 const JSON_HEAD = { "Content-Type": "application/json" };
@@ -323,6 +323,10 @@ async function api(path, options = {}) {
 function fail(error) {
     if (error.status === 401) { location.href = "login.html"; return; }   // chưa đăng nhập
     toast(error.message);
+}
+function bcls(b) {
+    if (!b) return "";
+    return b.id === "dev" ? "b-dev" : b.id === "admin" ? "b-admin" : "b-lv" + b.level;
 }
 
 /* ---------- Tài khoản ---------- */
