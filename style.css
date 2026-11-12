@@ -4182,3 +4182,69 @@ html[data-theme="dark"] .user-dropdown-list li a.logout-item:hover {
     border-radius: 50%;
     object-fit: cover;
 }
+
+.user-dropdown {
+    width: 250px;
+}
+
+.user-dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ud-avatar {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--cyan);
+    border-radius: 50%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(.4) rotate(-25deg);
+}
+
+.user-menu-wrapper.is-open .ud-avatar {
+    opacity: 1;
+    transform: none;
+    transition: transform .55s cubic-bezier(.34, 1.56, .64, 1) .08s, opacity .3s ease .08s;
+}
+
+.ud-info {
+    min-width: 0;
+}
+
+.ud-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.ud-chip {
+    margin-left: 0;
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+.user-menu-wrapper.is-open .ud-chip {
+    opacity: 1;
+    transform: none;
+    transition: opacity .3s ease .2s, transform .3s ease .2s;
+}
+
+/* Sóng lan quanh nút khi mở menu */
+.user-menu-wrapper.is-open #authLink::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border: 2px solid var(--cyan);
+    border-radius: 50%;
+    animation: ringOut .6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ringOut {
+    from { opacity: .8; transform: scale(.9); }
+    to   { opacity: 0; transform: scale(1.7); }
+}

@@ -5,13 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tài khoản | Minh Trí</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/badges.css">
+<link rel="stylesheet" href="/site-ui.css">
+<script src="/site-ui.js" defer>
+</script>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <script>
 try { document.documentElement.dataset.theme = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light"); } catch (e) {}
 </script>
 <style>
-body { padding: 40px 0 60px; }
-.back-home { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px; color: var(--mut); font-weight: 600; text-decoration: none; transition: color .2s, transform .2s; }
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+}
+
+.acc-main {
+    flex: 1;
+    padding: 40px 0 60px;
+}
+.back-home { 
+    display: inline-flex;  
+    align-items: center; 
+    gap: 6px; 
+    margin-bottom: 20px; 
+    color: var(--mut); 
+    font-weight: 600; 
+    text-decoration: none; 
+    transition: color .2s, 
+    transform .2s; }
 .back-home:hover { color: var(--blue); transform: translateX(-4px); }
 .acc { max-width: 760px; margin: 0 auto; padding: 24px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 10px 30px rgba(11, 31, 68, .08); }
 .a-tabs { display: flex; flex-wrap: wrap; gap: 4px; width: fit-content; max-width: 100%; margin-bottom: 22px; padding: 5px; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; }
@@ -42,76 +65,143 @@ body { padding: 40px 0 60px; }
 .a-field input { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); font: inherit; }
 .a-field input:focus { border-color: var(--cyan); outline: none; box-shadow: 0 0 0 3px rgba(6, 182, 212, .18); }
 .a-msg { min-height: 1.3em; margin: 0 0 12px; color: #d93025; font-size: .9rem; }
-/* ===== Danh hiệu ===== */
-.b-lv1{--bc:#94a3b8}.b-lv2{--bc:#22c55e}.b-lv3{--bc:#06b6d4}.b-lv4{--bc:#3b82f6}.b-lv5{--bc:#8b5cf6}.b-lv6{--bc:#ec4899}.b-lv7{--bc:#f59e0b}.b-lv8{--bc:#ff5a1f}.b-lv9{--bc:#facc15}.b-dev{--bc:#ef4444}.b-admin{--bc:#a855f7}
-.a-next { margin: 0 0 14px; color: var(--mut); font-size: .9rem; }
-.a-more { margin-bottom: 14px; }
-.a-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
-.a-list[hidden] { display: none; }
-.a-badge { position: relative; isolation: isolate; overflow: hidden; padding: 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 16px; }
-.a-badge.big { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
-.a-badge.big .a-ico { margin: 0; }
-.a-badge.locked { opacity: .5; filter: grayscale(.8); }
-.a-ico { position: relative; display: grid; place-items: center; flex: none; width: 46px; height: 46px; margin-bottom: 8px; border-radius: 50%; background: var(--bc); color: #fff; font-size: 1.5rem; }
-.a-badge .lv { color: var(--mut); font-size: .72rem; font-weight: 700; letter-spacing: .5px; }
-.a-badge h4 { margin: 2px 0 4px; }
-.a-badge ul { margin: 8px 0 0; padding: 0; list-style: none; font-size: .82rem; color: var(--mut); }
-.a-badge li.ok { color: #16a34a; font-weight: 650; }
-.a-chip { display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: var(--bc); color: #fff; font-size: .75rem; font-weight: 700; vertical-align: middle; }
-.a-chip[hidden] { display: none; }
-.a-chip.b-admin { background: linear-gradient(90deg, #f59e0b, #a855f7); }
-
-/* Cấp 1-7: hiệu ứng nhẹ, tăng dần */
-.a-badge.earned[class*="b-lv"] { border-color: var(--bc); }
-.a-badge.earned:is(.b-lv2,.b-lv3,.b-lv4,.b-lv5,.b-lv6,.b-lv7) .a-ico { animation: aPulse 3s ease-in-out infinite; }
-.a-badge.earned:is(.b-lv5,.b-lv6,.b-lv7)::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; box-shadow: inset 0 0 22px var(--bc); opacity: .18; animation: aGlow 3s ease-in-out infinite; }
-.a-badge.earned:is(.b-lv7,.b-lv9)::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.35) 50%, transparent 60%); transform: translateX(-120%); animation: aSweep 5s ease-in-out infinite; }
-
-/* Cấp 8: ngọn lửa */
-.a-badge.earned.b-lv8 { border-color: #ff5a1f; background: linear-gradient(160deg, rgba(255,106,0,.16), rgba(255,45,85,.10)); }
-.a-badge.earned.b-lv8::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70%; z-index: -1; background: linear-gradient(to top, rgba(255,90,0,.45), transparent); transform-origin: bottom; animation: aFlame 1.6s ease-in-out infinite; }
-.a-badge.earned.b-lv8 .a-ico { background: linear-gradient(160deg, #ffb347, #ff2d55); animation: aFlick 1.2s ease-in-out infinite; }
-
-/* Cấp 9: vương miện vàng lấp lánh */
-.a-badge.earned.b-lv9 { border-color: #facc15; background: linear-gradient(145deg, rgba(250,204,21,.18), rgba(245,158,11,.08)); }
-.a-badge.earned.b-lv9::before { animation-duration: 3s; }
-.a-badge.earned.b-lv9::after { content: "✦  ✦"; position: absolute; top: 8px; right: 12px; color: #facc15; letter-spacing: 10px; animation: aTwinkle 1.8s ease-in-out infinite; }
-.a-badge.earned.b-lv9 .a-ico { background: linear-gradient(145deg, #fde047, #f59e0b); animation: aBounce 2.4s ease-in-out infinite; }
-
-/* Dev: nền đỏ, viền bo nhẹ, phát sáng */
-.a-badge.earned.b-dev { border: 1px solid rgba(248,113,113,.6); border-radius: 18px; background: linear-gradient(145deg, #c62828, #7f1d1d); color: #fff; animation: aDev 2.4s ease-in-out infinite; }
-.a-badge.earned.b-dev .lv, .a-badge.earned.b-dev ul { color: #fecaca; }
-.a-badge.earned.b-dev .a-ico { background: rgba(255,255,255,.18); }
-.a-badge.earned.b-dev h4::after { content: "_"; margin-left: 2px; animation: aBlink 1s steps(1) infinite; }
-
-/* Admin: viền cầu vồng xoay, cực quang, vòng quỹ đạo quanh biểu tượng */
-.a-badge.earned.b-admin { border-color: transparent; background: transparent; color: #fff; }
-.a-badge.earned.b-admin::before { content: ""; position: absolute; inset: -60%; z-index: -2; background: conic-gradient(from 0deg, #ffd166, #06b6d4, #a855f7, #ff4d6d, #ffd166); animation: aSpin 4s linear infinite; }
-.a-badge.earned.b-admin::after { content: ""; position: absolute; inset: 2px; z-index: -1; border-radius: 14px; background: radial-gradient(circle at 20% 0%, #2b1a6b, #0b1030 70%); }
-.a-badge.earned.b-admin .lv, .a-badge.earned.b-admin ul { color: #cbd5e1; }
-.a-badge.earned.b-admin .a-ico { background: linear-gradient(145deg, #ffd166, #a855f7); }
-.a-badge.earned.b-admin .a-ico::after { content: ""; position: absolute; inset: -6px; border: 2px dotted #ffd166; border-radius: 50%; animation: aSpin 6s linear infinite; }
-.a-badge.earned.b-admin h4 { background: linear-gradient(90deg, #ffd166, #fff, #06b6d4, #ffd166); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: aSlide 3s linear infinite; }
-
-@keyframes aPulse { 50% { transform: scale(1.08); } }
-@keyframes aGlow { 50% { opacity: .45; } }
-@keyframes aSweep { 0%, 60% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
-@keyframes aFlame { 0%, 100% { opacity: .7; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.15); } }
-@keyframes aFlick { 0%, 100% { transform: scale(1) rotate(0); } 30% { transform: scale(1.1) rotate(-4deg); } 60% { transform: scale(.96) rotate(3deg); } }
-@keyframes aTwinkle { 50% { opacity: .25; } }
-@keyframes aBounce { 50% { transform: translateY(-4px) scale(1.06); } }
-@keyframes aDev { 0%, 100% { box-shadow: 0 0 10px rgba(239,68,68,.35); } 50% { box-shadow: 0 0 28px rgba(239,68,68,.75); } }
-@keyframes aBlink { 50% { opacity: 0; } }
-@keyframes aSpin { to { transform: rotate(360deg); } }
-@keyframes aSlide { to { background-position: 200% 0; } }
-@media (prefers-reduced-motion: reduce) { .a-badge, .a-badge *, .a-badge::before, .a-badge::after { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) 
+{ .a-badge, .a-badge *, .a-badge::before, .a-badge::after { animation: none !important; } }
 .a-toast { position: fixed; left: 50%; bottom: 28px; z-index: 400; padding: 10px 18px; border-radius: 12px; background: #0b1f44; color: #fff; font-size: .92rem; opacity: 0; transform: translate(-50%, 20px); transition: opacity .3s, transform .3s; }
 .a-toast.show { opacity: 1; transform: translate(-50%, 0); }
 @media (max-width: 560px) { .a-stats { grid-template-columns: 1fr; } .atab { padding: 8px 12px; } }
+
+/* Nút "Xem tất cả danh hiệu" và khung xổ xuống */
+.a-more i {
+    transition: transform .3s ease;
+}
+
+.a-more[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+.a-collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .45s cubic-bezier(.2, .8, .2, 1);
+}
+
+.a-collapse.open {
+    grid-template-rows: 1fr;
+}
+
+.a-collapse-inner {
+    min-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+
+.a-collapse.open .a-collapse-inner {
+    opacity: 1;
+}
+
+.a-collapse .a-list {
+    padding: 8px 4px 4px;
+}
+
+/* Từng thẻ trượt lên lần lượt (--d được đặt bằng JavaScript) */
+.a-collapse .a-badge {
+    translate: 0 16px;
+    scale: .96;
+    transition: translate .45s cubic-bezier(.2, .8, .2, 1) var(--d, 0s),
+                scale .45s cubic-bezier(.2, .8, .2, 1) var(--d, 0s);
+}
+
+.a-collapse.open .a-badge {
+    translate: 0 0;
+    scale: 1;
+}
+
+/* Nút chọn / tắt danh hiệu */
+.a-badge-actions {
+    margin-top: 10px;
+}
+
+.a-btn.sm {
+    padding: 5px 12px;
+    font-size: .8rem;
+}
+
+/* Cửa sổ xác nhận */
+.a-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+}
+
+.a-modal[hidden] {
+    display: none;
+}
+
+.a-modal-back {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 15, 40, .55);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+.a-modal-card {
+    position: relative;
+    width: min(420px, 100%);
+    padding: 22px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+    opacity: 0;
+    transform: translateY(14px) scale(.96);
+    transition: opacity .22s ease, transform .25s cubic-bezier(.2, .8, .2, 1);
+}
+
+.a-modal.show .a-modal-back {
+    opacity: 1;
+}
+
+.a-modal.show .a-modal-card {
+    opacity: 1;
+    transform: none;
+}
+
+.a-modal-card h3 {
+    margin: 0 0 8px;
+    color: var(--head);
+}
+
+.a-modal-card p {
+    margin: 0 0 18px;
+    color: var(--ink);
+    line-height: 1.55;
+}
+
+.a-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+    <div class="su-header" role="banner">
+        <div class="su-header-in">
+            <a class="logo" href="index.html" aria-label="Minh Trí – về trang chủ">
+                <span class="l1">MINH</span>
+                <span class="l2">TRÍ</span>
+            </a>
+            <div data-su-slot></div>
+        </div>
+    </div>
+<main class="wrap acc-main">
     <a href="index.html" class="back-home"><i class='bx bx-left-arrow-alt'></i> Trở về Trang chủ</a>
 
     <div class="acc">
@@ -160,16 +250,43 @@ body { padding: 40px 0 60px; }
             <div id="followList"></div>
         </section>
 
-        <!-- Danh hiệu -->
+            <!-- Danh hiệu -->
         <section class="a-panel" id="p-badges" hidden>
             <div id="curBadge"></div>
+            <p class="a-next" id="shownNote"></p>
             <p class="a-next" id="nextBadge"></p>
-            <button class="a-btn a-more" id="moreBadge" type="button">Xem tất cả danh hiệu</button>
-            <div class="a-list" id="badgeList" hidden></div>
+            <button class="a-btn a-more" id="moreBadge" type="button" aria-expanded="false">
+                <span>Xem tất cả danh hiệu</span> <i class='bx bx-chevron-down'></i>
+            </button>
+
+            <!-- Khung xổ xuống có hoạt ảnh -->
+            <div class="a-collapse" id="badgeWrap">
+                <div class="a-collapse-inner">
+                    <div class="a-list" id="badgeList"></div>
+                </div>
+             </div>
         </section>
     </div>
+</main>
+<footer class="fb">
+    <div class="wrap">
+        <p>© 2026 Minh Trí · All rights reserved.</p>
+        <span class="designer-credit">
+            <i>Designed by <strong>Minh Tri</strong></i>
+        </span>
+    </div>
+</footer>
+<div class="a-modal" id="confirmModal" hidden>
+    <div class="a-modal-back" data-no></div>
+    <div class="a-modal-card" role="alertdialog" aria-modal="true" aria-labelledby="cfTitle" aria-describedby="cfText">
+        <h3 id="cfTitle">Đổi danh hiệu?</h3>
+        <p id="cfText">Sau khi thay đổi Danh hiệu này, bạn không thể thay đổi Danh hiệu khác trong vòng 3 ngày tới. Bạn có chắc chắn muốn đổi không?</p>
+        <div class="a-modal-actions">
+            <button class="a-btn" type="button" data-no>Hủy</button>
+            <button class="a-btn main" id="cfYes" type="button">Đồng ý đổi</button>
+        </div>
+    </div>
 </div>
-
 <script>
 const LOCAL = ["127.0.0.1", "localhost"].includes(location.hostname);
 const API = LOCAL ? "http://127.0.0.1:5000" : "https://tr1ssca.pythonanywhere.com";
@@ -286,9 +403,59 @@ async function loadFollow() {
 }
 
 /* ---------- Danh hiệu ---------- */
-function bcls(b) { return b.id === "dev" ? "b-dev" : b.id === "admin" ? "b-admin" : "b-lv" + b.level; }
+function fmtDate(iso) {
+    const d = new Date(iso);
+    return isNaN(d.getTime()) ? "" : d.toLocaleString("vi-VN", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit", year: "numeric" });
+}
 
-function badgeCard(b, big) {
+/* Cửa sổ nổi hỏi xác nhận, trả về true nếu bấm "Đồng ý đổi" */
+function askConfirm() {
+    return new Promise((resolve) => {
+        const modal = $("#confirmModal");
+        modal.hidden = false;
+        requestAnimationFrame(() => modal.classList.add("show"));
+
+        const finish = (answer) => {
+            modal.classList.remove("show");
+            setTimeout(() => { modal.hidden = true; }, 220);
+            $("#cfYes").onclick = null;
+            modal.querySelectorAll("[data-no]").forEach((el) => { el.onclick = null; });
+            document.removeEventListener("keydown", onKey);
+            resolve(answer);
+        };
+        const onKey = (e) => { if (e.key === "Escape") finish(false); };
+
+        document.addEventListener("keydown", onKey);
+        $("#cfYes").onclick = () => finish(true);
+        modal.querySelectorAll("[data-no]").forEach((el) => { el.onclick = () => finish(false); });
+        $("#cfYes").focus();
+    });
+}
+
+async function selectBadge(badge, data) {
+    if (data.next_change) {                       // đang trong thời gian chờ 3 ngày: khỏi hỏi xác nhận
+        toast("Bạn có thể đổi danh hiệu từ " + fmtDate(data.next_change) + ".");
+        return;
+    }
+    if (!(await askConfirm())) return;
+    try {
+        await api("/api/badges/select", { method: "POST", headers: JSON_HEAD, body: JSON.stringify({ id: badge.id }) });
+        toast("Đã chọn danh hiệu \"" + badge.name + "\".");
+        loadBadges();
+        window.dispatchEvent(new Event("su:refresh"));      // cập nhật nút tài khoản trên đầu trang
+    } catch (error) { fail(error); }
+}
+
+async function turnOffBadge() {
+    try {
+        await api("/api/badges/off", { method: "POST" });
+        toast("Đã tắt hiển thị danh hiệu.");
+        loadBadges();
+        window.dispatchEvent(new Event("su:refresh"));
+    } catch (error) { fail(error); }
+}
+
+function badgeCard(b, big, data) {
     const card = document.createElement("div");
     card.className = "a-badge " + bcls(b) + (b.earned ? " earned" : " locked") + (big ? " big" : "");
     const ico = document.createElement("div");
@@ -303,6 +470,7 @@ function badgeCard(b, big) {
     const name = document.createElement("h4");
     name.textContent = b.name;
     text.append(lv, name);
+
     if (!big) {
         const ul = document.createElement("ul");
         if (b.note) {
@@ -318,7 +486,22 @@ function badgeCard(b, big) {
             ul.appendChild(li);
         });
         text.appendChild(ul);
+
+        // Mỗi danh hiệu đã đạt có một nút: "Chọn hiển thị" hoặc "Tắt danh hiệu"
+        if (b.earned) {
+            const isShown = data.shown === b.id;
+            const actions = document.createElement("div");
+            actions.className = "a-badge-actions";
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "a-btn sm" + (isShown ? "" : " main");
+            button.textContent = isShown ? "Tắt danh hiệu" : "Chọn hiển thị";
+            button.addEventListener("click", () => (isShown ? turnOffBadge() : selectBadge(b, data)));
+            actions.appendChild(button);
+            text.appendChild(actions);
+        }
     }
+
     card.append(ico, text);
     if (!big) { card.style.display = "flex"; card.style.gap = "12px"; ico.style.marginBottom = "0"; }
     return card;
@@ -328,20 +511,29 @@ async function loadBadges() {
     try {
         const data = await api("/api/badges");
         const list = data.badges;
-        $("#curBadge").replaceChildren(badgeCard(list.find((b) => b.id === data.current), true));
+        $("#curBadge").replaceChildren(badgeCard(list.find((b) => b.id === data.current), true, data));
+
+        $("#shownNote").textContent = data.shown
+            ? "Đang hiển thị danh hiệu này." + (data.next_change ? " Bạn có thể đổi danh hiệu từ " + fmtDate(data.next_change) + "." : "")
+            : "Bạn đang tắt hiển thị danh hiệu.";
+
         const next = list.find((b) => b.kind === "normal" && !b.earned);
         const miss = next && next.reqs.find((r) => r.value < r.goal);
         $("#nextBadge").textContent = next ? "Tiếp theo: " + next.name + " (" + miss.label + ": " + miss.value + "/" + miss.goal + ")" : "Bạn đã đạt tất cả danh hiệu thường!";
-        $("#badgeList").replaceChildren(...list.map((b) => badgeCard(b, false)));
+
+        $("#badgeList").replaceChildren(...list.map((b, index) => {
+            const card = badgeCard(b, false, data);
+            card.style.setProperty("--d", index * 45 + "ms");
+            return card;
+        }));
     } catch (error) { fail(error); }
 }
 
 $("#moreBadge").addEventListener("click", () => {
-    const box = $("#badgeList");
-    box.hidden = !box.hidden;
-    $("#moreBadge").textContent = box.hidden ? "Xem tất cả danh hiệu" : "Thu gọn";
+    const open = $("#badgeWrap").classList.toggle("open");
+    $("#moreBadge").setAttribute("aria-expanded", open);
+    $("#moreBadge").querySelector("span").textContent = open ? "Thu gọn" : "Xem tất cả danh hiệu";
 });
-
 /* ---------- Chuyển tab (đọc ?tab=... trên địa chỉ) ---------- */
 const TABS = ["account", "settings", "follow", "badges"];
 const LOADERS = { account: loadAccount, settings: () => {}, follow: loadFollow, badges: loadBadges };
@@ -365,6 +557,7 @@ if (!LOCAL && location.pathname.endsWith(".html")) {
     history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
 }
 show(new URLSearchParams(location.search).get("tab") || "account");
+
 </script>
 </body>
 </html>

@@ -1,0 +1,147 @@
+/* ===== Danh hiệu ===== */
+.b-lv1{--bc:#94a3b8}.b-lv2{--bc:#22c55e}.b-lv3{--bc:#06b6d4}.b-lv4{--bc:#3b82f6}.b-lv5{--bc:#8b5cf6}.b-lv6{--bc:#ec4899}.b-lv7{--bc:#f59e0b}.b-lv8{--bc:#ff5a1f}.b-lv9{--bc:#facc15}.b-dev{--bc:#ef4444}.b-admin{--bc:#f6b93b}
+.a-next { margin: 0 0 14px; color: var(--mut); font-size: .9rem; }
+.a-more { margin-bottom: 14px; }
+.a-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.a-list[hidden] { display: none; }
+.a-badge { position: relative; isolation: isolate; overflow: hidden; padding: 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 16px; }
+.a-badge.big { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.a-badge.big .a-ico { margin: 0; }
+.a-badge.locked { opacity: .5; filter: grayscale(.8); }
+.a-ico { position: relative; display: grid; place-items: center; flex: none; width: 46px; height: 46px; margin-bottom: 8px; border-radius: 50%; background: var(--bc); color: #fff; font-size: 1.5rem; }
+.a-badge .lv { color: var(--mut); font-size: .72rem; font-weight: 700; letter-spacing: .5px; }
+.a-badge h4 { margin: 2px 0 4px; }
+.a-badge ul { margin: 8px 0 0; padding: 0; list-style: none; font-size: .82rem; color: var(--mut); }
+.a-badge li.ok { color: #16a34a; font-weight: 650; }
+.a-chip { display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: var(--bc); color: #fff; font-size: .75rem; font-weight: 700; vertical-align: middle; }
+.a-chip[hidden] { display: none; }
+
+/* Cấp 1-7: hiệu ứng nhẹ, tăng dần */
+.a-badge.earned[class*="b-lv"] { border-color: var(--bc); }
+.a-badge.earned:is(.b-lv2,.b-lv3,.b-lv4,.b-lv5,.b-lv6,.b-lv7) .a-ico { animation: aPulse 3s ease-in-out infinite; }
+.a-badge.earned:is(.b-lv5,.b-lv6,.b-lv7)::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; box-shadow: inset 0 0 22px var(--bc); opacity: .18; animation: aGlow 3s ease-in-out infinite; }
+.a-badge.earned:is(.b-lv7,.b-lv9)::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.35) 50%, transparent 60%); transform: translateX(-120%); animation: aSweep 5s ease-in-out infinite; }
+
+/* Cấp 8: ngọn lửa */
+.a-badge.earned.b-lv8 { border-color: #ff5a1f; background: linear-gradient(160deg, rgba(255,106,0,.16), rgba(255,45,85,.10)); }
+.a-badge.earned.b-lv8::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70%; z-index: -1; background: linear-gradient(to top, rgba(255,90,0,.45), transparent); transform-origin: bottom; animation: aFlame 1.6s ease-in-out infinite; }
+.a-badge.earned.b-lv8 .a-ico { background: linear-gradient(160deg, #ffb347, #ff2d55); animation: aFlick 1.2s ease-in-out infinite; }
+
+/* Cấp 9: vương miện vàng lấp lánh */
+.a-badge.earned.b-lv9 { border-color: #facc15; background: linear-gradient(145deg, rgba(250,204,21,.18), rgba(245,158,11,.08)); }
+.a-badge.earned.b-lv9::before { animation-duration: 3s; }
+.a-badge.earned.b-lv9::after { content: "✦  ✦"; position: absolute; top: 8px; right: 12px; color: #facc15; letter-spacing: 10px; animation: aTwinkle 1.8s ease-in-out infinite; }
+.a-badge.earned.b-lv9 .a-ico { background: linear-gradient(145deg, #fde047, #f59e0b); animation: aBounce 2.4s ease-in-out infinite; }
+
+/* Dev: nền đỏ, viền bo nhẹ, phát sáng */
+.a-badge.earned.b-dev { border: 1px solid rgba(248,113,113,.6); border-radius: 18px; background: linear-gradient(145deg, #c62828, #7f1d1d); color: #fff; animation: aDev 2.4s ease-in-out infinite; }
+.a-badge.earned.b-dev .lv, .a-badge.earned.b-dev ul { color: #fecaca; }
+.a-badge.earned.b-dev .a-ico { background: rgba(255,255,255,.18); }
+.a-badge.earned.b-dev h4::after { content: "_"; margin-left: 2px; animation: aBlink 1s steps(1) infinite; }
+
+
+@keyframes aPulse { 50% { transform: scale(1.08); } }
+@keyframes aGlow { 50% { opacity: .45; } }
+@keyframes aSweep { 0%, 60% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+@keyframes aFlame { 0%, 100% { opacity: .7; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.15); } }
+@keyframes aFlick { 0%, 100% { transform: scale(1) rotate(0); } 30% { transform: scale(1.1) rotate(-4deg); } 60% { transform: scale(.96) rotate(3deg); } }
+@keyframes aTwinkle { 50% { opacity: .25; } }
+@keyframes aBounce { 50% { transform: translateY(-4px) scale(1.06); } }
+@keyframes aDev { 0%, 100% { box-shadow: 0 0 10px rgba(239,68,68,.35); } 50% { box-shadow: 0 0 28px rgba(239,68,68,.75); } }
+@keyframes aBlink { 50% { opacity: 0; } }
+@keyframes aSpin { to { transform: rotate(360deg); } }
+@keyframes aSlide { to { background-position: 200% 0; } }
+
+/* ===== Admin: khiên ánh kim ===== */
+@property --ang {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.a-badge.earned.b-admin {
+    border: 1.5px solid transparent;
+    border-radius: 16px;
+    color: #ffffff;
+    background:
+        linear-gradient(145deg, #140a26, #251448 55%, #0c0718) padding-box,
+        conic-gradient(from var(--ang), #f6d365, #fda085, #b8860b, #fff1b8, #f6d365) border-box;
+    animation: aAng 6s linear infinite;
+}
+
+/* Vệt sáng quét chéo */
+.a-badge.earned.b-admin::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 40%, rgba(255, 226, 150, .28) 50%, transparent 60%);
+    transform: translateX(-120%);
+    animation: aSweep 4.5s ease-in-out infinite;
+}
+
+/* Sao nhấp nháy ở góc */
+.a-badge.earned.b-admin::after {
+    content: "✦   ✧";
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    color: #f6d365;
+    letter-spacing: 6px;
+    animation: aTwinkle 2s ease-in-out infinite;
+}
+
+/* Biểu tượng hình thoi kim cương */
+.a-badge.earned.b-admin .a-ico {
+    width: 40px;
+    height: 40px;
+    margin: 6px 10px 6px 6px;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #fff1b8, #f6b93b 50%, #b8860b);
+    color: #3b2a00;
+    transform: rotate(45deg);
+    animation: aHalo 2.6s ease-in-out infinite;
+}
+
+.a-badge.earned.b-admin .a-ico i {
+    transform: rotate(-45deg);
+}
+
+.a-badge.earned.b-admin .lv,
+.a-badge.earned.b-admin ul {
+    color: #e9d9a6;
+}
+
+/* Tên: chữ in hoa, ánh vàng chạy ngang */
+.a-badge.earned.b-admin h4 {
+    background: linear-gradient(90deg, #f6d365, #ffffff, #f6b93b, #f6d365);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    animation: aSlide 3s linear infinite;
+}
+
+/* Chip Admin (hiện ở menu tài khoản, trang Tài khoản) */
+.a-chip.b-admin {
+    background: linear-gradient(135deg, #f6d365, #b8860b);
+    color: #2a1d00;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(246, 185, 59, .5);
+}
+
+/* Nút trong thẻ Admin / Dev (nền tối) */
+.a-badge.earned:is(.b-admin, .b-dev) .a-btn:not(.main) {
+    border-color: rgba(255, 255, 255, .35);
+    background: rgba(255, 255, 255, .12);
+    color: #ffffff;
+}
+
+@keyframes aAng { to { --ang: 360deg; } }
+@keyframes aHalo {
+    0%, 100% { box-shadow: 0 0 8px rgba(246, 185, 59, .45); }
+    50%      { box-shadow: 0 0 22px rgba(246, 185, 59, .9); }
+}

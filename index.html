@@ -21,6 +21,7 @@ catch (e) { }
 
 </script>
         <link rel="stylesheet" href="style.css?v=5">
+        <link rel="stylesheet" href="/badges.css">
     </head>
     <body>
         <header>
@@ -77,11 +78,16 @@ catch (e) { }
 
     <!-- Menu xổ xuống (Dropdown) -->
     <div class="user-dropdown" id="userDropdown" hidden>
-        <div class="user-dropdown-header">
-            <strong id="dropdownUserName">Tài khoản</strong>
+    <div class="user-dropdown-header">
+        <img class="ud-avatar" id="dropdownAvatar" alt="" hidden>
+            <div class="ud-info">
+                <div class="ud-row">
+                <strong id="dropdownUserName">Tài khoản</strong>
+                <span class="a-chip ud-chip" id="dropdownBadge" hidden></span>
+            </div>
             <small>Sinh viên NTU</small>
         </div>
-        <ul class="user-dropdown-list">
+    </div>        <ul class="user-dropdown-list">
         <li><a href="account.html?tab=account"><i class='bx bxs-user-account'></i> Tài khoản của tôi</a></li>
         <li><a href="profile.html"><i class='bx bxs-user-detail'></i> Hồ sơ của tôi</a></li>
         <li><a href="account.html?tab=settings"><i class='bx bxs-cog'></i> Cài đặt tài khoản</a></li>
@@ -1151,6 +1157,22 @@ spy();
     authLink.setAttribute("aria-label", "Tài khoản của " + user.name);
     authLink.removeAttribute("href");
     if (nameBox) nameBox.textContent = user.name;
+
+    // Ảnh đại diện và danh hiệu ở đầu menu
+    const udAvatar = document.getElementById("dropdownAvatar");
+    if (udAvatar) {
+        udAvatar.src = user.avatar
+            ? API + user.avatar
+            : "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name) + "&background=155eef&color=fff&size=128";
+        udAvatar.hidden = false;
+    }
+    const udBadge = document.getElementById("dropdownBadge");
+    if (udBadge && user.badge) {
+        const b = user.badge;
+        udBadge.textContent = b.name;
+        udBadge.className = "a-chip ud-chip " + (b.id === "dev" ? "b-dev" : b.id === "admin" ? "b-admin" : "b-lv" + b.level);
+        udBadge.hidden = false;
+    }
 
     // Bỏ "hidden" để hoạt ảnh CSS chạy được (hiện/ẩn do class is-open điều khiển)
     if (dropdown) dropdown.hidden = false;
