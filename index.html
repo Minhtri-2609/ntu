@@ -1044,7 +1044,8 @@ document.querySelectorAll(".github-placeholder").forEach(link => {
     });
 });
 /* ===== Biểu mẫu liên hệ: gửi về máy chủ Python ===== */
-const API = ["127.0.0.1", "localhost"].includes(location.hostname) ? "http://127.0.0.1:5000" : "";
+const API = ["127.0.0.1", "localhost"].includes(location.hostname) ? "http://127.0.0.1:5000" : "https://tr1ssca.pythonanywhere.com";
+
 $("#form").addEventListener("submit", async e => {
     e.preventDefault();
     const form = e.target;

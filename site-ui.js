@@ -1,7 +1,8 @@
 /* site-ui.js: nút sáng/tối và nút tài khoản dùng chung cho các trang phụ */
 (function () {
     const LOCAL = ["127.0.0.1", "localhost"].includes(location.hostname);
-const API = LOCAL ? "http://127.0.0.1:5000" : "";    const THEME_KEY = "theme";
+    const API = LOCAL ? "http://127.0.0.1:5000" : "https://tr1ssca.pythonanywhere.com";
+    const THEME_KEY = "theme";
 
     // Nạp icon Boxicons nếu trang chưa có
     if (!document.querySelector('link[href*="boxicons"]')) {
