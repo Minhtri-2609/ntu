@@ -305,7 +305,7 @@ document.querySelector('.back-home').addEventListener('click', function (e) {
     setTimeout(() => { location.href = this.href; }, 300);
 });
 addEventListener('pageshow', () => document.body.classList.remove('page-leave'));
-const API = CLEAN_URL ? "https://tr1ssca.pythonanywhere.com" : "http://127.0.0.1:5000";
+const API = LOCAL ? "http://127.0.0.1:5000" : "";
 function showMessage(form, text) {
     form.querySelector(".form-msg").textContent = text;
 }

@@ -749,7 +749,7 @@ async function api(path, options = {}) {
     const response = await fetch(API + path, { credentials: "include", ...options });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
-        const error = new Error(data.error || "Có lỗi xảy ra, vui lòng thử lại.");
+    const error = new Error(data.error || "Máy chủ không phản hồi đúng (mã " + response.status + "). Vui lòng thử lại.");
         error.status = response.status;
         throw error;
     }

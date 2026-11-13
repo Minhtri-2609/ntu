@@ -1314,10 +1314,10 @@ html[data-theme="dark"] {
          POST COMMENT_API                -> lưu một nhận xét mới
        Khi làm xong app.py, chỉ cần sửa COMMENT_API cho đúng địa chỉ máy chủ.
        ===================================================== */
-    const COMMENT_API = ["127.0.0.1", "localhost"].includes(location.hostname)
-        ? "/api/comments"
-        : "https://tr1ssca.pythonanywhere.com/api/comments";                       // ví dụ khi đặt ở máy chủ khác: "https://ten-may-chu.com/api/comments"
-    const POST_ID = "don-nhan";
+        const COMMENT_API = ["127.0.0.1", "localhost"].includes(location.hostname)
+            ? "http://127.0.0.1:5000/api/comments"
+            : "/api/comments";    
+            const POST_ID = "don-nhan";
 
     const cmToggle = document.getElementById("cmToggle");
     const cmPanel = document.getElementById("cmPanel");
