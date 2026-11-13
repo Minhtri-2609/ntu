@@ -159,12 +159,14 @@ holder.appendChild(themeBtn);
         try {
             const response = await fetch(API + "/api/me", { credentials: "include" });
             const data = await response.json();
+            console.log("[site-ui] /api/me ->", response.status, data);
             if (data.user) renderUser(data.user); else renderGuest();
         } catch (error) {
+            console.error("[site-ui] lỗi:", error);
             renderGuest();
         }
     }
-
+    
     window.addEventListener("su:refresh", load);     // các trang khác gọi khi vừa đổi ảnh hoặc danh hiệu
     load();
 })();

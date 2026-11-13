@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Khi trái tim bạn đủ kiên định, không ai có thể ảnh hưởng đến bạn. Hãy bình tĩnh đón nhận và tiếp tục yêu đời.">
+        <meta name="description" content="Vận mệnh qua cách nhìn của một sinh viên cơ điện tử: có những thứ mình không chọn được, nhưng cách mình đi qua chúng thì có.">
         <meta name="theme-color" content="#0b1f44">
         <title>
-            Đón Nhận | Minh Trí
+            Vận Mệnh | Minh Trí
         </title>
         <link rel="icon" type="image/png" href="/favicon1.png">
  <style>
@@ -21,7 +21,8 @@
     --line: #dbe5f3;
     --blue: #1d4ed8;
     --cyan: #06b6d4;
-    --purple: #6d28d9;
+    --accent: #c2674f;
+    --star: #f59e0b;
     --shadow: 0 16px 45px rgba(11, 31, 68, 0.09);
 }
 
@@ -33,6 +34,7 @@ html[data-theme="dark"] {
     --muted: #9fb0cc;
     --heading: #e6edf7;
     --line: #25344f;
+    --accent: #e88f76;
     --shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
 }
 
@@ -75,7 +77,6 @@ button {
     z-index: 100;
     inset: 0 0 auto;
     height: 4px;
-    background: transparent;
 }
 
 .progress-bar {
@@ -113,15 +114,12 @@ button {
 }
 
 .brand span:first-child {
+    margin-right: 0.2em;
     color: var(--heading);
 }
 
 .brand span:last-child {
     color: var(--blue);
-}
-
-.brand span:first-child {
-    margin-right: 0.2em;
 }
 
 .header-actions {
@@ -130,8 +128,7 @@ button {
     gap: 10px;
 }
 
-.header-link,
-.icon-button {
+.header-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -143,16 +140,15 @@ button {
     color: var(--text);
     font-size: 0.9rem;
     font-weight: 650;
-    cursor: pointer;
-    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.header-link:hover,
-.icon-button:hover {
+.header-link:hover {
     transform: translateY(-2px);
     border-color: var(--cyan);
 }
 
+/* ---------- Phần đầu bài ---------- */
 .article-hero {
     position: relative;
     isolation: isolate;
@@ -160,14 +156,14 @@ button {
     align-items: flex-end;
     min-height: clamp(360px, 48vw, 590px);
     overflow: hidden;
-    background: #07152f;
+    background: #0a1233;
 }
 
 .article-hero::after {
     position: absolute;
     z-index: -1;
     inset: 0;
-    background: linear-gradient(90deg, rgba(4, 13, 35, 0.95), rgba(4, 13, 35, 0.54) 58%, rgba(4, 13, 35, 0.08)), linear-gradient(0deg, rgba(4, 13, 35, 0.62), transparent 55%);
+    background: linear-gradient(90deg, rgba(4, 9, 30, 0.82), rgba(4, 9, 30, 0.3) 60%, rgba(4, 9, 30, 0)), linear-gradient(0deg, rgba(4, 9, 30, 0.5), transparent 50%);
     content: "";
 }
 
@@ -178,6 +174,7 @@ button {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 40%;
 }
 
 .hero-content {
@@ -190,13 +187,12 @@ button {
 .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
     margin-bottom: 16px;
     padding: 5px 12px;
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.1);
-    color: #c7f7ff;
+    color: #ffe3c2;
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.09em;
@@ -213,8 +209,8 @@ button {
 }
 
 .hero-summary {
-    max-width: 720px;
-    color: #d9e9ff;
+    max-width: 640px;
+    color: #e6ecff;
     font-size: clamp(1rem, 1.8vw, 1.2rem);
 }
 
@@ -223,16 +219,11 @@ button {
     flex-wrap: wrap;
     gap: 10px 22px;
     margin-top: 24px;
-    color: #c1d6f5;
+    color: #cfd9f3;
     font-size: 0.88rem;
 }
 
-.hero-meta span {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-}
-
+/* ---------- Bố cục ---------- */
 .article-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 280px;
@@ -254,33 +245,26 @@ button {
 .article-content p {
     margin: 0 0 18px;
     color: var(--muted);
+    font-size: 1.04rem;
 }
 
 .article-content h2 {
-    margin: 54px 0 16px;
+    margin: 50px 0 16px;
     padding-top: 14px;
     border-top: 1px solid var(--line);
     color: var(--heading);
-    font-size: clamp(1.55rem, 3vw, 2rem);
+    font-size: clamp(1.5rem, 3vw, 1.95rem);
     line-height: 1.3;
     scroll-margin-top: 100px;
 }
 
-.article-content h3 {
-    margin: 28px 0 10px;
-    color: var(--heading);
-    font-size: 1.18rem;
-    line-height: 1.4;
-}
-
-.article-content ul,
-.article-content ol {
+.article-content ul {
     margin: 0 0 20px 22px;
     color: var(--muted);
 }
 
 .article-content li {
-    margin: 7px 0;
+    margin: 9px 0;
     padding-left: 4px;
 }
 
@@ -288,61 +272,57 @@ button {
     color: var(--heading);
 }
 
-.lead-paragraph {
-    color: var(--heading) !important;
-    font-size: 1.13rem;
-    line-height: 1.8;
+.article-content .post-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
 }
 
-.callout {
-    margin: 26px 0;
-    padding: 20px 22px;
-    border-left: 4px solid var(--cyan);
-    border-radius: 0 14px 14px 0;
-    background: linear-gradient(120deg, rgba(29, 78, 216, 0.08), rgba(6, 182, 212, 0.08));
+.figure-caption {
+    margin: 10px 0 28px !important;
+    font-size: .85rem !important;
+    font-style: italic;
+    text-align: center;
 }
 
-.callout p:last-child {
-    margin-bottom: 0;
+/* Đoạn mở đầu có chữ cái đầu in to */
+.article-content .lead-paragraph {
+    color: var(--text);
+    font-size: 1.12rem;
+    line-height: 1.85;
+    text-align: justify;
 }
 
-.key-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin: 24px 0;
+.dropcap {
+    float: left;
+    padding-top: 6px;
+    padding-right: 12px;
+    color: var(--accent);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: .85;
 }
 
-.key-card {
-    padding: 18px;
-    border: 1px solid var(--line);
-    border-radius: 15px;
-    background: var(--page-bg);
+/* Câu trích */
+.pull-quote {
+    margin: 34px 0;
+    padding: 6px 0 6px 22px;
+    border-left: 4px solid var(--accent);
 }
 
-.key-card .number {
-    display: inline-grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    color: #fff;
-    font-size: 0.86rem;
-    font-weight: 800;
-}
-
-.key-card h3 {
-    margin: 0 0 6px;
-    font-size: 1rem;
-}
-
-.key-card p {
+.article-content .pull-quote p {
     margin: 0;
-    font-size: 0.9rem;
+    color: var(--heading);
+    font-family: "Lora", "Times New Roman", Times, serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 1.6;
 }
 
+/* Sơ đồ vòng phản hồi */
 .diagram {
     margin: 28px 0;
     padding: 22px;
@@ -368,8 +348,8 @@ button {
 .flow-node {
     display: grid;
     place-items: center;
-    min-width: 112px;
-    min-height: 72px;
+    min-width: 108px;
+    min-height: 64px;
     padding: 10px;
     border: 1px solid rgba(6, 182, 212, 0.3);
     border-radius: 12px;
@@ -393,54 +373,97 @@ button {
     font-weight: 800;
 }
 
-.table-wrap {
-    overflow-x: auto;
-    margin: 22px 0;
-    border: 1px solid var(--line);
-    border-radius: 14px;
+.article-content .diagram-note {
+    margin: 14px 0 0;
+    font-size: .9rem;
+    text-align: center;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 520px;
+.callout {
+    margin: 26px 0;
+    padding: 20px 22px;
+    border-left: 4px solid var(--cyan);
+    border-radius: 0 14px 14px 0;
+    background: linear-gradient(120deg, rgba(29, 78, 216, 0.08), rgba(6, 182, 212, 0.08));
 }
 
-th,
-td {
-    padding: 13px 15px;
-    border-bottom: 1px solid var(--line);
-    text-align: left;
-    vertical-align: top;
+.callout p:last-child {
+    margin-bottom: 0;
 }
 
-th {
-    background: var(--page-bg);
+.signature {
+    margin-top: 34px;
+    color: var(--accent);
+    font-family: "Dancing Script", "Segoe Script", cursive;
+    font-size: 2rem;
+    text-align: right;
+}
+
+/* Thẻ và đánh giá */
+.post-meta-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: .9rem;
+}
+
+.post-tags {
     color: var(--heading);
-    font-size: 0.9rem;
+    font-weight: 600;
 }
 
-td {
+.post-tags span {
+    margin-left: 5px;
+    color: var(--accent);
+    font-weight: normal;
+}
+
+.stars {
+    color: var(--star);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.post-social-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: transparent;
     color: var(--muted);
-    font-size: 0.91rem;
+    font-size: .9rem;
+    font-weight: 650;
+    cursor: pointer;
+    transition: color .2s ease;
 }
 
-tr:last-child td {
-    border-bottom: 0;
+.share-btn:hover {
+    color: var(--heading);
 }
 
-.code-block {
-    overflow-x: auto;
-    margin: 20px 0;
-    padding: 18px 20px;
-    border: 1px solid rgba(100, 160, 255, 0.2);
-    border-radius: 14px;
-    background: #07152b;
-    color: #d8f7ff;
-    font: 0.91rem/1.7 Consolas, "Courier New", monospace;
-    white-space: pre;
+.share-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
 }
 
+/* ---------- Mục lục ---------- */
 .toc {
     position: sticky;
     top: 94px;
@@ -465,8 +488,7 @@ tr:last-child td {
     font-size: 0.88rem;
 }
 
-.toc a:hover,
-.references a:hover {
+.toc a:hover {
     color: var(--blue);
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -490,27 +512,6 @@ tr:last-child td {
     font-size: 0.8rem;
     font-weight: 650;
     cursor: pointer;
-}
-
-.references {
-    margin-top: 22px;
-    padding: 20px;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: var(--page-bg);
-}
-
-.references h3 {
-    margin-top: 0;
-}
-
-.references ol {
-    margin-bottom: 0;
-}
-
-.references a {
-    overflow-wrap: anywhere;
-    color: var(--blue);
 }
 
 .article-footer {
@@ -575,207 +576,11 @@ tr:last-child td {
     transform: none;
 }
 
-@media (max-width: 900px) {
-    .article-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .toc {
-        position: static;
-        order: -1;
-    }
-}
-
-@media (max-width: 620px) {
-    .header-inner {
-        min-height: 60px;
-    }
-
-    .header-link {
-        padding: 7px 10px;
-        font-size: 0.82rem;
-    }
-
-    .hero-content {
-        padding: 55px 0 48px;
-    }
-
-    .article-layout {
-        margin-top: 28px;
-    }
-
-    .article-content {
-        padding: 21px 18px;
-        border-radius: 16px;
-    }
-
-    .key-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .diagram {
-        padding: 15px;
-    }
-
-    .flow-row {
-        flex-direction: column;
-    }
-
-    .flow-arrow {
-        transform: rotate(90deg);
-    }
-
-    .flow-node {
-        width: 100%;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
- 
-/* =========================================================
-   Phần riêng của trang "Đón Nhận"
-   ========================================================= */
-:root {
-    --brand-red: #e45757;
-    --star: #f59e0b;
-}
-
-html[data-theme="dark"] {
-    --brand-red: #f87171;
-}
-
-/* Phần đầu trang không dùng ảnh nền nên dùng màu chuyển sắc cùng tông với các bài khác */
-.article-hero.no-image {
-    background: linear-gradient(135deg, #0b1f44 0%, #1a1650 55%, #0e4a63 100%);
-}
-
-/* Ảnh minh họa trong bài */
-.article-content .post-image {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin-bottom: 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, .05);
-}
-
-/* Đoạn văn có chữ cái đầu in to (drop-cap) */
-.article-content .post-text {
-    margin-bottom: 30px;
-    color: var(--text);
-    font-size: 1.05rem;
-    line-height: 1.8;
-    text-align: justify;
-}
-
-.dropcap {
-    float: left;
-    padding-top: 6px;
-    padding-right: 12px;
-    color: var(--brand-red);
-    font-family: "Georgia", "Times New Roman", serif;
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: .85;
-}
-
-/* Thẻ (tag) và đánh giá */
-.post-meta-footer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-    font-size: .9rem;
-}
-
-.post-tags {
-    color: var(--heading);
-    font-weight: 600;
-}
-
-.post-tags span {
-    margin-left: 5px;
-    color: var(--brand-red);
-    font-weight: normal;
-}
-
-.post-rating {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.stars {
-    color: var(--star);
-    font-size: 1.2rem;
-    letter-spacing: 2px;
-    line-height: 1;
-}
-
-.rates-count {
-    color: var(--muted);
-    font-weight: 600;
-}
-
-.rates-count span {
-    font-weight: normal;
-}
-
-/* Các nút chia sẻ */
-.post-social-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-}
-
-.share-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: none;
-    background: transparent;
-    color: var(--muted);
-    font-size: .9rem;
-    font-weight: 650;
-    cursor: pointer;
-    transition: color .2s ease;
-}
-
-.share-btn:hover {
-    color: var(--heading);
-}
-
-.share-btn svg {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
-}
-
-/* =========================================================
-   Phần nhận xét
-   ========================================================= */
+/* ---------- Nhận xét ---------- */
 .comments {
     margin-top: 32px;
 }
 
-/* Nút bấm để mở/đóng phần nhận xét */
 .cm-toggle {
     display: flex;
     align-items: center;
@@ -814,7 +619,6 @@ html[data-theme="dark"] {
     transform: rotate(-135deg);
 }
 
-/* Khung nội dung xổ xuống mượt */
 .cm-panel {
     display: grid;
     grid-template-rows: 0fr;
@@ -836,7 +640,6 @@ html[data-theme="dark"] {
     visibility: visible;
 }
 
-/* Biểu mẫu gồm 2 hàng */
 .cm-form {
     display: grid;
     gap: 12px;
@@ -866,7 +669,6 @@ html[data-theme="dark"] {
     color: var(--text);
     font: inherit;
     font-size: .95rem;
-    transition: border-color .2s ease, box-shadow .2s ease;
 }
 
 .cm-form textarea {
@@ -894,25 +696,17 @@ html[data-theme="dark"] {
     color: #ffffff;
     font-weight: 700;
     cursor: pointer;
-    transition: transform .2s ease, opacity .2s ease, box-shadow .2s ease;
-}
-
-.cm-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(29, 78, 216, .28);
 }
 
 .cm-submit:disabled {
     opacity: .6;
     cursor: wait;
-    transform: none;
-    box-shadow: none;
 }
 
 .cm-status {
     min-height: 1.4em;
     margin: 0 !important;
-    font-size: .88rem;
+    font-size: .88rem !important;
 }
 
 .cm-status.ok {
@@ -923,7 +717,6 @@ html[data-theme="dark"] {
     color: #dc2626 !important;
 }
 
-/* Danh sách nhận xét đã đăng */
 .cm-list {
     display: grid;
     gap: 12px;
@@ -935,6 +728,7 @@ html[data-theme="dark"] {
 .cm-item {
     display: flex;
     gap: 12px;
+    margin: 0 !important;
     padding: 14px 16px;
     border: 1px solid var(--line);
     border-radius: 14px;
@@ -966,12 +760,12 @@ html[data-theme="dark"] {
     margin-left: 8px;
     color: var(--muted);
     font-size: .8rem;
-    font-weight: 500;
 }
 
 .article-content .cm-text {
     margin: 4px 0 0;
     color: var(--text);
+    font-size: 1rem;
     overflow-wrap: anywhere;
     white-space: pre-wrap;
 }
@@ -981,13 +775,62 @@ html[data-theme="dark"] {
     color: var(--muted);
     font-size: .92rem;
     text-align: center;
+    list-style: none;
+}
+
+@media (max-width: 900px) {
+    .article-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toc {
+        position: static;
+        order: -1;
+    }
 }
 
 @media (max-width: 620px) {
+    .header-inner {
+        min-height: 60px;
+    }
+
+    .header-link {
+        padding: 7px 10px;
+        font-size: 0.82rem;
+    }
+
+    .hero-content {
+        padding: 55px 0 48px;
+    }
+
+    .article-layout {
+        margin-top: 28px;
+    }
+
+    .article-content {
+        padding: 21px 18px;
+        border-radius: 16px;
+    }
+
+    .diagram {
+        padding: 15px;
+    }
+
+    .flow-row {
+        flex-direction: column;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .flow-node {
+        width: 100%;
+    }
+
     .post-social-actions {
         flex-direction: column;
         align-items: stretch;
-        gap: 16px;
     }
 
     .share-btn {
@@ -997,7 +840,6 @@ html[data-theme="dark"] {
         border-radius: 8px;
     }
 
-    /* Điện thoại: tên và ô nhập xếp dọc, nút Đăng chiếm hết chiều ngang */
     .cm-row {
         flex-direction: column;
         align-items: stretch;
@@ -1010,19 +852,19 @@ html[data-theme="dark"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .cm-panel,
-    .cm-chevron {
-        transition: none;
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
     }
 }
-/* Ảnh nền phần đầu trang */
-.article-hero .hero-bg {
-    object-fit: cover;
-    object-position: center 30%;   /* 0% = lấy phần trên của ảnh, 50% = giữa, 100% = phần dưới */
-}
-
 
  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" href="/badges.css">
 <link rel="stylesheet" href="/site-ui.css">
@@ -1031,186 +873,183 @@ html[data-theme="dark"] {
     </head>
     <body>
         <div class="progress-track" aria-hidden="true">
-            <div class="progress-bar" id="progressBar">
-            </div>
+            <div class="progress-bar" id="progressBar"></div>
         </div>
         <header class="site-header">
             <div class="header-inner">
-                <a class="brand" href="../index.html" aria-label="Hà Lâm – về trang chủ">
-                    <span>
-                        MINH
-                    </span>
-                    <span>
-                        TRÍ
-                    </span>
+                <a class="brand" href="../index.html" aria-label="Minh Trí – về trang chủ">
+                    <span>MINH</span>
+                    <span>TRÍ</span>
                 </a>
                 <div class="header-actions">
-                    <a class="header-link" href="../index.html">
-                        ← Trang chủ
-                    </a>
+                    <a class="header-link" href="../index.html">← Trang chủ</a>
 <button id="themeToggle" class="theme-switch" type="button" aria-label="Chuyển giao diện">
-    <!-- Icon Mặt trăng cố định bên trái -->
     <svg class="track-icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd" /></svg>
-    
-    <!-- Icon Mặt trời cố định bên phải -->
     <svg class="track-icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" /></svg>
-    
-    <!-- Cục tròn trượt -->
     <span class="switch-thumb"></span>
 </button>
                 </div>
             </div>
         </header>
-        <section class="article-hero ">
-            <img src="don-nhan.webp" alt="Minh Trí - Đón Nhận" class="hero-bg">
+
+        <section class="article-hero">
+            <img src="van-menh.webp" alt="Một người đứng trên sườn đồi nhìn ra biển dưới trăng lưỡi liềm, có chữ ký Minh Trí">
             <div class="hero-content">
-                <span class="eyebrow">
-                    Tản mạn cuộc sống
-                </span>
-                <h1>
-                    Đón Nhận
-                </h1>
+                <span class="eyebrow">Tản mạn cuộc sống</span>
+                <h1>Vận Mệnh</h1>
                 <p class="hero-summary">
-                    Khi trái tim bạn đủ kiên định, không ai có thể ảnh hưởng đến bạn.
+                    Có những thứ mình không chọn được. Nhưng cách mình đi qua chúng thì có.
                 </p>
                 <div class="hero-meta">
-                    <span>
-                        ◷ 1 phút đọc
-                    </span>
-                    <span>
-                        ✎ Written by Minh Tri
-                    </span>
+                    <span>◷ 4 phút đọc</span>
+                    <span>▣ Cập nhật: 13/11/2026</span>
+                    <span>✎ Written by Minh Tri</span>
                 </div>
             </div>
         </section>
+
         <main class="article-layout">
             <article class="article-content">
-                <img src="don-nhan.webp" alt="Minh Trí - Đón Nhận" class="post-image">
-                <p class="post-text" id="noi-dung">
-                    <span class="dropcap">
-                        T
-                    </span>
-                    hế giới này chưa bao giờ có sự đồng cảm, bạn có thể chán nản, có thể than vãn, thậm chí có thể gục ngã, nhưng bạn phải biết cách tự chữa lành vết thương cho mình. Khi trái tim bạn đủ kiên định, không ai có thể ảnh hưởng đến bạn. Cuộc sống không bao giờ trở nên tốt đẹp hơn mà chính bản thân bạn hãy bình tĩnh đón nhận, rồi tiếp tục yêu đời, ngày tháng cứ chầm chậm trôi về phía trước, rồi mọi chuyện sẽ dần tốt đẹp lên. Thứ có thể kéo bạn ra khỏi đáy không bao giờ là thời gian, mà là khuôn mẫu trong trái tim bạn và sự nhẹ nhõm từ trái tim.
+                <img src="van-menh.svg" alt="Minh Trí – Vận Mệnh" class="post-image">
+                <p class="figure-caption">Một buổi chiều ở Nha Trang, nhìn từ phía mình đứng.</p>
+
+                <p class="lead-paragraph" id="mo-dau">
+                    <span class="dropcap">N</span>gày bé, mình nghĩ vận mệnh là một tờ giấy đã viết sẵn ở đâu đó, và việc của mình chỉ là sống cho đến khi đọc hết nó. Lớn lên một chút, mình đổi sang nghĩ ngược lại: mọi thứ là do mình, ai khổ là do không đủ cố gắng. Giờ ngồi viết những dòng này, mình thấy cả hai cách nghĩ đều đúng một nửa, và nửa còn lại mới là chỗ đáng bàn.
                 </p>
-                <div class="post-meta-footer">
-                    <div class="post-tags">
-                        Tags:
-                        <span>
-                            Đón Nhận
-                        </span>
-                    </div>
-                    <div class="post-rating">
-                        <span class="stars">
-                            ★★★★★
-                        </span>
-                        <span class="rates-count">
-                            5
-                            <span>
-                                / 67 rates
-                            </span>
-                        </span>
-                    </div>
+
+                <h2 id="khong-chon">1. Những điều mình không chọn</h2>
+                <p>
+                    Mình không chọn được nơi mình sinh ra, không chọn được những năm đầu đời diễn ra như thế nào, cũng không chọn được người mình gặp sớm hay muộn. Có những cánh cửa mở ra trước mặt mình khi mình chưa kịp hiểu nó là gì, và có những cánh cửa khép lại khi mình vẫn đang đứng gõ.
+                </p>
+                <p>
+                    Gọi những thứ đó là vận mệnh cũng được. Mình không muốn cãi nhau với từ ngữ. Chỉ là mình nhận ra, nếu cứ dành sức để tức giận với phần mình không đổi được, thì phần mình đổi được sẽ bị bỏ quên.
+                </p>
+
+                <div class="pull-quote">
+                    <p>Hoàn cảnh là điểm xuất phát, không phải đích đến.</p>
                 </div>
+
+                <h2 id="co-dien-tu">2. Nhìn vận mệnh bằng mắt của một sinh viên cơ điện tử</h2>
+                <p>
+                    Học Cơ điện tử ở Nha Trang, mình quen với một ý tưởng: một hệ thống tốt không phải hệ thống không bao giờ bị tác động, mà là hệ thống biết đo lại chính mình và điều chỉnh. Nhiệt độ ngoài trời mình không quyết định được, nhưng cái máy lạnh thì vẫn giữ được căn phòng ở mức mình muốn, nhờ cảm biến và vòng phản hồi.
+                </p>
+                <div class="diagram">
+                    <div class="diagram-title">Vòng phản hồi, áp dụng cho một người</div>
+                    <div class="flow-row">
+                        <div class="flow-node">Điều kiện ban đầu<small>Thứ mình được cho</small></div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node">Lựa chọn<small>Mình quyết định</small></div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node">Hành động<small>Làm thật, từng ngày</small></div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node">Kết quả<small>Đúng hoặc sai</small></div>
+                    </div>
+                    <p class="diagram-note">Kết quả quay lại làm cơ sở cho lần chọn kế tiếp. Chính vòng quay đó làm nên đường đi.</p>
+                </div>
+                <p>
+                    Điều kiện ban đầu thì cố định. Nhiễu thì luôn có: thi trượt, kế hoạch đổ vỡ, một dự án chạy mãi không ra tín hiệu. Phần mình điều khiển được là cách mình đọc lại kết quả và chỉnh bước tiếp theo. Với mình, đó là lúc vận mệnh bắt đầu có chỗ cho bàn tay của mình.
+                </p>
+
+                <h2 id="nhung-ngay">3. Những ngày mình hoài nghi</h2>
+                <p>
+                    Không phải ngày nào mình cũng nghĩ được như vậy. Có những tối ngồi trước một mạch không chịu chạy, đã kiểm tra nguồn, kiểm tra dây, đọc đi đọc lại datasheet mà vẫn không ra, mình cũng từng nghĩ: hay là mình không hợp với con đường này. Câu nghĩ đó nghe giống một lời tiên tri, nhưng thật ra chỉ là mệt.
+                </p>
+                <p>
+                    Sáng hôm sau, thường chỉ là một chân linh kiện cắm lệch. Mình học được rằng cảm giác "số mình thế rồi" hay đến đúng lúc mình đuối sức, chứ chưa chắc lúc nào nó cũng đúng. Nên giờ mình tập một thói quen nhỏ: đừng kết luận về cả cuộc đời vào lúc mười một giờ đêm.
+                </p>
+
+                <div class="callout">
+                    <p>
+                        <strong>Ghi chú cho mình:</strong> khi thấy mọi thứ đều sai, hãy ngủ trước, đo lại sau.
+                    </p>
+                </div>
+
+                <h2 id="giu-lai">4. Điều mình giữ lại</h2>
+                <ul>
+                    <li><strong>Biết ơn phần được cho.</strong> Có những thứ mình có không phải vì mình giỏi, và mình không nên quên điều đó.</li>
+                    <li><strong>Chịu trách nhiệm phần mình chọn.</strong> Không đổ cho số, cũng không tự trách quá tay.</li>
+                    <li><strong>Đi chậm nhưng đo lại thường xuyên.</strong> Một bước nhỏ đúng hướng đáng giá hơn một cú nhảy chưa nhìn.</li>
+                    <li><strong>Giữ vài người ở gần.</strong> Phần lớn những lần mình đứng dậy được là nhờ có người nói một câu đúng lúc.</li>
+                </ul>
+
+                <h2 id="loi-nhan">5. Lời nhắn cho chính mình</h2>
+                <p>
+                    Nếu một ngày nào đó mình đọc lại bài này và đang ở một nơi khác, làm một việc khác với điều mình dự định bây giờ, thì cũng không sao. Vận mệnh có thể không đi theo kế hoạch của mình, nhưng cách mình đối xử với nó thì vẫn là của mình.
+                </p>
+                <div class="pull-quote">
+                    <p>Mình không viết lại được điểm bắt đầu. Nhưng mình viết được trang tiếp theo.</p>
+                </div>
+                <p class="signature">Minh Trí</p>
+
+                <div class="post-meta-footer">
+                    <div class="post-tags">Tags: <span>Vận Mệnh · Tản mạn</span></div>
+                    <div class="post-rating"><span class="stars">★★★★★</span></div>
+                </div>
+
                 <div class="post-social-actions">
                     <button class="share-btn" type="button" data-share="facebook">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/></svg>
                         Facebook
                     </button>
-                    <button class="share-btn" type="button" data-share="tweet">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                        </svg>
-                        Tweet
-                    </button>
                     <button class="share-btn" type="button" data-share="copy">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                         Sao chép
                     </button>
                     <button class="share-btn" type="button" data-share="share">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         Chia sẻ
                     </button>
                 </div>
+
                 <section class="comments" id="nhan-xet">
                     <button class="cm-toggle" id="cmToggle" type="button" aria-expanded="false" aria-controls="cmPanel">
-                        <span>
-                            💬 Nhận xét
-                            <span id="cmCount">
-                                (0)
-                            </span>
-                        </span>
-                        <span class="cm-chevron" aria-hidden="true">
-                        </span>
+                        <span>💬 Nhận xét <span id="cmCount">(0)</span></span>
+                        <span class="cm-chevron" aria-hidden="true"></span>
                     </button>
                     <div class="cm-panel" id="cmPanel">
                         <div class="cm-panel-inner">
                             <form class="cm-form" id="cmForm" novalidate>
                                 <div class="cm-row">
-                                    <label for="cmName">
-                                        Nhận xét với tên:
-                                    </label>
+                                    <label for="cmName">Nhận xét với tên:</label>
                                     <input id="cmName" name="name" type="text" maxlength="50" placeholder="Nhập tên của bạn" autocomplete="name" required>
                                 </div>
                                 <div class="cm-row cm-row-msg">
                                     <textarea id="cmText" name="content" rows="3" maxlength="1000" placeholder="Viết nhận xét của bạn..." aria-label="Nội dung nhận xét" required></textarea>
-                                    <button class="cm-submit" id="cmSubmit" type="submit">
-                                        Đăng
-                                    </button>
+                                    <button class="cm-submit" id="cmSubmit" type="submit">Đăng</button>
                                 </div>
-                                <p class="cm-status" id="cmStatus" role="status" aria-live="polite">
-                                </p>
+                                <p class="cm-status" id="cmStatus" role="status" aria-live="polite"></p>
                             </form>
-                            <ul class="cm-list" id="cmList">
-                            </ul>
+                            <ul class="cm-list" id="cmList"></ul>
                         </div>
                     </div>
                 </section>
             </article>
+
             <aside class="toc">
-                <h2>
-                    Trong bài viết
-                </h2>
+                <h2>Trong bài viết</h2>
                 <ol>
-                    <li>
-                        <a href="#noi-dung">
-                            Đón nhận
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#nhan-xet">
-                            Nhận xét
-                        </a>
-                    </li>
+                    <li><a href="#mo-dau">Mở đầu</a></li>
+                    <li><a href="#khong-chon">Điều mình không chọn</a></li>
+                    <li><a href="#co-dien-tu">Mắt nhìn cơ điện tử</a></li>
+                    <li><a href="#nhung-ngay">Những ngày hoài nghi</a></li>
+                    <li><a href="#giu-lai">Điều mình giữ lại</a></li>
+                    <li><a href="#loi-nhan">Lời nhắn cho mình</a></li>
+                    <li><a href="#nhan-xet">Nhận xét</a></li>
                 </ol>
                 <div class="toc-tools">
-                    <button class="small-action" type="button" id="copyLink">
-                        Sao chép liên kết
-                    </button>
-                    <button class="small-action" type="button" onclick="window.print()">
-                        In bài viết
-                    </button>
+                    <button class="small-action" type="button" id="copyLink">Sao chép liên kết</button>
+                    <button class="small-action" type="button" onclick="window.print()">In bài viết</button>
                 </div>
             </aside>
         </main>
+
         <footer class="article-footer">
             <div class="footer-inner">
-                <span>
-                    © 2026 Minh Trí · Góc Tản Mạn.
-                </span>
-                <a href="../index.html">
-                    Trở về trang chủ ↑
-                </a>
+                <span>© 2026 Minh Trí · Góc Tản Mạn.</span>
+                <a href="../index.html">Trở về trang chủ ↑</a>
             </div>
         </footer>
-        <button class="back-top" id="backTop" type="button" aria-label="Cuộn lên đầu trang">
-            ↑
-        </button>
+        <button class="back-top" id="backTop" type="button" aria-label="Cuộn lên đầu trang">↑</button>
 
 <script>
 (function () {
@@ -1241,9 +1080,7 @@ html[data-theme="dark"] {
         applyTheme(nextTheme);
         try {
             localStorage.setItem("theme", nextTheme);
-        } catch (error) {
-            // Trang vẫn đổi giao diện dù trình duyệt không cho lưu lựa chọn.
-        }
+        } catch (error) {}
     });
 
     function updateProgress() {
@@ -1274,6 +1111,24 @@ html[data-theme="dark"] {
         }, 1800);
     });
 
+    /* ---------- Hiện dần khi cuộn tới ---------- */
+    const revealTargets = article.querySelectorAll("h2, .callout, .diagram, .pull-quote");
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealTargets.forEach(function (element) {
+            element.classList.add("reveal");
+            revealObserver.observe(element);
+        });
+    }
+
     /* ---------- Nút chia sẻ ---------- */
     const pageUrl = window.location.href;
     const pageTitle = document.title;
@@ -1283,16 +1138,11 @@ html[data-theme="dark"] {
             const action = button.dataset.share;
             if (action === "facebook") {
                 window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(pageUrl), "_blank", "noopener");
-            } else if (action === "tweet") {
-                window.open("https://twitter.com/intent/tweet?url=" + encodeURIComponent(pageUrl) + "&text=" + encodeURIComponent(pageTitle), "_blank", "noopener");
             } else if (action === "share" && navigator.share) {
                 try {
                     await navigator.share({ title: pageTitle, url: pageUrl });
-                } catch (error) {
-                    // Người dùng đóng hộp chia sẻ, không cần xử lý.
-                }
+                } catch (error) {}
             } else {
-                // "Sao chép", hoặc "Chia sẻ" trên trình duyệt không hỗ trợ
                 const original = button.lastChild.textContent;
                 try {
                     await navigator.clipboard.writeText(pageUrl);
@@ -1308,16 +1158,12 @@ html[data-theme="dark"] {
     });
 
     /* =====================================================
-       NHẬN XÉT
-       Dữ liệu được gửi tới app.py (Flask) qua 2 địa chỉ:
-         GET  COMMENT_API?post=don-nhan  -> trả về danh sách nhận xét (JSON)
-         POST COMMENT_API                -> lưu một nhận xét mới
-       Khi làm xong app.py, chỉ cần sửa COMMENT_API cho đúng địa chỉ máy chủ.
+       NHẬN XÉT: dùng chung máy chủ app.py, phân biệt bài bằng POST_ID
        ===================================================== */
     const COMMENT_API = ["127.0.0.1", "localhost"].includes(location.hostname)
-        ? ""
-        : "https://tr1ssca.pythonanywhere.com/api/comments";                       // ví dụ khi đặt ở máy chủ khác: "https://ten-may-chu.com/api/comments"
-    const POST_ID = "don-nhan";
+        ? "http://127.0.0.1:5000/api/comments"
+        : "https://tr1ssca.pythonanywhere.com/api/comments";
+    const POST_ID = "van-menh";
 
     const cmToggle = document.getElementById("cmToggle");
     const cmPanel = document.getElementById("cmPanel");
@@ -1331,7 +1177,6 @@ html[data-theme="dark"] {
 
     let comments = [];
 
-    // Bấm vào "Nhận xét" để mở/đóng biểu mẫu
     cmToggle.addEventListener("click", function () {
         const open = !cmPanel.classList.contains("open");
         cmPanel.classList.toggle("open", open);
@@ -1353,7 +1198,7 @@ html[data-theme="dark"] {
         return isNaN(date.getTime()) ? "" : date.toLocaleString("vi-VN");
     }
 
-    // Dùng textContent để tên và nội dung do người khác nhập không thể chèn mã HTML
+    // Dùng textContent để nội dung người khác nhập không chèn được mã HTML
     function renderComments(message) {
         cmList.innerHTML = "";
         cmCount.textContent = "(" + comments.length + ")";
@@ -1389,18 +1234,15 @@ html[data-theme="dark"] {
             text.className = "cm-text";
             text.textContent = item.content;
 
-            body.appendChild(name);
-            body.appendChild(time);
-            body.appendChild(text);
-            li.appendChild(avatar);
-            li.appendChild(body);
+            body.append(name, time, text);
+            li.append(avatar, body);
             cmList.appendChild(li);
         });
     }
 
     async function loadComments() {
         try {
-            const response = await fetch(COMMENT_API + "?post=" + encodeURIComponent(POST_ID));
+            const response = await fetch(COMMENT_API + "?post=" + encodeURIComponent(POST_ID), { credentials: "include" });
             if (!response.ok) throw new Error("HTTP " + response.status);
             const data = await response.json();
             comments = Array.isArray(data) ? data : [];
@@ -1411,7 +1253,6 @@ html[data-theme="dark"] {
         }
     }
 
-    // Nhớ tên người nhận xét cho lần sau
     try {
         cmName.value = localStorage.getItem("commenterName") || "";
     } catch (error) {
@@ -1440,12 +1281,12 @@ html[data-theme="dark"] {
         try {
             const response = await fetch(COMMENT_API, {
                 method: "POST",
+                credentials: "include",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ post: POST_ID, name: name, content: content })
             });
             if (!response.ok) throw new Error("HTTP " + response.status);
 
-            // Nếu máy chủ trả về nhận xét đã lưu thì dùng nó, không thì tự tạo
             let saved = null;
             try {
                 saved = await response.json();
@@ -1462,9 +1303,7 @@ html[data-theme="dark"] {
             setStatus("Đã đăng nhận xét. Cảm ơn bạn!", "ok");
             try {
                 localStorage.setItem("commenterName", name);
-            } catch (error) {
-                // Không lưu được tên cũng không sao.
-            }
+            } catch (error) {}
         } catch (error) {
             setStatus("Không đăng được nhận xét (máy chủ chưa sẵn sàng). Nội dung của bạn vẫn còn, hãy thử lại sau.", "err");
         } finally {

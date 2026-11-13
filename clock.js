@@ -96,3 +96,4 @@
     setInterval(function () { var t = zone(VN, Date.now()); if (t.year + "-" + t.month + "-" + t.day !== key) draw(); }, 60000);
   }
 })();
+
