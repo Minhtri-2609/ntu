@@ -4248,3 +4248,29 @@ html[data-theme="dark"] .user-dropdown-list li a.logout-item:hover {
     from { opacity: .8; transform: scale(.9); }
     to   { opacity: 0; transform: scale(1.7); }
 }
+
+/* ===== Ảnh đại diện là đường link tới bài "Vận mệnh" ===== */
+.avatar-link {
+    float: right;
+    margin: 0 0 10px 20px;
+    border-radius: 50%;           /* vùng bấm và vùng rê chuột tròn đúng như ảnh */
+}
+
+.avatar-link .avatar {
+    margin: 0;
+    transition: transform .35s cubic-bezier(.34, 1.56, .64, 1),
+                box-shadow .3s ease;
+}
+
+/* Rê chuột (hoặc dùng bàn phím Tab tới): phóng to nhẹ, viền đổi màu và có quầng sáng */
+.avatar-link:hover .avatar,
+.avatar-link:focus-visible .avatar {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 3px #a855f7,                   /* viền: từ xanh cyan sang tím */
+                0 0 22px 4px rgba(168, 85, 247, .45),
+                0 12px 26px rgba(11, 31, 68, .28);
+}
+
+.avatar-link:focus-visible {
+    outline: none;                /* vòng sáng ở trên đã thay cho viền focus */
+}

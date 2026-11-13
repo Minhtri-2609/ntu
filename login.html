@@ -214,9 +214,81 @@
     color: #ffd2d2;
     font-size: 13.5px;
         }
+        /* ===== Bầu trời: sao lấp lánh + sao băng ===== */
+.sky {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.sky::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(1.6px 1.6px at 12% 18%, #fff, transparent 60%),
+        radial-gradient(1.2px 1.2px at 27% 8%,  #fff, transparent 60%),
+        radial-gradient(1.8px 1.8px at 43% 22%, #fff, transparent 60%),
+        radial-gradient(1.2px 1.2px at 58% 10%, #fff, transparent 60%),
+        radial-gradient(1.6px 1.6px at 71% 26%, #fff, transparent 60%),
+        radial-gradient(1.2px 1.2px at 84% 12%, #fff, transparent 60%),
+        radial-gradient(1.4px 1.4px at 92% 30%, #fff, transparent 60%),
+        radial-gradient(1.2px 1.2px at 6%  34%, #fff, transparent 60%);
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: .3; }
+    to   { opacity: .9; }
+}
+
+.sky i {
+    position: absolute;
+    width: 450px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff);
+    box-shadow: 0 0 8px 1px rgba(160, 200, 255, .6);
+    opacity: 0;
+    transform: rotate(28deg);
+    animation: shoot 11s linear infinite;
+}
+
+.sky i:nth-child(1) { top: 10%; left: 55%; animation-duration: 9s; animation-delay: 2s; }
+.sky i:nth-child(2) { top: 22%; left: 20%; animation-duration: 7s; animation-delay: 6s; }
+.sky i:nth-child(3) { top: 6%;  left: 75%; animation-duration: 11s; animation-delay: 9s; }
+.sky i:nth-child(4) { top: 30%; left: 45%; animation-duration: 14s; animation-delay: 12s; }
+.sky i:nth-child(5) { top: 15%; left: 35%; animation-duration: 16s; animation-delay: 4s; }
+.sky i:nth-child(6) { top: 25%; left: 60%; animation-duration: 15s; animation-delay: 7s; }
+.sky i:nth-child(7) { top: 5%;  left: 10%; animation-duration: 16s; animation-delay: 10s; }
+.sky i:nth-child(8) { top: 35%; left: 85%; animation-duration: 13s; animation-delay: 13s; }
+.sky i:nth-child(9) { top: 20%; left: 40%; animation-duration: 15s; animation-delay: 16s; }
+.sky i:nth-child(10) { top: 40%; left: 25%; animation-duration: 12s; animation-delay: 19s; }
+.sky i:nth-child(11) { top: 10%; left: 70%; animation-duration: 14s; animation-delay: 22s; }
+.sky i:nth-child(12) { top: 30%; left: 55%; animation-duration: 15s; animation-delay: 25s; }
+
+@keyframes shoot {
+    0%   { opacity: 0; transform: rotate(28deg) translateX(0); }
+    1.5% { opacity: 1; }
+    7%   { opacity: 0; transform: rotate(28deg) translateX(550px); }
+    100% { opacity: 0; transform: rotate(28deg) translateX(550px); }
+}
+
+/* Khung đăng nhập nằm trên bầu trời */
+.container {
+    z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sky i { display: none; }
+    .sky::before { animation: none; }
+}
     </style>
 </head>
 <body>
+    <div class="sky" aria-hidden="true"><i></i><i></i><i></i><i></i><i><i><i><i><i><i><i></i></div>
     <a href="https://tlamthat.id.vn" class="back-home">← Trở về Trang chủ</a>
     <div class="container">
         <div class="form-box login">
@@ -349,6 +421,13 @@ document.querySelector(".form-box.register form").addEventListener("submit", e =
     e.preventDefault();
     const inputs = e.target.querySelectorAll("input");
     sendAuth("/api/register", { username: inputs[0].value, email: inputs[1].value, password: inputs[2].value }, e.target);
+});
+/* Sao băng: mỗi lần lặp đổi sang vị trí ngẫu nhiên */
+document.querySelectorAll('.sky i').forEach(function (s) {
+    s.addEventListener('animationiteration', function () {
+        s.style.top = (4 + Math.random() * 30) + '%';
+        s.style.left = (5 + Math.random() * 80) + '%';
+    });
 });
 </script>
 </body>

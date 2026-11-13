@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 /* ===== Nút sáng/tối và nút tài khoản dùng chung cho các trang phụ ===== */
 :root {
     --su-card: #ffffff;
@@ -264,6 +265,47 @@ html[data-theme="dark"] {
 .su-menu-list a.su-logout i {
     color: #e5484d;
 }
+
+/* ===== Logo MINH TRÍ dùng chung, giống trang chủ ===== */
+.site-header a.brand,
+.su-header a.logo {
+    position: relative;
+    display: inline-block;
+    flex: 0 0 auto;
+    margin: 0;
+    padding-top: 12px;                 /* giống trang chủ; thấy logo hơi thấp thì giảm còn 6px hoặc 0 */
+    font-family: "Bungee", "Arial Black", Impact, sans-serif;
+    font-size: clamp(1.2rem, 5.2vw, 1.75rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -.035em;
+    white-space: nowrap;
+    text-shadow: 0 3px 12px rgba(45, 55, 160, .12);
+}
+
+.site-header a.brand span,
+.su-header a.logo span {
+    display: inline-block;
+    color: #30239a;                    /* giao diện sáng: cả hai chữ màu tím */
+}
+
+.site-header a.brand span:first-child,
+.su-header a.logo .l1 {
+    margin-right: .18em;               /* khoảng cách giữa MINH và TRÍ */
+}
+
+/* Giao diện tối: MINH trắng, TRÍ xanh cyan, không bị chìm vào nền */
+html[data-theme="dark"] .site-header a.brand span:first-child,
+html[data-theme="dark"] .su-header a.logo .l1 {
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .site-header a.brand span:last-child,
+html[data-theme="dark"] .su-header a.logo .l2 {
+    color: #7ee7ff;
+}
+
+
 /* --- NÚT TOGGLE SÁNG/TỐI (Bản Fix Trùng Màu) --- */
 .theme-switch {
     position: relative;
