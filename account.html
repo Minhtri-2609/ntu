@@ -459,6 +459,15 @@ async function turnOffBadge() {
     } catch (error) { fail(error); }
 }
 
+async function turnOnBadge(badge) {
+    try {
+        await api("/api/badges/select", { method: "POST", headers: JSON_HEAD, body: JSON.stringify({ id: badge.id }) });
+        toast("Đã bật hiển thị danh hiệu.");
+        loadBadges();
+        window.dispatchEvent(new Event("su:refresh"));
+    } catch (error) { fail(error); }
+}
+
 function badgeCard(b, big, data) {
     const card = document.createElement("div");
     card.className = "a-badge " + bcls(b) + (b.earned ? " earned" : " locked") + (big ? " big" : "");
@@ -494,13 +503,18 @@ function badgeCard(b, big, data) {
         // Mỗi danh hiệu đã đạt có một nút: "Chọn hiển thị" hoặc "Tắt danh hiệu"
         if (b.earned) {
             const isShown = data.shown === b.id;
+            const isHiddenSel = data.hidden && data.selected === b.id;   // đã chọn nhưng đang tắt
             const actions = document.createElement("div");
             actions.className = "a-badge-actions";
             const button = document.createElement("button");
             button.type = "button";
             button.className = "a-btn sm" + (isShown ? "" : " main");
-            button.textContent = isShown ? "Tắt danh hiệu" : "Chọn hiển thị";
-            button.addEventListener("click", () => (isShown ? turnOffBadge() : selectBadge(b, data)));
+            button.textContent = isShown ? "Tắt danh hiệu" : isHiddenSel ? "Bật hiển thị" : "Chọn hiển thị";
+            button.addEventListener("click", () => {
+                if (isShown) return turnOffBadge();
+                if (isHiddenSel) return turnOnBadge(b);
+                return selectBadge(b, data);
+            });
             actions.appendChild(button);
             text.appendChild(actions);
         }
@@ -519,7 +533,7 @@ async function loadBadges() {
 
         $("#shownNote").textContent = data.shown
             ? "Đang hiển thị danh hiệu này." + (data.next_change ? " Bạn có thể đổi danh hiệu từ " + fmtDate(data.next_change) + "." : "")
-            : "Bạn đang tắt hiển thị danh hiệu.";
+            : "Bạn đang tắt hiển thị danh hiệu. Bấm \"Bật hiển thị\" để hiện lại (không bị tính thời gian chờ).";
 
         const next = list.find((b) => b.kind === "normal" && !b.earned);
         const miss = next && next.reqs.find((r) => r.value < r.goal);
