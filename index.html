@@ -1045,6 +1045,14 @@ document.querySelectorAll(".github-placeholder").forEach(link => {
     });
 });
 /* ===== Biểu mẫu liên hệ: gửi về máy chủ Python ===== */
+function authFetch(url, options = {}) {
+    let token = "";
+    try { token = localStorage.getItem("auth_token") || ""; } catch (e) {}
+    const headers = { ...(options.headers || {}) };
+    if (token) headers.Authorization = "Bearer " + token;
+    return fetch(url, { credentials: "include", ...options, headers });
+}
+
 const API = ["127.0.0.1", "localhost"].includes(location.hostname) ? "http://127.0.0.1:5000" : "https://tr1ssca.pythonanywhere.com";
 
 $("#form").addEventListener("submit", async e => {
@@ -1120,7 +1128,7 @@ spy();
     // 1. Hỏi máy chủ xem còn đăng nhập không (đáng tin hơn localStorage)
     let user = null;
     try {
-        const response = await fetch(API + "/api/me", { credentials: "include" });
+        const response = await authFetch(API + "/api/me");
         const data = await response.json();
         user = data.user;
     } catch (error) {
@@ -1136,6 +1144,7 @@ spy();
     if (!user) {
         try {
             localStorage.removeItem("demo_session");
+            localStorage.removeItem("auth_token");
         } catch (e) {}
         return;     // chưa đăng nhập: giữ biểu tượng người, bấm vào đi tới login.html
     }
@@ -1201,10 +1210,11 @@ spy();
         logoutBtn.addEventListener("click", async function (e) {
             e.preventDefault();
             try {
-                await fetch(API + "/api/logout", { method: "POST", credentials: "include" });
+                await authFetch(API + "/api/logout", { method: "POST" });
             } catch (error) {}
             try {
                 localStorage.removeItem("demo_session");
+                localStorage.removeItem("auth_token");
             } catch (error) {}
             if (typeof toast === "function") toast("Đã đăng xuất thành công!");
             setTimeout(() => location.reload(), 400);

@@ -289,6 +289,13 @@ body {
     </div>
 </div>
 <script>
+function authFetch(url, options = {}) {
+    let token = "";
+    try { token = localStorage.getItem("auth_token") || ""; } catch (e) {}
+    const headers = { ...(options.headers || {}) };
+    if (token) headers.Authorization = "Bearer " + token;
+    return fetch(url, { credentials: "include", ...options, headers });
+}
 const LOCAL = ["127.0.0.1", "localhost"].includes(location.hostname);
 const API = LOCAL ? "http://127.0.0.1:5000" : "https://tr1ssca.pythonanywhere.com";
 // Đường dẫn tới từng bài viết (sửa nếu file của bạn nằm chỗ khác)
@@ -311,7 +318,7 @@ function toast(message) {
 }
 
 async function api(path, options = {}) {
-    const response = await fetch(API + path, { credentials: "include", ...options });
+    const response = await authFetch(API + path, options);
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
         const error = new Error(data.error || "Có lỗi xảy ra, vui lòng thử lại.");
@@ -356,7 +363,7 @@ async function loadAccount() {
 
 $("#logoutBtn").addEventListener("click", async () => {
     try { await api("/api/logout", { method: "POST" }); } catch (e) {}
-    try { localStorage.removeItem("demo_session"); } catch (e) {}
+    try { localStorage.removeItem("demo_session"); localStorage.removeItem("auth_token"); } catch (e) {}
     location.href = LOCAL ? "index.html" : "/";
 });
 

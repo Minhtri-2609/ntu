@@ -340,6 +340,14 @@ const loginLink = document.querySelector('.login-link');
 // Chỉ đổi địa chỉ khi đã đưa lên web, không đổi khi chạy thử ở máy
 const CLEAN_URL = !["127.0.0.1", "localhost"].includes(location.hostname);
 
+function authFetch(url, options = {}) {
+    let token = "";
+    try { token = localStorage.getItem("auth_token") || ""; } catch (e) {}
+    const headers = { ...(options.headers || {}) };
+    if (token) headers.Authorization = "Bearer " + token;
+    return fetch(url, { credentials: "include", ...options, headers });
+}
+
 function setMode(isRegister, push) {
     container.classList.toggle('active', isRegister);
     if (push && CLEAN_URL) {
@@ -387,7 +395,7 @@ async function sendAuth(path, body, form) {
     button.disabled = true;
     showMessage(form, "");
     try {
-        const response = await fetch(API + path, {
+        const response = await authFetch(API + path, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -400,6 +408,7 @@ async function sendAuth(path, body, form) {
         }
         try {
             localStorage.setItem("demo_session", JSON.stringify({ name: data.user.username }));
+            if (data.token) localStorage.setItem("auth_token", data.token);
         } catch (error) {
             // Không lưu được cũng không sao.
         }

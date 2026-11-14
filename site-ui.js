@@ -1,4 +1,12 @@
 /* site-ui.js: nút sáng/tối và nút tài khoản dùng chung cho các trang phụ */
+function authFetch(url, options = {}) {
+    let token = "";
+    try { token = localStorage.getItem("auth_token") || ""; } catch (e) {}
+    const headers = { ...(options.headers || {}) };
+    if (token) headers.Authorization = "Bearer " + token;
+    return fetch(url, { credentials: "include", ...options, headers });
+}
+
 (function () {
     const LOCAL = ["127.0.0.1", "localhost"].includes(location.hostname);
     const API = LOCAL ? "http://127.0.0.1:5000" : "https://tr1ssca.pythonanywhere.com";
@@ -142,10 +150,11 @@ holder.appendChild(themeBtn);
         userBox.querySelector(".su-logout").addEventListener("click", async function (e) {
             e.preventDefault();
             try {
-                await fetch(API + "/api/logout", { method: "POST", credentials: "include" });
+                await authFetch(API + "/api/logout", { method: "POST" });
             } catch (error) {}
             try {
                 localStorage.removeItem("demo_session");
+                localStorage.removeItem("auth_token");
             } catch (error) {}
             location.reload();
         });
@@ -160,7 +169,7 @@ holder.appendChild(themeBtn);
 
     async function load() {
         try {
-            const response = await fetch(API + "/api/me", { credentials: "include" });
+            const response = await authFetch(API + "/api/me");
             const data = await response.json();
             console.log("[site-ui] /api/me ->", response.status, data);
             if (data.user) renderUser(data.user); else renderGuest();
