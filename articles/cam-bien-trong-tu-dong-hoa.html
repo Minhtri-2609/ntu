@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="/favicon1.png">
+        <meta name="description" content="Tìm hiểu vai trò của cảm biến trong tự động hóa: các loại cảm biến thường gặp, tín hiệu 4–20 mA, IO-Link, bảo trì dự đoán và cách chọn cảm biến phù hợp.">
+        <meta name="theme-color" content="#0b1f44">
+        <title>
+            Vai trò của cảm biến trong tự động hóa | Minh Trí
+        </title>
+
+ <style>
+
+:root {
+    color-scheme: light;
+    --page-bg: #f3f7fc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --muted: #56657f;
+    --heading: #0b1f44;
+    --line: #dbe5f3;
+    --blue: #1d4ed8;
+    --cyan: #06b6d4;
+    --purple: #6d28d9;
+    --shadow: 0 16px 45px rgba(11, 31, 68, 0.09);
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg: #0b1220;
+    --surface: #121c31;
+    --text: #e6edf7;
+    --muted: #9fb0cc;
+    --heading: #e6edf7;
+    --line: #25344f;
+    --shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+}
+
+body {
+    min-width: 320px;
+    overflow-x: hidden;
+    background: var(--page-bg);
+    color: var(--text);
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.75;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 3px;
+}
+
+.progress-track {
+    position: fixed;
+    z-index: 100;
+    inset: 0 0 auto;
+    height: 4px;
+    background: transparent;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--cyan), #a78bfa);
+    transition: width 0.08s linear;
+}
+
+.site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    backdrop-filter: blur(16px);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: min(1180px, 92%);
+    min-height: 68px;
+    margin: 0 auto;
+}
+
+.brand {
+    font-family: "Arial Black", "Segoe UI", sans-serif;
+    font-size: 1.32rem;
+    font-weight: 900;
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+}
+
+.brand span:first-child {
+    color: var(--heading);
+}
+
+.brand span:last-child {
+    color: var(--blue);
+}
+
+.brand span:first-child {
+    margin-right: 0.2em;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-link,
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 13px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 650;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.header-link:hover,
+.icon-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--cyan);
+}
+
+.article-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-height: clamp(360px, 48vw, 590px);
+    overflow: hidden;
+    background: #07152f;
+}
+
+.article-hero::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(4, 13, 35, 0.95), rgba(4, 13, 35, 0.54) 58%, rgba(4, 13, 35, 0.08)), linear-gradient(0deg, rgba(4, 13, 35, 0.62), transparent 55%);
+    content: "";
+}
+
+.article-hero img {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-content {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    padding: 72px 0 66px;
+    color: #fff;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 5px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #c7f7ff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+}
+
+.hero-content h1 {
+    max-width: 850px;
+    margin-bottom: 16px;
+    font-size: clamp(2.3rem, 5.5vw, 4.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+}
+
+.hero-summary {
+    max-width: 720px;
+    color: #d9e9ff;
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+}
+
+.hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 24px;
+    color: #c1d6f5;
+    font-size: 0.88rem;
+}
+
+.hero-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.article-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 36px;
+    width: min(1180px, 92%);
+    margin: 52px auto 88px;
+    align-items: start;
+}
+
+.article-content {
+    min-width: 0;
+    padding: clamp(22px, 4vw, 48px);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.article-content p {
+    margin: 0 0 18px;
+    color: var(--muted);
+}
+
+.article-content h2 {
+    margin: 54px 0 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    color: var(--heading);
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    line-height: 1.3;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin: 28px 0 10px;
+    color: var(--heading);
+    font-size: 1.18rem;
+    line-height: 1.4;
+}
+
+.article-content ul,
+.article-content ol {
+    margin: 0 0 20px 22px;
+    color: var(--muted);
+}
+
+.article-content li {
+    margin: 7px 0;
+    padding-left: 4px;
+}
+
+.article-content strong {
+    color: var(--heading);
+}
+
+.lead-paragraph {
+    color: var(--heading) !important;
+    font-size: 1.13rem;
+    line-height: 1.8;
+}
+
+.callout {
+    margin: 26px 0;
+    padding: 20px 22px;
+    border-left: 4px solid var(--cyan);
+    border-radius: 0 14px 14px 0;
+    background: linear-gradient(120deg, rgba(29, 78, 216, 0.08), rgba(6, 182, 212, 0.08));
+}
+
+.callout p:last-child {
+    margin-bottom: 0;
+}
+
+.key-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+}
+
+.key-card {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: var(--page-bg);
+}
+
+.key-card .number {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    color: #fff;
+    font-size: 0.86rem;
+    font-weight: 800;
+}
+
+.key-card h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+
+.key-card p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.diagram {
+    margin: 28px 0;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--page-bg);
+}
+
+.diagram-title {
+    margin-bottom: 16px;
+    color: var(--heading);
+    font-weight: 750;
+}
+
+.flow-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.flow-node {
+    display: grid;
+    place-items: center;
+    min-width: 112px;
+    min-height: 72px;
+    padding: 10px;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--heading);
+    text-align: center;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.flow-node small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.flow-arrow {
+    color: var(--cyan);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    margin: 22px 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+}
+
+th,
+td {
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: var(--page-bg);
+    color: var(--heading);
+    font-size: 0.9rem;
+}
+
+td {
+    color: var(--muted);
+    font-size: 0.91rem;
+}
+
+tr:last-child td {
+    border-bottom: 0;
+}
+
+.code-block {
+    overflow-x: auto;
+    margin: 20px 0;
+    padding: 18px 20px;
+    border: 1px solid rgba(100, 160, 255, 0.2);
+    border-radius: 14px;
+    background: #07152b;
+    color: #d8f7ff;
+    font: 0.91rem/1.7 Consolas, "Courier New", monospace;
+    white-space: pre;
+}
+
+.toc {
+    position: sticky;
+    top: 94px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.toc h2 {
+    margin-bottom: 12px;
+    color: var(--heading);
+    font-size: 1.05rem;
+}
+
+.toc ol {
+    display: grid;
+    gap: 7px;
+    margin-left: 19px;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.toc a:hover,
+.references a:hover {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.toc-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--line);
+}
+
+.small-action {
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--page-bg);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.references {
+    margin-top: 22px;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--page-bg);
+}
+
+.references h3 {
+    margin-top: 0;
+}
+
+.references ol {
+    margin-bottom: 0;
+}
+
+.references a {
+    overflow-wrap: anywhere;
+    color: var(--blue);
+}
+
+.article-footer {
+    padding: 34px 0;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+}
+
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.footer-inner a {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.back-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    color: #fff;
+    font-size: 1.2rem;
+    box-shadow: 0 8px 24px rgba(29, 78, 216, 0.27);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+.back-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (max-width: 900px) {
+    .article-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toc {
+        position: static;
+        order: -1;
+    }
+}
+
+@media (max-width: 620px) {
+    .header-inner {
+        min-height: 60px;
+    }
+
+    .header-link {
+        padding: 7px 10px;
+        font-size: 0.82rem;
+    }
+
+    .hero-content {
+        padding: 55px 0 48px;
+    }
+
+    .article-layout {
+        margin-top: 28px;
+    }
+
+    .article-content {
+        padding: 21px 18px;
+        border-radius: 16px;
+    }
+
+    .key-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .diagram {
+        padding: 15px;
+    }
+
+    .flow-row {
+        flex-direction: column;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .flow-node {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+ </style>
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/badges.css">
+<link rel="stylesheet" href="/site-ui.css">
+<link rel="stylesheet" href="/print.css" media="print">
+<script src="/site-ui.js" defer></script>
+    </head>
+    <body>
+        <div class="progress-track" aria-hidden="true">
+            <div class="progress-bar" id="progressBar">
+            </div>
+        </div>
+        <header class="site-header">
+            <div class="header-inner">
+                <a class="brand" href="../index.html" aria-label="Minh Trí – về trang chủ">
+                    <span>
+                        MINH
+                    </span>
+                    <span>
+                        TRÍ
+                    </span>
+                </a>
+                <div class="header-actions">
+                    <a class="header-link" href="../index.html#articles">
+                        ← Góc kiến thức
+                    </a>
+<button id="themeToggle" class="theme-switch" type="button" aria-label="Chuyển giao diện">
+    <!-- Icon Mặt trăng cố định bên trái -->
+    <svg class="track-icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd" /></svg>
+
+    <!-- Icon Mặt trời cố định bên phải -->
+    <svg class="track-icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.5-1.591a.75.75 0 00-1.061 1.06l1.5 1.591z" /></svg>
+
+    <!-- Cục tròn trượt -->
+    <span class="switch-thumb"></span>
+</button>
+                </div>
+            </div>
+        </header>
+        <section class="article-hero">
+            <img src="images/sensors-in-automation.webp" alt="Cảm biến tiệm cận phát hiện thùng hàng trên băng tải, kết nối với PLC, encoder, cảm biến nhiệt độ và tín hiệu 4-20 mA" width="1600" height="900" fetchpriority="high">
+            <div class="hero-content">
+                <span class="eyebrow">
+                    Góc kiến thức · Tự động hóa
+                </span>
+                <h1>
+                    Vai trò của cảm biến trong tự động hóa
+                </h1>
+                <p class="hero-summary">
+                    Tìm hiểu cách cảm biến biến đại lượng vật lý thành tín hiệu điện cho bộ điều khiển, các loại cảm biến thường gặp trong nhà máy và cách chọn cảm biến phù hợp.
+                </p>
+                <div class="hero-meta">
+                    <span>
+                        ◷ 11–14 phút đọc
+                    </span>
+                    <span>
+                        ▣ Cập nhật: 14/11/2026
+                    </span>
+                    <span>
+                        ✦ Nội dung học tập
+                    </span>
+                    <span>
+                        ✎ Compiled by Minh Tri
+                    </span>
+
+                </div>
+            </div>
+        </section>
+        <main class="article-layout">
+            <article class="article-content">
+                <p class="lead-paragraph">
+                    Trong một hệ thống tự động hóa, cảm biến là thiết bị đầu tiên “nhìn thấy” thế giới vật lý. Nó chuyển các đại lượng như vị trí, tốc độ, nhiệt độ, áp suất hay sự có mặt của một vật thể thành tín hiệu điện để bộ điều khiển xử lý. Không có cảm biến, bộ điều khiển không biết máy đang ở trạng thái nào và không thể đưa ra quyết định đúng.
+                </p>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Ví dụ dễ hình dung:
+                        </strong>
+                         một cảm biến tiệm cận đặt cạnh băng tải phát hiện mỗi thùng hàng đi qua và gửi tín hiệu đến PLC. PLC đếm số thùng, và khi thùng đến đúng vị trí thì ra lệnh cho xi lanh đẩy hoặc dừng băng tải. Nếu cảm biến báo sai, toàn bộ chuỗi hành động phía sau đều sai theo.
+                    </p>
+                </div>
+                <h2 id="role">
+                    1. Cảm biến đóng vai trò gì trong hệ thống tự động?
+                </h2>
+                <p>
+                    Các tài liệu về tự động hóa công nghiệp thường ví cảm biến như “mắt và tai” của hệ thống: chúng liên tục theo dõi, phát hiện và gửi dữ liệu để quá trình vận hành chính xác, an toàn và hiệu quả. Cảm biến chuyển đại lượng vật lý như vị trí, nhiệt độ, áp suất hay sự hiện diện của vật thể thành tín hiệu điện, từ đó điều khiển quá trình và giữ chất lượng sản phẩm ổn định.
+                </p>
+                <p>
+                    Về mặt cấu trúc, cảm biến nằm ở đầu vào của vòng điều khiển. Tín hiệu cảm biến có thể được chuyển từ dạng tương tự sang số bằng bộ ADC để tăng độ chính xác. Bộ điều khiển logic sau đó nhận tín hiệu, xử lý theo yêu cầu ứng dụng rồi phát lệnh điều khiển qua cơ cấu chấp hành tới các thiết bị đầu ra.
+                </p>
+                <div class="diagram">
+                    <div class="diagram-title">
+                        Vị trí của cảm biến trong vòng điều khiển
+                    </div>
+                    <div class="flow-row">
+                        <div class="flow-node">
+                            Đại lượng vật lý
+                            <small>
+                                Vị trí, nhiệt độ, áp suất...
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Cảm biến
+                            <small>
+                                Sensor / Transmitter
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Điều hòa tín hiệu
+                            <small>
+                                Lọc, khuếch đại, ADC
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Bộ điều khiển
+                            <small>
+                                PLC / MCU
+                            </small>
+                        </div>
+                        <span class="flow-arrow">
+                            →
+                        </span>
+                        <div class="flow-node">
+                            Cơ cấu chấp hành
+                            <small>
+                                Động cơ, van, xi lanh
+                            </small>
+                        </div>
+                    </div>
+                    <p style="margin:16px 0 0;text-align:center;font-size:.9rem;">
+                        Kết quả tác động của cơ cấu chấp hành lại được cảm biến đo lần nữa, tạo thành vòng phản hồi kín.
+                    </p>
+                </div>
+                <p>
+                    Cụ thể, cảm biến đảm nhiệm bốn nhóm việc chính trong nhà máy:
+                </p>
+                <div class="key-grid">
+                    <div class="key-card">
+                        <span class="number">
+                            01
+                        </span>
+                        <h3>
+                            Giám sát quá trình
+                        </h3>
+                        <p>
+                            Theo dõi nhiệt độ, áp suất, độ ẩm, lưu lượng, chuyển động và vị trí trong thời gian thực.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            02
+                        </span>
+                        <h3>
+                            Phản hồi điều khiển
+                        </h3>
+                        <p>
+                            Cung cấp dữ liệu vị trí, tốc độ để điều khiển vòng kín, ví dụ biến động cơ DC thành động cơ servo.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            03
+                        </span>
+                        <h3>
+                            Kiểm tra chất lượng
+                        </h3>
+                        <p>
+                            Phát hiện chi tiết, kiểm tra mức chất lỏng, nhãn mác và những lỗi mắt thường khó thấy.
+                        </p>
+                    </div>
+                    <div class="key-card">
+                        <span class="number">
+                            04
+                        </span>
+                        <h3>
+                            An toàn và bảo trì
+                        </h3>
+                        <p>
+                            Phát hiện người vào vùng nguy hiểm, theo dõi rung động để phát hiện sớm máy sắp hỏng.
+                        </p>
+                    </div>
+                </div>
+                <p>
+                    Cảm biến là nền tảng dữ liệu của cả <a href="tong-quan-co-dien-tu.html">hệ thống cơ điện tử</a>, và là “đầu vào” quen thuộc của <a href="he-thong-nhung-la-gi.html">hệ thống nhúng</a> lẫn <a href="internet-of-things.html">IoT</a>.
+                </p>
+                <h2 id="types">
+                    2. Các nhóm cảm biến thường gặp
+                </h2>
+                <p>
+                    Có rất nhiều loại cảm biến, nhưng có thể gom chúng theo đại lượng cần đo. Môi trường công nghiệp khắc nghiệt với bụi bẩn, thay đổi nhiệt độ, va đập, rung động và nhiễu điện từ, nên mỗi ứng dụng cần một nguyên lý cảm biến phù hợp thay vì một loại dùng cho mọi nơi.
+                </p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Đại lượng cần đo
+                                </th>
+                                <th>
+                                    Cảm biến thường gặp
+                                </th>
+                                <th>
+                                    Vai trò điển hình
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Sự hiện diện, khoảng cách gần
+                                </td>
+                                <td>
+                                    Tiệm cận cảm ứng, điện dung, quang điện, siêu âm
+                                </td>
+                                <td>
+                                    Phát hiện, đếm vật thể trên băng tải; kiểm tra có/không có chi tiết
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Vị trí và tốc độ
+                                </td>
+                                <td>
+                                    Encoder, resolver, cảm biến vị trí tuyến tính
+                                </td>
+                                <td>
+                                    Phản hồi vị trí cho động cơ, cơ cấu chấp hành và robot
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Nhiệt độ
+                                </td>
+                                <td>
+                                    Cặp nhiệt điện, RTD, thermistor
+                                </td>
+                                <td>
+                                    Giám sát lò, quá trình nhiệt, động cơ và thiết bị
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Áp suất, lực, mô-men
+                                </td>
+                                <td>
+                                    Cảm biến áp suất, cảm biến lực / mô-men
+                                </td>
+                                <td>
+                                    Bình khí, máy nén, HVAC, điều khiển lực và độ căng
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Rung động, gia tốc
+                                </td>
+                                <td>
+                                    Gia tốc kế áp điện, gia tốc kế MEMS
+                                </td>
+                                <td>
+                                    Giám sát tình trạng máy, bảo trì dự đoán
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Dòng điện
+                                </td>
+                                <td>
+                                    Cảm biến dòng điện
+                                </td>
+                                <td>
+                                    Bảo vệ tải, ước lượng mô-men động cơ
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Một điểm thú vị là cảm biến dòng điện, khi kết hợp với thuật toán dựa trên mô hình, có thể đóng vai trò “cảm biến mô-men ảo”. Tương tự, dòng điện đo được nằm trong thông số cũng cho biết một công đoạn sản xuất có được thực hiện đúng hay không.
+                </p>
+                <h2 id="proximity">
+                    3. Cảm biến tiệm cận: phát hiện vật thể không cần chạm
+                </h2>
+                <p>
+                    Cảm biến tiệm cận phát hiện sự có mặt hoặc vắng mặt của vật thể (hoặc khoảng cách tới vật thể) mà không tiếp xúc trực tiếp, và thường cho ngõ ra dạng bật/tắt. Chúng gắn trên băng tải, máy công cụ và dây chuyền lắp ráp. Bốn công nghệ phổ biến khác nhau ở thứ chúng cảm nhận được và chỗ chúng dễ bị lỗi.
+                </p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Loại
+                                </th>
+                                <th>
+                                    Nguyên lý và vật thể phát hiện
+                                </th>
+                                <th>
+                                    Lưu ý khi dùng
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Cảm ứng (inductive)
+                                </td>
+                                <td>
+                                    Dùng trường điện từ, chuyên phát hiện kim loại; nhạy nhất với kim loại sắt từ
+                                </td>
+                                <td>
+                                    Khoảng cách phát hiện ngắn; kim loại màu cho khoảng cách ngắn hơn; phoi kim loại có thể gây nhiễu
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Điện dung (capacitive)
+                                </td>
+                                <td>
+                                    Phát hiện thay đổi điện dung; thấy cả kim loại lẫn phi kim như nhựa, chất lỏng, bột
+                                </td>
+                                <td>
+                                    Nhạy với bụi và độ ẩm; chậm hơn loại cảm ứng
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Quang điện (photoelectric)
+                                </td>
+                                <td>
+                                    Phát và thu chùm sáng; phản xạ hoặc bị che chắn khi có vật
+                                </td>
+                                <td>
+                                    Có thể bị ảnh hưởng bởi ánh sáng nền, bụi và thấu kính bẩn
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Siêu âm (ultrasonic)
+                                </td>
+                                <td>
+                                    Phát xung âm thanh tần số cao, đo thời gian tiếng vọng để suy ra khoảng cách
+                                </td>
+                                <td>
+                                    Phát hiện vật bất kể màu hay độ trong suốt; hợp đo mức và đo khoảng cách
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Với cảm biến quang điện, tài liệu của element14 mô tả ba chế độ: thu phát riêng (tầm làm việc có thể tới khoảng 20 m), phản xạ gương (khoảng 1–3 m) và phản xạ khuếch tán (khoảng 12–300 mm). Đây là các giá trị tham khảo; tầm thực tế phụ thuộc vào model, vật thể và điều kiện lắp đặt.
+                </p>
+                <p>
+                    Một mẹo hay dùng trong thực tế: cảm biến cảm ứng đặt hướng vào răng của bánh răng sẽ tạo một xung cho mỗi răng. Đếm tần số xung rồi chia cho số răng sẽ ra tốc độ quay.
+                </p>
+                <h2 id="encoder">
+                    4. Encoder: cảm biến phản hồi vị trí và tốc độ
+                </h2>
+                <p>
+                    Cảm biến quan trọng nhất của một hệ thống điều khiển chuyển động thường là cảm biến phản hồi động cơ, phổ biến nhất là encoder và resolver. Trong encoder, chuyển động của động cơ hoặc tải làm một đĩa hoặc dải có mẫu điều chế tín hiệu đầu vào, và encoder chia thành hai loại: tăng dần (incremental) và tuyệt đối (absolute).
+                </p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Tiêu chí
+                                </th>
+                                <th>
+                                    Incremental
+                                </th>
+                                <th>
+                                    Absolute
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Tín hiệu
+                                </td>
+                                <td>
+                                    Chuỗi xung, thường có kênh A/B (lệch pha 90°) và có thể thêm kênh Z làm mốc
+                                </td>
+                                <td>
+                                    Mã số riêng cho từng vị trí, có thể đọc qua ngõ ra nhị phân hoặc bus nối tiếp
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Khi mất điện
+                                </td>
+                                <td>
+                                    Mất thông tin vị trí tuyệt đối, phải chạy quy trình về gốc (homing) sau khi cấp điện lại
+                                </td>
+                                <td>
+                                    Có vị trí ngay khi cấp điện, không cần homing
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Chi phí và độ phức tạp
+                                </td>
+                                <td>
+                                    Thường rẻ và gọn, phù hợp đo tốc độ, chiều quay hoặc vị trí tương đối
+                                </td>
+                                <td>
+                                    Cấu tạo phức tạp hơn nên thường đắt hơn
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Lựa chọn encoder phụ thuộc vào yêu cầu cụ thể: nếu hệ thống cần biết vị trí ngay khi khởi động, như robot nhiều trục hoặc máy tự động, encoder tuyệt đối là lựa chọn tự nhiên; nếu chỉ cần đo tốc độ và dịch chuyển tương đối với chi phí thấp, encoder tăng dần thường đủ dùng. Kênh thứ hai lệch pha 90° giúp xác định chiều quay, còn một kênh đơn chỉ đếm được tốc độ mà không biết chiều.
+                </p>
+                <h2 id="temperature">
+                    5. Cảm biến nhiệt độ: cặp nhiệt điện, RTD và thermistor
+                </h2>
+                <p>
+                    Ba công nghệ đo nhiệt độ chính trong công nghiệp có thể so sánh theo dải đo, độ ổn định, độ chính xác, độ nhạy và thời gian đáp ứng. Không loại nào tốt nhất ở mọi mặt.
+                </p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Loại
+                                </th>
+                                <th>
+                                    Ưu điểm
+                                </th>
+                                <th>
+                                    Hạn chế
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Cặp nhiệt điện (thermocouple)
+                                </td>
+                                <td>
+                                    Dải đo rất rộng, tới nhiệt độ cao; bền chắc; đáp ứng nhanh; không cần nguồn kích thích; giá vừa phải
+                                </td>
+                                <td>
+                                    Độ chính xác trung bình; quan hệ phi tuyến; cần dây bù đúng loại
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    RTD (ví dụ Pt100)
+                                </td>
+                                <td>
+                                    Chính xác hơn, ổn định lâu dài tốt, quan hệ gần tuyến tính
+                                </td>
+                                <td>
+                                    Dải đo hẹp hơn ở đầu cao, đắt hơn, đáp ứng chậm hơn, cần dòng kích thích
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Thermistor
+                                </td>
+                                <td>
+                                    Độ nhạy cao, giá thấp, tín hiệu mạnh
+                                </td>
+                                <td>
+                                    Dải đo hẹp, phi tuyến, phù hợp ứng dụng không quá khắt khe
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Theo bảng so sánh của TE Connectivity, RTD có dải đo khoảng −200 đến 600 °C và đáp ứng trong 1–7 giây, trong khi cặp nhiệt điện có dải đo khoảng −200 đến 2000 °C và đáp ứng dưới 1 giây. Các con số này là mức điển hình; giá trị thực tế còn phụ thuộc vào loại cảm biến, vỏ bọc và cách lắp. Với nhiều ứng dụng dưới khoảng 1000 °F (≈ 540 °C) cần độ chính xác, RTD thường là lựa chọn hợp lý.
+                </p>
+                <h2 id="signals">
+                    6. Tín hiệu ra của cảm biến và cách nối với PLC
+                </h2>
+                <p>
+                    Sau khi cảm biến đo xong, tín hiệu phải đến được bộ điều khiển. Cảm biến loại bật/tắt cho ngõ ra số. Các cảm biến đo liên tục như áp suất hay nhiệt độ thường cho tín hiệu tương tự, phổ biến nhất là dòng 4–20 mA hoặc điện áp 0–10 V.
+                </p>
+                <h3>
+                    Vì sao 4–20 mA được dùng rộng rãi?
+                </h3>
+                <ul>
+                    <li>
+                        <strong>
+                            Phát hiện đứt dây:
+                        </strong>
+                         4 mA ứng với 0% và 20 mA ứng với 100% giá trị đo. Vì luôn có ít nhất 4 mA chạy trong vòng lặp, nếu bộ điều khiển thấy 0 mA thì đó là sự cố, không phải giá trị đo bằng 0.
+                    </li>
+                    <li>
+                        <strong>
+                            Truyền xa, ít nhiễu:
+                        </strong>
+                         tín hiệu dòng được dùng rộng rãi vì ổn định hơn tín hiệu áp khi dây dài, thường dùng được ở khoảng cách hàng trăm đến hàng nghìn feet.
+                    </li>
+                    <li>
+                        <strong>
+                            Dễ đổi sang điện áp:
+                        </strong>
+                         một điện trở chính xác 250 Ω đổi 4–20 mA thành 1–5 V.
+                    </li>
+                    <li>
+                        <strong>
+                            Cấp nguồn qua vòng lặp:
+                        </strong>
+                         nhiều bộ phát tín hiệu chỉ cần hai dây, vừa nhận nguồn vừa gửi tín hiệu. Mỗi vòng lặp 4–20 mA chỉ truyền một giá trị tương tự.
+                    </li>
+                </ul>
+                <h3>
+                    Ví dụ quy đổi tín hiệu về giá trị đo
+                </h3>
+                <p>
+                    Giả sử bộ phát nhiệt độ đo từ 20 °C đến 100 °C và PLC đọc được 12 mA. Giá trị được quy đổi tuyến tính như sau:
+                </p>
+                <pre class="code-block"><code>I          = 12 mA
+phan_tram  = (I - 4) / 16 * 100        // = 50 %
+nhiet_do   = 20 + phan_tram / 100 * (100 - 20)   // = 60 °C</code></pre>
+                <p>
+                    Đoạn mã chỉ minh họa phép tính ở mức khái niệm. Khi lập trình PLC hoặc vi điều khiển thật, hãy dùng đúng chức năng scale của phần mềm, kiểm tra mô-đun đầu vào đã cấu hình đúng loại dòng hay áp, và xử lý trường hợp tín hiệu dưới 4 mA (sự cố).
+                </p>
+                <h2 id="iolink">
+                    7. IO-Link và cảm biến thông minh
+                </h2>
+                <p>
+                    Cảm biến ngày nay không chỉ là một “công tắc” hay “bộ phát tín hiệu” mà còn có thể giao tiếp hai chiều. IO-Link (chuẩn quốc tế IEC 61131-9) là giao tiếp số, điểm-điểm, hai chiều, dùng cho cảm biến và cơ cấu chấp hành. Hệ thống gồm một bộ chủ (master) nối với bộ điều khiển cấp cao và các thiết bị IO-Link như cảm biến hay cơ cấu chấp hành. Đây không phải một fieldbus mà là bước tiến hóa của cách kết nối cảm biến và cơ cấu chấp hành tới bộ điều khiển.
+                </p>
+                <ul>
+                    <li>
+                        <strong>
+                            Dùng lại phần cứng quen thuộc:
+                        </strong>
+                         dùng các đầu nối chuẩn như M5, M8 và M12; phần lớn thiết bị IO-Link dùng M12.
+                    </li>
+                    <li>
+                        <strong>
+                            Cấu hình từ xa:
+                        </strong>
+                         thông số có thể được tải từ bộ điều khiển xuống để cài đặt hoặc cấu hình lại thiết bị.
+                    </li>
+                    <li>
+                        <strong>
+                            Chẩn đoán sâu hơn:
+                        </strong>
+                         cảm biến có thể báo trạng thái, sự kiện và thông số cấu hình, hỗ trợ bảo trì dự đoán.
+                    </li>
+                    <li>
+                        <strong>
+                            Tương thích hệ thống cũ:
+                        </strong>
+                         bộ chủ IO-Link có thể làm việc với cảm biến nhị phân thông thường nên dễ bổ sung vào hệ thống hiện có.
+                    </li>
+                </ul>
+                <h2 id="selection">
+                    8. Cách chọn cảm biến cho một ứng dụng
+                </h2>
+                <p>
+                    Chọn đúng cảm biến là bước quan trọng khi thiết kế hệ thống điều khiển. Trước khi mở datasheet, hãy trả lời các câu hỏi sau:
+                </p>
+                <ol>
+                    <li>
+                        <strong>
+                            Đo cái gì, trong dải nào?
+                        </strong>
+                         xác định đại lượng, giá trị nhỏ nhất, lớn nhất và vùng làm việc bình thường.
+                    </li>
+                    <li>
+                        <strong>
+                            Cần chính xác và nhanh đến mức nào?
+                        </strong>
+                         xác định độ chính xác, độ phân giải và thời gian đáp ứng yêu cầu.
+                    </li>
+                    <li>
+                        <strong>
+                            Vật thể và môi trường ra sao?
+                        </strong>
+                         vật liệu mục tiêu, khoảng cách, nền, bụi bẩn, độ ẩm, nhiệt độ, rung và nhiễu điện từ.
+                    </li>
+                    <li>
+                        <strong>
+                            Ngõ ra có khớp bộ điều khiển không?
+                        </strong>
+                         số hay tương tự, 4–20 mA hay 0–10 V, hay giao tiếp số như IO-Link; xác định cần mạch điều hòa tín hiệu hay không.
+                    </li>
+                    <li>
+                        <strong>
+                            Chi phí và bảo trì:
+                        </strong>
+                         giá thiết bị, độ tin cậy, tuổi thọ và tần suất hiệu chuẩn.
+                    </li>
+                </ol>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Những thông số dễ bị hiểu nhầm:
+                        </strong>
+                         độ phân giải là thay đổi nhỏ nhất mà cảm biến phát hiện được, và không phải độ chính xác: một cảm biến phân giải cao vẫn có thể đo sai. Theo hướng dẫn của Micro-Epsilon, nên chọn cảm biến có độ phân giải tốt hơn độ chính xác yêu cầu ít nhất 10 lần. Thời gian đáp ứng thường được tính tới khi tín hiệu ra đạt 90% giá trị, và nó không nhất thiết bằng tốc độ đo công bố trong datasheet, vì còn phụ thuộc vị trí và chuyển động của vật đo.
+                    </p>
+                </div>
+                <h2 id="applications">
+                    9. Ứng dụng thực tế và bảo trì dự đoán
+                </h2>
+                <ul>
+                    <li>
+                        <strong>
+                            Băng tải và đóng gói:
+                        </strong>
+                         đếm thùng, phát hiện vật, kiểm tra chiều cao chồng hàng và mức chất lỏng bằng cảm biến quang điện, cảm ứng, siêu âm.
+                    </li>
+                    <li>
+                        <strong>
+                            Robot và điều khiển chuyển động:
+                        </strong>
+                         encoder, cảm biến vị trí và cảm biến lực cho phản hồi chuyển động, phát hiện va chạm và điều hướng.
+                    </li>
+                    <li>
+                        <strong>
+                            Tự động hóa tòa nhà:
+                        </strong>
+                         điều khiển HVAC, chiếu sáng thông minh và nhận biết có người trong phòng.
+                    </li>
+                    <li>
+                        <strong>
+                            Quy trình công nghiệp:
+                        </strong>
+                         đo áp suất trong bình chứa, máy nén, đường ống và hệ thống điều khiển quá trình.
+                    </li>
+                </ul>
+                <h3>
+                    Bảo trì dự đoán và giám sát tình trạng
+                </h3>
+                <p>
+                    Giám sát tình trạng (condition monitoring) dùng cảm biến, thiết bị thu thập dữ liệu và phần mềm phân tích để theo dõi hiệu suất của máy, từ đó tìm ra chi tiết cần sửa hoặc thay thế như một phần của chiến lược bảo trì dự đoán. Rung động là một trong những đại lượng được theo dõi nhiều nhất, thường dùng gia tốc kế, đầu dò tiệm cận hoặc cảm biến vận tốc. Ngoài ra còn có giám sát nhiệt, dầu bôi trơn, điện và áp suất. Theo nhóm tác giả Hassan và cộng sự (2024), các cảm biến này được gắn lên máy để ghi lại dao động cơ học, chuyển thành tín hiệu điện để phân tích, và dữ liệu rung động có thể được dùng cùng học máy để phát hiện dấu hiệu hỏng hóc sớm.
+                </p>
+                <p>
+                    Loại gia tốc kế MEMS phổ biến hoạt động bằng cách treo một khối thử nhỏ giữa các bản song song để tạo thành hai tụ điện. Khi máy rung, khối thử dịch chuyển làm điện dung thay đổi và đó chính là tín hiệu cảm biến. Dữ liệu này rất hữu ích cho thiết bị nhúng và IoT để gửi cảnh báo lên nền tảng giám sát.
+                </p>
+                <h2 id="learning">
+                    10. Lộ trình học về cảm biến cho người mới
+                </h2>
+                <ol>
+                    <li>
+                        <strong>
+                            Nền tảng điện – điện tử:
+                        </strong>
+                         điện áp, dòng điện, điện trở, cầu phân áp và định luật Ohm; những thứ cần cho việc đọc tín hiệu cảm biến.
+                    </li>
+                    <li>
+                        <strong>
+                            Cảm biến số đơn giản:
+                        </strong>
+                         nối công tắc hành trình, cảm biến tiệm cận hoặc quang điện vào một chân vào số và đọc trạng thái.
+                    </li>
+                    <li>
+                        <strong>
+                            Cảm biến tương tự:
+                        </strong>
+                         đọc nhiệt độ hoặc áp suất qua ADC, học cách hiệu chuẩn, lọc nhiễu và quy đổi ra đơn vị kỹ thuật.
+                    </li>
+                    <li>
+                        <strong>
+                            Encoder và đo tốc độ:
+                        </strong>
+                         đếm xung, giải mã hai kênh A/B và tính tốc độ từ tần số xung.
+                    </li>
+                    <li>
+                        <strong>
+                            Nối với PLC và truyền thông công nghiệp:
+                        </strong>
+                         làm quen tín hiệu 4–20 mA, mô-đun I/O của PLC và tìm hiểu IO-Link.
+                    </li>
+                </ol>
+                <p>
+                    Tại Trường Đại học Nha Trang, nội dung này nằm trong các học phần như “Cảm biến và ứng dụng”, “PLC” và “Mạng truyền thông công nghiệp” của chương trình Kỹ thuật Cơ điện tử; người học nên đối chiếu đề cương chính thức của khóa mình.
+                </p>
+                <div class="callout">
+                    <p>
+                        <strong>
+                            Dự án nhập môn gợi ý:
+                        </strong>
+                         mô hình băng tải mini đếm sản phẩm bằng cảm biến tiệm cận hoặc quang điện, hiển thị số đếm lên LCD, và cho phép dừng băng tải khi đủ số lượng. Hãy bắt đầu với một cảm biến, kiểm tra tín hiệu bằng đồng hồ vạn năng, sau đó mới thêm hiển thị và điều khiển.
+                    </p>
+                </div>
+                <h2 id="summary">
+                    11. Kết luận
+                </h2>
+                <p>
+                    Cảm biến là cầu nối giữa thế giới vật lý và hệ thống điều khiển: nếu không có dữ liệu đáng tin cậy từ cảm biến, những thuật toán điều khiển hay bộ điều khiển hiện đại đến đâu cũng khó phát huy tác dụng. Để dùng cảm biến hiệu quả, hãy hiểu nguyên lý hoạt động, biết giới hạn của từng loại, chọn tín hiệu ra phù hợp với bộ điều khiển và luôn kiểm chứng bằng phép đo thực tế. Khi nền tảng này vững, việc học tiếp PLC, hệ thống nhúng hay IoT sẽ dễ dàng hơn nhiều.
+                </p>
+                <section class="references" id="references">
+                    <h3>
+                        Tài liệu tham khảo
+                    </h3>
+                    <p>
+                        Nội dung được tổng hợp và diễn giải từ các tài liệu dưới đây; ví dụ và sơ đồ là nội dung biên soạn lại cho mục đích học tập. Các con số kỹ thuật chỉ mang tính tham khảo; hãy xem datasheet của từng sản phẩm.
+                    </p>
+                    <ol>
+                        <li>
+                            <a href="https://www.automate.org/industry-insights/understanding-sensors-for-motion-control-and-manufacturing/aph" target="_blank" rel="noopener">
+                                A3 (Association for Advancing Automation) – Understanding Sensors for Motion Control and Manufacturing
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.newark.com/industrial-sensors-and-industrial-automation-applications" target="_blank" rel="noopener">
+                                element14 / Newark – Industrial Sensors and Industrial Automation Applications
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.variohm.com/news-media/technical-blog-archive/why-sensors-are-key-to-industrial-automation" target="_blank" rel="noopener">
+                                Variohm – Why sensors are key to industrial automation
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.motionworld.com/blog/applications/1190/understanding-industrial-sensors-in-automated-production-systems" target="_blank" rel="noopener">
+                                Motion World – Understanding Industrial Sensors in Automated Production Systems
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://tractian.com/en/glossary/proximity-sensor" target="_blank" rel="noopener">
+                                Tractian – Proximity Sensor
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.digikey.at/en/articles/sorting-through-proximity-and-distance-sensor-technology-choices" target="_blank" rel="noopener">
+                                DigiKey – Sorting Through Proximity and Distance Sensor Technology Choices
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://controldesign.com/sensing/encoders/article/33036226/incremental-vs-absolute-encoders" target="_blank" rel="noopener">
+                                Control Design – Incremental vs. absolute encoders
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://blog.orientalmotor.com/incremental-vs-absolute-systems" target="_blank" rel="noopener">
+                                Oriental Motor – Incremental vs. Absolute Systems
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.te.com/en/products/sensors/temperature-sensors/resources/rtds-vs-thermocouples.html" target="_blank" rel="noopener">
+                                TE Connectivity – RTDs vs. Thermocouples
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.controleng.com/temperature-tutorial-thermocouple-vs-rtd-vs-thermistor/" target="_blank" rel="noopener">
+                                Control Engineering – Temperature tutorial: Thermocouple vs. RTD vs. thermistor
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://control.com/technical-articles/why-is-4-20-ma-current-used-for-industrial-analog-controls/" target="_blank" rel="noopener">
+                                control.com – Why is 4-20 mA Current Used for Industrial Analog Sensors?
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://us.rs-online.com/expert/industrial-communications-4-20-ma-current-loop" target="_blank" rel="noopener">
+                                RS – Industrial Communications: 4-20 mA Current Loop
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.automation.com/article/io-link-connects-intelligent-sensors-actuators-industrial-communications" target="_blank" rel="noopener">
+                                Automation.com – IO-Link Connects Intelligent Sensors and Actuators
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://ifm.com/us/en/shared/technologies/io-link/io-link-introduction" target="_blank" rel="noopener">
+                                ifm – IO-Link: What it is, how it works, and why it's important
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.automation.com/article/10-things-you-need-to-know-about-precision-displac-1" target="_blank" rel="noopener">
+                                Micro-Epsilon (Automation.com) – 10 things you need to know about precision displacement sensors
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://www.ni.com/en/solutions/condition-monitoring/what-is-condition-monitoring.html" target="_blank" rel="noopener">
+                                NI – What Is Condition Monitoring?
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://doi.org/10.3390/s24030740" target="_blank" rel="noopener">
+                                I. U. Hassan, K. Panduru, J. Walsh – An In-Depth Study of Vibration Sensors for Condition Monitoring (Sensors, 2024)
+                            </a>
+                            .
+                        </li>
+                        <li>
+                            <a href="https://ctdt.ntu.edu.vn/chuongtrinhdt/56" target="_blank" rel="noopener">
+                                Trường Đại học Nha Trang – Chương trình đào tạo Kỹ thuật Cơ điện tử
+                            </a>
+                            .
+                        </li>
+                    </ol>
+                </section>
+            </article>
+            <aside class="toc">
+                <h2>
+                    Trong bài viết
+                </h2>
+                <ol>
+                    <li>
+                        <a href="#role">
+                            Vai trò của cảm biến
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#types">
+                            Các nhóm cảm biến
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#proximity">
+                            Cảm biến tiệm cận
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#encoder">
+                            Encoder
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#temperature">
+                            Cảm biến nhiệt độ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#signals">
+                            Tín hiệu và nối PLC
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#iolink">
+                            IO-Link
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#selection">
+                            Cách chọn cảm biến
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#applications">
+                            Ứng dụng và bảo trì
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#learning">
+                            Lộ trình học tập
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#summary">
+                            Kết luận
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#references">
+                            Tài liệu tham khảo
+                        </a>
+                    </li>
+                </ol>
+                <div class="toc-tools">
+                    <button class="small-action" type="button" id="copyLink">
+                        Sao chép liên kết
+                    </button>
+                    <button class="small-action" type="button" onclick="window.print()">
+                        In bài viết
+                    </button>
+                </div>
+            </aside>
+        </main>
+        <footer class="article-footer">
+            <div class="footer-inner">
+                <span>
+                    © 2026 Minh Trí · Nội dung phục vụ mục đích học tập.
+                </span>
+                <a href="../index.html">
+                    Trở về trang chủ ↑
+                </a>
+            </div>
+        </footer>
+        <button class="back-top" id="backTop" type="button" aria-label="Cuộn lên đầu trang">
+            ↑
+        </button>
+
+
+<script>
+(function () {
+    "use strict";
+
+    const root = document.documentElement;
+    const themeButton = document.getElementById("themeToggle");
+    const progressBar = document.getElementById("progressBar");
+    const backTop = document.getElementById("backTop");
+    const copyButton = document.getElementById("copyLink");
+    const article = document.querySelector(".article-content");
+
+    function applyTheme(theme) {
+        root.dataset.theme = theme;
+        themeButton.setAttribute("aria-pressed", String(theme === "dark"));
+    }
+
+    let savedTheme = "light";
+    try {
+        savedTheme = localStorage.getItem("theme") || "light";
+    } catch (error) {
+        savedTheme = "light";
+    }
+    applyTheme(savedTheme);
+
+    themeButton.addEventListener("click", function () {
+        const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
+        try {
+            localStorage.setItem("theme", nextTheme);
+        } catch (error) {
+            // Trang vẫn đổi giao diện dù trình duyệt không cho lưu lựa chọn.
+        }
+    });
+
+    function updateProgress() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progressBar.style.width = Math.min(100, Math.max(0, progress)) + "%";
+        backTop.classList.toggle("is-visible", window.scrollY > 420);
+    }
+
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    updateProgress();
+
+    backTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    copyButton.addEventListener("click", async function () {
+        const originalText = copyButton.textContent;
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            copyButton.textContent = "Đã sao chép";
+        } catch (error) {
+            copyButton.textContent = "Không thể sao chép";
+        }
+        window.setTimeout(function () {
+            copyButton.textContent = originalText;
+        }, 1800);
+    });
+
+    const revealTargets = article.querySelectorAll("h2, .callout, .key-card, .diagram, .references");
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealTargets.forEach(function (element) {
+            element.classList.add("reveal");
+            revealObserver.observe(element);
+        });
+    }
+})();
+</script>
+
+<script>
+/* Mục lục: cuộn mượt tới mục mà không để lại #... trên thanh địa chỉ */
+document.addEventListener("click", function (e) {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    const target = document.getElementById(link.getAttribute("href").slice(1));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+/* Bỏ ".html" trên thanh địa chỉ (chỉ khi đã đưa lên web) */
+if (!["127.0.0.1", "localhost"].includes(location.hostname) && location.pathname.endsWith(".html")) {
+    history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
+}
+</script>
+    </body>
+</html>

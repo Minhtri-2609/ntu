@@ -85,7 +85,7 @@ catch (e) { }
                 <strong id="dropdownUserName">Tài khoản</strong>
                 <span class="a-chip ud-chip" id="dropdownBadge" hidden></span>
             </div>
-            <small>Sinh viên NTU</small>
+            <small id="dropdownRole">Sinh viên NTU</small>
         </div>
     </div>        <ul class="user-dropdown-list">
         <li><a href="account.html?tab=account"><i class='bx bxs-user-account'></i> Tài khoản của tôi</a></li>
@@ -881,7 +881,8 @@ const DOCS = [
 const ARTS = [
     ["Tổng quan về ngành Kỹ thuật Cơ điện tử", "Cơ khí, điện tử, lập trình và điều khiển phối hợp để tạo nên các hệ thống thông minh.", "2026-11-08", 210, "articles/tong-quan-co-dien-tu.html", "articles/images/mechatronics-overview.webp"],
     ["Hệ thống nhúng là gì?", "Tìm hiểu cấu trúc phần cứng, firmware, thời gian thực và ứng dụng trong thiết bị.", "2026-11-08", 190, "articles/he-thong-nhung-la-gi.html", "articles/images/embedded-systems.webp"],
-["IoT (Internet of Things) là gì?", "Cách thiết bị kết nối, gửi dữ liệu lên mạng và ứng dụng từ nhà thông minh đến nông nghiệp.", "2026-11-10", 180, "articles/internet-of-things.html", "articles/images/internet-of-things.webp"],    ["Vai trò của cảm biến trong tự động hóa", "Các loại cảm biến thường gặp và cách chọn.", "2026-10-22", 200, "", ""],
+    ["IoT (Internet of Things) là gì?", "Cách thiết bị kết nối, gửi dữ liệu lên mạng và ứng dụng từ nhà thông minh đến nông nghiệp.", "2026-11-10", 180, "articles/internet-of-things.html", "articles/images/internet-of-things.webp"],    
+    ["Vai trò của cảm biến trong tự động hóa", "Các loại cảm biến thường gặp và cách chọn.", "2026-11-14", 200, "articles/cam-bien-trong-tu-dong-hoa.html", "articles/images/sensors-in-automation.webp"],
     ["Vi điều khiển và ứng dụng", "Cách một vi điều khiển đọc cảm biến và điều khiển thiết bị.", "2026-10-29", 220, "", ""],
     ["Những kiến thức cơ bản về điện tử", "Điện trở, tụ điện, diode, transistor trong một bài viết.", "2026-11-02", 170, "", ""],
     ["Các dự án học tập liên quan đến IoT", "Gợi ý dự án nhỏ để thực hành từng bước.", "2026-11-04", 195, "", ""]
@@ -1172,6 +1173,11 @@ spy();
         udBadge.textContent = b.name;
         udBadge.className = "a-chip ud-chip " + (b.id === "dev" ? "b-dev" : b.id === "admin" ? "b-admin" : "b-lv" + b.level);
         udBadge.hidden = false;
+    }
+    const udRole = document.getElementById("dropdownRole");
+    if (udRole && user.school_tag !== undefined) {
+        udRole.textContent = user.school_tag ? "Sinh viên " + user.school_tag : "Sinh viên";
+    
     }
 
     // Bỏ "hidden" để hoạt ảnh CSS chạy được (hiện/ẩn do class is-open điều khiển)

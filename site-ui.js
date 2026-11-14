@@ -122,7 +122,10 @@ holder.appendChild(themeBtn);
         button.title = "Tài khoản: " + user.name;
         userBox.querySelector(".su-menu-avatar").src = avatarUrl;
         userBox.querySelector(".su-menu-row strong").textContent = user.name;
-
+        const role = userBox.querySelector(".su-menu-info small");
+        if (role && user.school_tag !== undefined) {
+            role.textContent = user.school_tag ? "Sinh viên " + user.school_tag : "Sinh viên";
+        }
         const chip = userBox.querySelector(".a-chip");
         if (user.badge) {
             chip.textContent = user.badge.name;
