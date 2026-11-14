@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
     <title>Hồ sơ của tôi | Minh Trí</title>
     <!-- Kế thừa giao diện chung -->
     <link rel="stylesheet" href="style.css">
@@ -344,7 +344,8 @@
     display: flex;
     flex-direction: column;
     width: min(820px, 100%);
-    max-height: calc(100vh - 32px);
+    max-height: calc(100vh - 32px);   /* dự phòng */
+    max-height: calc(100dvh - 32px);  /* khớp với .modal, đã trừ thanh địa chỉ */
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: 18px;
@@ -380,7 +381,15 @@
 
 .modal-body {
     padding: 20px;
+    min-height: 0;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.modal-head,
+.modal-foot {
+    flex: none;               /* tiêu đề và nút Lưu/Hủy luôn giữ nguyên, chỉ phần giữa cuộn */
 }
 
 .modal-foot {
@@ -550,7 +559,17 @@
     .form-grid {
         grid-template-columns: 1fr;
     }
+    .modal {
+        padding: 8px 8px max(8px, env(safe-area-inset-bottom));
+    }
+    .modal-card {
+        max-height: calc(100vh - 16px);
+        max-height: calc(100dvh - 16px);
+    }
+    .modal-body { padding: 14px; }
+    .modal-foot { padding: 10px 14px max(10px, env(safe-area-inset-bottom)); }
 }
+
 .field select, .field textarea {
     padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px;
     background: var(--bg); color: var(--ink); font: inherit; width: 100%;
@@ -953,7 +972,7 @@ function openModal() {
     setError("");
     $("#editModal").hidden = false;
     document.body.style.overflow = "hidden";
-    $("#fName").focus();
+    if (!matchMedia("(pointer: coarse)").matches) $("#fName").focus();   // điện thoại: không bật bàn phím ngay
 }
 
 function closeModal() {
