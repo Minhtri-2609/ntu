@@ -861,6 +861,14 @@ button {
     }
 }
 
+.cm-who { margin: 0 0 8px; font-weight: 650; }
+.cm-login { margin: 0 0 14px; padding: 12px 14px; border-radius: 10px; background: rgba(37,99,235,.08); }
+.cm-login a { text-decoration: underline; font-weight: 700; }
+.cm-form[hidden],
+.cm-login[hidden] {
+    display: none;
+}
+
  </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1008,17 +1016,17 @@ button {
                     </button>
                     <div class="cm-panel" id="cmPanel">
                         <div class="cm-panel-inner">
-                            <form class="cm-form" id="cmForm" novalidate>
-                                <div class="cm-row">
-                                    <label for="cmName">Nhận xét với tên:</label>
-                                    <input id="cmName" name="name" type="text" maxlength="50" placeholder="Nhập tên của bạn" autocomplete="name" required>
-                                </div>
+                            <form class="cm-form" id="cmForm" novalidate hidden>
+                                <p class="cm-who" id="cmWho"></p>
                                 <div class="cm-row cm-row-msg">
-                                    <textarea id="cmText" name="content" rows="3" maxlength="1000" placeholder="Viết nhận xét của bạn..." aria-label="Nội dung nhận xét" required></textarea>
+                                    <textarea id="cmText" ...giữ nguyên...></textarea>
                                     <button class="cm-submit" id="cmSubmit" type="submit">Đăng</button>
                                 </div>
                                 <p class="cm-status" id="cmStatus" role="status" aria-live="polite"></p>
                             </form>
+                            <p class="cm-login" id="cmLogin" hidden>
+                                Bạn cần <a href="../login.html">đăng nhập hoặc đăng ký</a> để nhận xét.
+                            </p>
                             <ul class="cm-list" id="cmList"></ul>
                         </div>
                     </div>
@@ -1168,7 +1176,6 @@ button {
     const cmToggle = document.getElementById("cmToggle");
     const cmPanel = document.getElementById("cmPanel");
     const cmForm = document.getElementById("cmForm");
-    const cmName = document.getElementById("cmName");
     const cmText = document.getElementById("cmText");
     const cmSubmit = document.getElementById("cmSubmit");
     const cmStatus = document.getElementById("cmStatus");
@@ -1183,7 +1190,7 @@ button {
         cmToggle.setAttribute("aria-expanded", String(open));
         if (open) {
             window.setTimeout(function () {
-                (cmName.value ? cmText : cmName).focus();
+                if (me) cmText.focus();
             }, 360);
         }
     });
@@ -1253,22 +1260,11 @@ button {
         }
     }
 
-    try {
-        cmName.value = localStorage.getItem("commenterName") || "";
-    } catch (error) {
-        cmName.value = "";
-    }
 
     cmForm.addEventListener("submit", async function (event) {
         event.preventDefault();
-        const name = cmName.value.trim();
         const content = cmText.value.trim();
 
-        if (!name) {
-            setStatus("Vui lòng nhập tên của bạn.", "err");
-            cmName.focus();
-            return;
-        }
         if (!content) {
             setStatus("Vui lòng viết nội dung nhận xét.", "err");
             cmText.focus();
@@ -1301,15 +1297,81 @@ button {
             renderComments();
             cmText.value = "";
             setStatus("Đã đăng nhận xét. Cảm ơn bạn!", "ok");
+    cmForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const content = cmText.value.trim();
+
+        if (!me) {
+            setStatus("Bạn cần đăng nhập để nhận xét.", "err");
+            return;
+        }
+        if (!content) {
+            setStatus("Vui lòng viết nội dung nhận xét.", "err");
+            cmText.focus();
+            return;
+        }
+
+        cmSubmit.disabled = true;
+        setStatus("Đang đăng...", "");
+
+        try {
+            const response = await fetch(COMMENT_API, {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ post: POST_ID, content: content })
+            });
+            if (response.status === 401) {
+                me = null;
+                cmForm.hidden = true;
+                cmLogin.hidden = false;
+                setStatus("", "");
+                return;
+            }
+            if (!response.ok) throw new Error("HTTP " + response.status);
+
+            let saved = null;
             try {
-                localStorage.setItem("commenterName", name);
-            } catch (error) {}
+                saved = await response.json();
+            } catch (error) {
+                saved = null;
+            }
+            if (!saved || !saved.content) {
+                saved = { name: me.name, content: content, time: new Date().toISOString() };
+            }
+
+            comments.unshift(saved);
+            renderComments();
+            cmText.value = "";
+            setStatus("Đã đăng nhận xét. Cảm ơn bạn!", "ok");
         } catch (error) {
             setStatus("Không đăng được nhận xét (máy chủ chưa sẵn sàng). Nội dung của bạn vẫn còn, hãy thử lại sau.", "err");
         } finally {
             cmSubmit.disabled = false;
         }
     });
+        } catch (error) {
+            setStatus("Không đăng được nhận xét (máy chủ chưa sẵn sàng). Nội dung của bạn vẫn còn, hãy thử lại sau.", "err");
+        } finally {
+            cmSubmit.disabled = false;
+        }
+    });
+
+    const cmWho = document.getElementById("cmWho");
+    const cmLogin = document.getElementById("cmLogin");
+    const ME_API = COMMENT_API.replace("/api/comments", "/api/me");
+    let me = null;
+
+    async function loadMe() {
+    try {
+        const r = await fetch(ME_API, { credentials: "include" });
+        me = (await r.json()).user || null;
+    } catch (e) { me = null; }
+    cmForm.hidden = !me;
+    cmLogin.hidden = !!me;
+    if (me) cmWho.textContent = "Nhận xét với tên: " + me.name;
+    }
+loadMe();
 
     loadComments();
 })();

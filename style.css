@@ -2564,7 +2564,7 @@ section:not(#home) h2 {
     align-items: center;
     gap: 5px;
     margin-left: 30px;          /* đẩy sang phải, tách khỏi Trang chủ / Giới thiệu / Liên hệ */
-    padding: 6px 14px;          /* khung nhỏ ôm quanh chữ */
+    padding: 5px 9px;          /* khung nhỏ ôm quanh chữ */
     border: 1px solid rgba(255, 255, 255, .25);
     border-radius: 999px;       /* bo tròn thành viên thuốc */
     background: rgba(255, 255, 255, .08);
@@ -3337,6 +3337,8 @@ header > nav a.active::after {
    (không che đồng hồ và lịch ở phía trên). */
 #home {
     z-index: 5;
+    overflow-x: clip;           /* cắt phần sao băng tràn ngang */
+    overflow-y: visible;        /* giữ nguyên để menu nút GHI CHÚ xổ xuống không bị cắt */
 }
 .nt.open .nt-act button:nth-child(1) {
     transition-delay: 0s;

@@ -340,7 +340,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: min(640px, 100%);
+    width: min(820px, 100%);
     max-height: calc(100vh - 32px);
     background: var(--card);
     border: 1px solid var(--line);
@@ -548,6 +548,13 @@
         grid-template-columns: 1fr;
     }
 }
+.field select, .field textarea {
+    padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--bg); color: var(--ink); font: inherit; width: 100%;
+}
+.field textarea { resize: none; }
+.field select:disabled, .field textarea[readonly] { opacity: .8; cursor: not-allowed; }
+
     </style>
 </head>
 <body>
@@ -598,6 +605,13 @@
                         <div>
                             <strong>Ngành</strong>
                             <span id="infoMajor">Chưa cập nhật</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i class='bx bxs-institution'></i>
+                        <div>
+                            <strong>Khoa/Viện</strong>
+                            <span id="infoFaculty">Chưa cập nhật</span>
                         </div>
                     </li>
                     <li id="rowSpec">
@@ -690,14 +704,18 @@
                 </label>
                 <label class="field full">
                     <span>Trường học</span>
-                    <input id="fSchool" type="text" maxlength="100">
+                    <select id="fSchool"><option value="">— Chọn trường —</option></select>
                 </label>
                 <label class="field">
                     <span>Ngành</span>
-                    <input id="fMajor" type="text" maxlength="100">
+                    <select id="fMajor" disabled><option value="">— Chọn trường trước —</option></select>
                 </label>
                 <label class="field">
-                    <span>Chuyên ngành (nếu có)</span>
+                    <span>Khoa/Viện</span>
+                    <textarea id="fFaculty" rows="2" readonly placeholder="Theo ngành"></textarea>
+                </label>
+                <label class="field full">
+                <span>Chuyên ngành (nếu có)</span>
                     <input id="fSpec" type="text" maxlength="100">
                 </label>
                 <label class="field">
@@ -723,6 +741,7 @@
         </div>
     </form>
 </div>
+<script src="majors-data.js"></script>
 <script>
 const LOCAL = ["127.0.0.1", "localhost"].includes(location.hostname);
 const API = LOCAL ? "http://127.0.0.1:5000" : "https://tr1ssca.pythonanywhere.com";
@@ -788,6 +807,7 @@ function renderProfile() {
 
     setInfo("infoSchool", profile.school);
     setInfo("infoMajor", profile.major);
+    setInfo("infoFaculty", profile.faculty);
     setInfo("infoSpec", profile.specialization);
     setInfo("infoHome", profile.hometown);
     setInfo("profileEmail", profile.contact_email);
@@ -864,6 +884,41 @@ document.querySelectorAll(".ptab").forEach((tab) => {
     });
 });
 
+/* ---------- Trường / Ngành / Khoa-Viện ---------- */
+const SCHOOLS = window.SCHOOL_DATA || {};
+
+function fillSchools() {
+    const sel = $("#fSchool");
+    sel.length = 1;
+    Object.entries(SCHOOLS).forEach(([key, s]) => sel.add(new Option(s.label, key)));
+}
+function schoolKeyFromText(text) {
+    return Object.keys(SCHOOLS).find((k) => (text || "").includes("(" + k + ")")) || "";
+}
+function updateFaculty() {
+    const key = $("#fSchool").value;
+    const code = $("#fMajor").value.split(" - ")[0];
+    const m = key && SCHOOLS[key].majors.find((x) => x.code === code);
+    $("#fFaculty").value = m ? m.faculty : "";
+}
+function fillMajors(key, selected) {
+    const sel = $("#fMajor");
+    sel.length = 1;
+    sel.options[0].text = key ? "— Chọn ngành —" : "— Chọn trường trước —";
+    sel.disabled = !key;
+    if (key) SCHOOLS[key].majors.forEach((m) => {
+        const text = m.code + " - " + m.name;      // dạng [mã ngành] - [Tên ngành]
+        sel.add(new Option(text, text));
+    });
+    if (selected) {
+        if (![...sel.options].some((o) => o.value === selected)) sel.add(new Option(selected, selected));
+        sel.value = selected;
+    }
+    updateFaculty();
+}
+$("#fSchool").addEventListener("change", () => fillMajors($("#fSchool").value, ""));
+$("#fMajor").addEventListener("change", updateFaculty);
+
 /* ---------- Cửa sổ sửa hồ sơ ---------- */
 function setError(message) {
     $("#editError").textContent = message;
@@ -873,8 +928,11 @@ function openModal() {
     pending = { avatar: null, cover: null };
     $("#fName").value = profile.display_name;
     $("#fNick").value = profile.nickname;
-    $("#fSchool").value = profile.school;
-    $("#fMajor").value = profile.major;
+    fillSchools();
+    const schoolKey = schoolKeyFromText(profile.school);
+    $("#fSchool").value = schoolKey;
+    fillMajors(schoolKey, profile.major);
+    if (!$("#fFaculty").value) $("#fFaculty").value = profile.faculty || "";
     $("#fSpec").value = profile.specialization;
     $("#fEmail").value = profile.contact_email;
     $("#fPhone").value = profile.phone;
@@ -899,59 +957,76 @@ document.addEventListener("keydown", (e) => {
 });
 
 /* ---------- Chọn ảnh: thu nhỏ ngay trên máy trước khi tải lên ---------- */
+async function loadBitmap(file, maxWidth) {
+    if (window.createImageBitmap) {
+        if (maxWidth) {
+            try { return await createImageBitmap(file, { resizeWidth: maxWidth, resizeQuality: "medium" }); } catch (e) {}
+        }
+        try { return await createImageBitmap(file); } catch (e) {}
+    }
+    return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("Không đọc được ảnh này (có thể là ảnh HEIC). Hãy chọn ảnh JPG/PNG khác.")); };
+        img.src = url;
+    });
+}
+
 async function resizeImage(file, kind) {
-    const bitmap = await createImageBitmap(file);
+    const bitmap = await loadBitmap(file, kind === "cover" ? 1280 : 0);
+    const bw = bitmap.naturalWidth || bitmap.width;
+    const bh = bitmap.naturalHeight || bitmap.height;
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
 
     if (kind === "avatar") {
-        const side = Math.min(bitmap.width, bitmap.height);       // cắt vuông ở giữa
+        const side = Math.min(bw, bh);
         canvas.width = canvas.height = Math.min(side, 512);
-        context.fillStyle = "#ffffff";
+        context.fillStyle = "#fff";
         context.fillRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(bitmap, (bitmap.width - side) / 2, (bitmap.height - side) / 2, side, side, 0, 0, canvas.width, canvas.height);
+        context.drawImage(bitmap, (bw - side) / 2, (bh - side) / 2, side, side, 0, 0, canvas.width, canvas.height);
     } else {
-        const scale = Math.min(1, 1600 / bitmap.width);           // giữ nguyên tỉ lệ, tối đa rộng 1600px
-        canvas.width = Math.round(bitmap.width * scale);
-        canvas.height = Math.round(bitmap.height * scale);
-        context.fillStyle = "#ffffff";
+        const scale = Math.min(1, 1280 / bw);              // giảm từ 1600 xuống 1280 cho nhẹ
+        canvas.width = Math.round(bw * scale);
+        canvas.height = Math.round(bh * scale);
+        context.fillStyle = "#fff";
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
     }
+    if (bitmap.close) bitmap.close();
 
     return new Promise((resolve, reject) => {
-        canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("Không xử lý được ảnh."))), "image/jpeg", 0.85);
+        canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("Không xử lý được ảnh."))), "image/jpeg", 0.82);
     });
 }
 
 async function handleFile(file, kind) {
     if (!file) return;
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
-        setError("Chỉ chọn ảnh JPG, PNG hoặc WebP.");
-        return;
-    }
+    const okType = /^image\//.test(file.type) || /\.(jpe?g|png|webp)$/i.test(file.name);
+    if (!okType) { showErr("Chỉ chọn ảnh JPG, PNG hoặc WebP."); return; }
     try {
         const blob = await resizeImage(file, kind);
         pending[kind] = blob;
         const preview = URL.createObjectURL(blob);
-        if (kind === "avatar") {
-            $("#editAvatar").src = preview;
-        } else {
-            $("#editCover").style.backgroundImage = 'url("' + preview + '")';
-        }
+        if (kind === "avatar") $("#editAvatar").src = preview;
+        else $("#editCover").style.backgroundImage = 'url("' + preview + '")';
         setError("");
     } catch (error) {
-        setError(error.message);
+        showErr(error.message);
     }
 }
+function showErr(message) { setError(message); toast(message); }   // hiện cả toast để điện thoại luôn thấy
 
 document.querySelectorAll("[data-pick]").forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", () => {$("#fileAvatar").addEventListener("change", async (e) => { const f = e.target.files[0]; await handleFile(f, "avatar"); e.target.value = ""; });
+$("#fileCover").addEventListener("change", async (e) => { const f = e.target.files[0]; await handleFile(f, "cover"); e.target.value = ""; });
         $(button.dataset.pick === "cover" ? "#fileCover" : "#fileAvatar").click();
     });
 });
-$("#fileAvatar").addEventListener("change", (e) => handleFile(e.target.files[0], "avatar"));
-$("#fileCover").addEventListener("change", (e) => handleFile(e.target.files[0], "cover"));
+
+$("#fileAvatar").addEventListener("change", async (e) => { const f = e.target.files[0]; await handleFile(f, "avatar"); e.target.value = ""; });
+$("#fileCover").addEventListener("change", async (e) => { const f = e.target.files[0]; await handleFile(f, "cover"); e.target.value = ""; });
 
 /* ---------- Lưu: tải ảnh mới (nếu có) rồi lưu thông tin, áp dụng ngay ---------- */
 $("#editForm").addEventListener("submit", async (event) => {
@@ -974,8 +1049,9 @@ $("#editForm").addEventListener("submit", async (event) => {
             body: JSON.stringify({
                 display_name: $("#fName").value,
                 nickname: $("#fNick").value,
-                school: $("#fSchool").value,
+                school: SCHOOLS[$("#fSchool").value] ? SCHOOLS[$("#fSchool").value].label : "",
                 major: $("#fMajor").value,
+                faculty: $("#fFaculty").value,
                 specialization: $("#fSpec").value,
                 contact_email: $("#fEmail").value,
                 phone: $("#fPhone").value,
@@ -989,7 +1065,7 @@ $("#editForm").addEventListener("submit", async (event) => {
         toast("Đã lưu hồ sơ.");
         loadLists();
     } catch (error) {
-        setError(error.message);
+        showErr(error.message);
     } finally {
         button.disabled = false;
     }
@@ -1010,6 +1086,10 @@ $("#editForm").addEventListener("submit", async (event) => {
     renderProfile();
     loadLists();
 })();
+/* Bỏ ".html" trên thanh địa chỉ (chỉ khi đã đưa lên web) */
+if (!LOCAL && location.pathname.endsWith(".html")) {
+    history.replaceState(null, "", location.pathname.replace(/\.html$/, "") + location.search);
+}
 </script>
 </body>
 </html>
