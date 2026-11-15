@@ -4,11 +4,6 @@ window.SCHOOL_DATA = {
   "label": "Trường Đại học Nha Trang (NTU)",
   "majors": [
    {
-    "code": "7620304",
-    "name": "Khai thác thủy sản",
-    "faculty": "Khoa Khoa học Thủy sản (Trường Thủy sản và Khoa học Sự sống)"
-   },
-   {
     "code": "7620303",
     "name": "Khoa học thủy sản",
     "faculty": "Khoa Khoa học Thủy sản (Trường Thủy sản và Khoa học Sự sống)"
@@ -200,12 +195,12 @@ window.SCHOOL_DATA = {
    },
    {
     "code": "7480201A",
-    "name": "Công nghệ thông tin (Chương trình đào tạo đặc biệt POHE)",
+    "name": "Công nghệ thông tin (Chương trình đào tạo đặc biệt)",
     "faculty": "Khoa Công nghệ Thông tin"
    },
    {
-    "code": "7480201VN",
-    "name": "Công nghệ thông tin (Chương trình Việt - Nhật)",
+    "code": "7480201B",
+    "name": "Công nghệ thông tin Việt - Nhật",
     "faculty": "Khoa Công nghệ Thông tin"
    },
    {
@@ -215,12 +210,12 @@ window.SCHOOL_DATA = {
    },
    {
     "code": "7340101A",
-    "name": "Quản trị kinh doanh song ngữ Anh - Việt (Chương trình đào tạo đặc biệt)",
+    "name": "Quản trị kinh doanh (Chương trình đào tạo đặc biệt: Quản trị kinh doanh tổng hợp; Quản trị kinh doanh quốc tế)",
     "faculty": "Khoa Kinh doanh (Trường Kinh tế và Kinh doanh)"
    },
    {
     "code": "7340301A",
-    "name": "Kế toán (Chương trình đào tạo đặc biệt POHE)",
+    "name": "Kế toán (Chương trình đào tạo đặc biệt)",
     "faculty": "Khoa Kế toán và Kiểm toán (Trường Kinh tế và Kinh doanh)"
    },
    {
@@ -230,7 +225,7 @@ window.SCHOOL_DATA = {
    },
    {
     "code": "7810201A",
-    "name": "Quản trị khách sạn (Chương trình đào tạo đặc biệt POHE)",
+    "name": "Quản trị khách sạn (Chương trình đào tạo đặc biệt)",
     "faculty": "Khoa Du lịch"
    },
    {
@@ -240,7 +235,7 @@ window.SCHOOL_DATA = {
    },
    {
     "code": "7810103A",
-    "name": "Quản trị dịch vụ du lịch và lữ hành (Chương trình đào tạo đặc biệt POHE)",
+    "name": "Quản trị dịch vụ du lịch và lữ hành (Chương trình đào tạo đặc biệt)",
     "faculty": "Khoa Du lịch"
    },
    {
